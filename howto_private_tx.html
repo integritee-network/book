@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The SubstraTEE Book</title>
+        <title>How To Perform a Private Transaction - The SubstraTEE Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html" class="active"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,19 +148,96 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img src="./fig/substraTEE-logo-scs.svg" alt="logo" /></p>
-<p><img src="./fig/web3_foundation_grants_badge_black.svg" alt="web3grant" /></p>
+                        <h1><a class="header" href="#m5-private-tx-demo" id="m5-private-tx-demo">M5 Private-tx demo</a></h1>
+<h2><a class="header" href="#with-docker-on-any-hardware" id="with-docker-on-any-hardware">with docker on any hardware</a></h2>
+<pre><code>./M5.sh
+</code></pre>
+<h2><a class="header" href="#on-sgx-hardware" id="on-sgx-hardware">on SGX hardware</a></h2>
+<p>To run a demo for private tokens (without docker containers) do the following:</p>
+<p>Assumptions:</p>
+<ul>
+<li>your machine has SGX support</li>
+<li>Intel SGX SDK installed.</li>
+<li>rust toolchain is ready to build substrate</li>
+</ul>
+<p>in terminal 1 run a substraTEE-node</p>
+<pre><code>git clone https://github.com/scs/substraTEE-node
+cd substraTEE-node
+git checkout tags/M5.2
+cargo build --release
+./target/release/substratee-node --dev --ws-port 9979 --rpc-port 9969
+</code></pre>
+<p>in terminal 2, run the worker</p>
+<pre><code>git clone https://github.com/scs/substraTEE-worker
+cd substraTEE-worker
+git checkout tags/M5.2
+make
+cd bin
+RUST_LOG=info ./substratee_worker -p 9979 worker
+</code></pre>
+<p>in terminal 3, run the client</p>
+<pre><code>cd substraTEE-worker/bin
+./substratee_client --node-ws-port 9979
+</code></pre>
+<p>Then you should see this in terminal 3:</p>
+<pre><code>*** Getting the amount of the registered workers
+[&lt;] Found 1  workers
+
+[&gt;] Getting the first worker's from the substraTEE-node
+[&lt;] Got first worker's coordinates:
+    W1's public key : &quot;5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar&quot;
+    W1's url: &quot;127.0.0.1:2000&quot;
+
+[&gt;] Get the shielding key from W1 (=5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar)
+[&lt;] Got worker shielding key Rsa3072KeyPair: { n:CF67550FB00AB959A76219EA35188B360380037123FCAA77B683A791A1F980331F9D9E11D04C7F5FB3B63787F8AAB579FDFFE1DCE79A29B6ACED2628635C8463965D5D839BD58072AA77B8CAE124E40562955FE9936DAE2976CD57B41A2DE89EEDBF9DA77C155365E8BB45DCA1E0EC3B32604D9489712762BE63B3D1F04801D796887F70115BFDD440450A04BFE81DEE7BE718F56F766E6B0C2D9DE270583C4DFBA64FD59B4DE39C07977F1FD2956588DDBF73987EECB5BB303AF2115C4E72879C5EC69B7CD5C00DAEF9F9B062B40ADA16984C574246C8AB882A79D2E1C2F597C1017FBA69D7449BAD85ADE822D92A775DB1766F21C886E762C3E260390B72C82515F1D48FD190059B419C639E3688BCC2070E9CDB6BDDD49202B7296EA2AB01EA2D3AC2990C5078446582A4C03194BBF8D7E557B4503FF4645C053D7288398C79781F642F3A8D399195E6D2E6F74B434791D881BC97BAA0F0B228BD031C40E357BC61644E68CC40F3E08BDCBBD92E306FA9353FAEA05FDCBFCF4729FECC008C, e:01000001 }
+
+[+] Alice's Incognito Pubkey: 5Dt1Wg85pXGLstt36t6TDdvXXoCtG6zkUL17KkyVaPYSrzGH
+
+[+] Bob's Incognito Pubkey: 5GTTq4EnvMk4oTXYJp2kqTd2T9hbnARuee5awLiKFKsxWgRy
+
+[+] pre-funding Alice's Incognito account (ROOT call)
+[+] Subscribed, waiting for event...
+
+[+] Received confirm call from 5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar
+[+] query Alice's Incognito account balance
+    got getter response from worker: Ok(&quot;State is 1000000&quot;)
+[+] query Bob's Incognito account balance
+    got getter response from worker: Ok(&quot;State is 0&quot;)
+
+*** incognito transfer from Alice to Bob
+
+[+] Subscribed, waiting for event...
+
+[+] Received confirm call from 5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar
+[+] query Alice's Incognito account balance
+    got getter response from worker: Ok(&quot;State is 900000&quot;)
+[+] query Bob's Incognito account balance
+    got getter response from worker: Ok(&quot;State is 100000&quot;)
+
+</code></pre>
+<h3><a class="header" href="#so-what-happens-here" id="so-what-happens-here">So, what happens here?</a></h3>
+<p>Alice wants to transfer 100k tokens privately to Bob. She doesn't use her substraTEE-node account for this as the transfer would be publicly visible.</p>
+<p>Instead, she creates an <em>incognito</em> account and she keeps her account secret (also the public key). This account will never hit the substraTEE-node blockchain transparently.</p>
+<p>The <em>Demo God</em> then gives Alice some initial Balance of 1M.</p>
+<p>Bob also creates an <em>incognito</em> account and tells Alice (and only her) his public key.</p>
+<p>Alice now uses SubstraTEE's <em>shielded transaction</em> feature to send 100k to Bob.</p>
+<h3><a class="header" href="#under-the-hood" id="under-the-hood">under the hood</a></h3>
+<p>TODO:</p>
+<ul>
+<li>block diagram</li>
+<li>sequence diagram</li>
+</ul>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-
-                        
-                            <a rel="next" href="trusted_execution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
+                            <a rel="prev" href="howto_worker.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
                         
 
                         <div style="clear: both"></div>
@@ -170,11 +247,11 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-
-                
-                    <a href="trusted_execution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
+                    <a href="howto_worker.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
                     </a>
+                
+
                 
             </nav>
 

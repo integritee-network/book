@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The SubstraTEE Book</title>
+        <title>What is SubstraTEE Good For? - The SubstraTEE Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html" class="active"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,17 +148,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img src="./fig/substraTEE-logo-scs.svg" alt="logo" /></p>
-<p><img src="./fig/web3_foundation_grants_badge_black.svg" alt="web3grant" /></p>
+                        <h1><a class="header" href="#what-to-use-tees-for" id="what-to-use-tees-for">What to use TEEs for</a></h1>
+<p><em>TODO</em></p>
+<p>documentation for substraTEE, an extension of <a href="https://github.com/paritytech/substrate">parity substrate</a> allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality</p>
+<h1><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h1>
+<table><thead><tr><th>use case</th><th>substraTEE-signer <br>(off-chain stateless)</th><th>substraTEE-worker<br> (off-chain stateful)</th><th>substraTEE-node<br> (onchain-stateful)</th></tr></thead><tbody>
+<tr><td>hardware wallet</td><td>:+1: local TEE per user</td><td></td><td>:thumbsdown:</td></tr>
+<tr><td>atomic swaps<br>(cross-chain bridge)</td><td>:+1: light node in both chains</td><td>:+1:</td><td>:thumbsdown:</td></tr>
+<tr><td>coinmixer</td><td>:+1:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
+<tr><td>oracle</td><td>:+1:</td><td>:+1:</td><td>difficult if non-deterministic</td></tr>
+<tr><td>inheritance notary</td><td>:+1:</td><td>:+1:</td><td>storage expensive</td></tr>
+<tr><td>confidential transactions</td><td>:thumbsdown:</td><td>:thumbsdown: doesn't scale? (collisions of state changes)</td><td>:+1: <a href="https://encointer.org">encointer</a></td></tr>
+<tr><td>2nd layer confidential payment hub (Similar to <a href="https://github.com/lsds/Teechain">TeeChan</a>)</td><td></td><td>:+1:</td><td></td></tr>
+<tr><td>confidential smart contracts</td><td>:thumbsdown:</td><td>:+1: (Ekiden, PDO, <a href="https://encointer.org">encointer</a>)</td><td>computation time and storage expensive</td></tr>
+<tr><td><a href="https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/poet.html">POET</a> consensus</td><td>:thumbsdown:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
+</tbody></table>
+<h1><a class="header" href="#substratee-signer" id="substratee-signer">substraTEE-signer</a></h1>
+<p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
+<p><em>stateless</em>: no state needs to be preserved (onchain - data or hash) between uses</p>
+<p><img src="./substraTEE-signer.svg" alt="signer" /></p>
+<p>One flavour of substraTEE is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX). </p>
+<p>Main feature: trusted hardware custodian of your private keys</p>
+<h1><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h1>
+<p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
+<p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
+<p><img src="./substraTEE-offchain-contract.svg" alt="offchain-contract" /></p>
+<p>Similar to but still quite different than <a href="https://github.com/hyperledger-labs/private-data-objects">sawtooth PDO</a> or <a href="https://www.oasislabs.com/">Ekiden/OasisLabs</a></p>
+<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. SubstraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em> </p>
+<p>Dapps can commit WASM contracts and run their own TEE's or hire an enclave service to run confidential WASM smart contracts on. delegates are remote attested on the blockchain (the TCB doesn't include the WASM contract). They have to be fed with the most recent state, call and opaque payload. They then update the state that is written back to the chain.</p>
+<h1><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h1>
+<p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic. </p>
+<p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
+<p>a fork of substrate that has an Executor running in a TEE (Intel SGX)</p>
+<p>Main feature: many confidential transactions can be executed with every block</p>
+<p><img src="./substraTEE-stealth-node.svg" alt="node" /></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="remote_attestation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="trusted_execution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="privacy.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -170,9 +206,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="remote_attestation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="trusted_execution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="privacy.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

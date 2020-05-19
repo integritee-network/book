@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The SubstraTEE Book</title>
+        <title>CDN - The SubstraTEE Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html" class="active"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,17 +148,44 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img src="./fig/substraTEE-logo-scs.svg" alt="logo" /></p>
-<p><img src="./fig/web3_foundation_grants_badge_black.svg" alt="web3grant" /></p>
+                        <h1><a class="header" href="#use-case-cdn-subscriptions" id="use-case-cdn-subscriptions">Use Case CDN Subscriptions</a></h1>
+<p>SubstraTEE could be used to restrict (narrow- or broadband) content delivery to paying users. Examples could be blogs, articles, video streaming, video on-demand, music streaming or on-deman aso.</p>
+<h2><a class="header" href="#basic-substratee-application-for-cdn" id="basic-substratee-application-for-cdn">Basic SubstraTEE application for CDN</a></h2>
+<ul>
+<li>Subscriptions are managed on-chain, as are payments (can be flat subscription fees or pay-per-use)</li>
+<li>SubstraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key. 
+No consumers or publishers nor operators have access</li>
+<li>publishers commit their content (encrypted with the CEK (RSA+AES)) to IPFS and register the content on-chain, providing the IPFS url</li>
+<li>consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which 
+<ul>
+<li>authenticates the consumer and looks up subscription status on-chain</li>
+<li>fetches the requested content from IPFS</li>
+<li>decrypts the content</li>
+<li>sends the content to the consumer over the previously established TLS channel</li>
+</ul>
+</li>
+</ul>
+<h2><a class="header" href="#cek-turnover" id="cek-turnover">CEK turnover</a></h2>
+<p>As a first implementation, the CEK can stay constant over time. However, we should be able to rotate this key if we need to revoke.</p>
+<h2><a class="header" href="#access-to-archive-prior-to-subscription" id="access-to-archive-prior-to-subscription">Access to Archive Prior to Subscription</a></h2>
+<p>Because the private CEK is known to all worker enclaves and never needs to be known to publishers or subscribers we do not need to trans-encrypt content. 
+It doesn't matter at what time a consumer subscribes. The worker can deliver all prior content to the subscriber. 
+The subscription metadata can include restrictions to archive access. </p>
+<h2><a class="header" href="#pay-per-use" id="pay-per-use">Pay per use</a></h2>
+<p>Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our <a href="./M5_DEMO.html">private-tx example</a> for how this could work.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="interoperability.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="trusted_execution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="design.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -170,9 +197,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="interoperability.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="trusted_execution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="design.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

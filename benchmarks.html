@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - The SubstraTEE Book</title>
+        <title>Benchmarks - The SubstraTEE Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html" class="active"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,17 +148,53 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img src="./fig/substraTEE-logo-scs.svg" alt="logo" /></p>
-<p><img src="./fig/web3_foundation_grants_badge_black.svg" alt="web3grant" /></p>
+                        <h1><a class="header" href="#benchmark" id="benchmark">Benchmark</a></h1>
+<p><em>TODO</em> </p>
+<table><thead><tr><th>ops</th><th>call_counter_wasm</th><th>call_counter</th><th>no compose_extrinsic</th><th>msg decryption</th><th>counter update</th><th>sgx_file_read</th><th>counter update + no_ops ocall</th></tr></thead><tbody>
+<tr><td>ecall</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td></tr>
+<tr><td>sgx::fs::read (rsa key)</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td>☑</td></tr>
+<tr><td>rsa msg decryption</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td></td><td></td><td>☑</td></tr>
+<tr><td>wasm sha256 computation</td><td>☑</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>wasm invokation</td><td>☑</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>std::file::read</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td></td><td>☑</td></tr>
+<tr><td>sgx::fs::read (aes key)</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td></td><td>☑</td></tr>
+<tr><td>aes decryption</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td></td><td>☑</td></tr>
+<tr><td>aes decryption</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td></td><td>☑</td></tr>
+<tr><td>std::file::write</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td></td><td>☑</td></tr>
+<tr><td>no_ops_ocall</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>compose extrinsic</td><td>☑</td><td>☑</td><td></td><td></td><td></td><td></td><td>☑</td></tr>
+<tr><td><strong>invokations/s</strong></td><td>332</td><td>342</td><td>365</td><td>400</td><td>5000</td><td>8196</td><td>4587</td></tr>
+</tbody></table>
+<ul>
+<li><strong>call_counter</strong> represents the operations that are performed in a milestone 1 counter state update.</li>
+<li><strong>call_counter_wasm</strong> represents the operations that are performed in a milestone 2 counter state update.</li>
+<li><strong>sgx::fs::read:</strong> an SGX call that accesses the sealed enclave storage which is only readable by one specific enclave instance.</li>
+<li><strong>ecall</strong> general entry point from the host system to an enclave.</li>
+<li><strong>no_ops_ocall:</strong> an ocall (a call from the enclave to the host) that does nothing in order to see the impact of an ocall itself.</li>
+<li><strong>invokations/s:</strong> stands for the number of executions per seconds that can be achieved. This does roughly correspond to tx/s.</li>
+</ul>
+<h2><a class="header" href="#analysis" id="analysis">Analysis</a></h2>
+<ul>
+<li>RSA decryption is by far the most expensive step in the whole pipeline. This, however, is hard to migitate as long as no more efficient asymmetric encryption exists.</li>
+<li>The effect of sgx::fs::read does only have a small impact.</li>
+<li>wasm invokation's impact is negligible</li>
+<li>If the current RSA de/-encryption process is optimized, &gt;1000 tx/s, is achievable.</li>
+</ul>
+<h2><a class="header" href="#testsetup" id="testsetup">Testsetup</a></h2>
+<p>All tests have been performend on an Intel NUC NUC8i3BEH2, Bean Canyon i3-8109U 3.0 GHz.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
+                            <a rel="prev" href="security.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
 
                         
-                            <a rel="next" href="trusted_execution.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="guides.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -170,9 +206,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
+                    <a href="security.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
 
                 
-                    <a href="trusted_execution.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="guides.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

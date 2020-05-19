@@ -1,0 +1,327 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Remote Attestation - The SubstraTEE Book</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html" class="active"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The SubstraTEE Book</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#remote-attestation" id="remote-attestation">Remote Attestation</a></h1>
+<p><em>TODO</em> </p>
+<p>The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.</p>
+<h2><a class="header" href="#convincing-the-substratee-user" id="convincing-the-substratee-user">convincing the substraTEE user</a></h2>
+<p>A user that interacts with substraTEE wants to be sure that the shielding pubkey she uses to encrypt her call to the STF originates form an enclave that</p>
+<ol>
+<li>is running on genuine Intel SGX HW</li>
+<li>runs the official code</li>
+<li>accesses the correct STF state</li>
+</ol>
+<h3><a class="header" href="#classical-remote-attestation-solution" id="classical-remote-attestation-solution">Classical Remote Attestation Solution</a></h3>
+<p>The standard use case for remote attestation involves a service provider (SP) like a video streaming service which wants to be sure his viewer application runs on a genuine SGX HW and respects DRM.
+The SP therefore requests a quote from the application and sends that quote to Intel Attestation Services (IAS) who sign off the quote if it is genuine.</p>
+<p>The issue here is that IAS only talks to registered clients. You need to register in order to get a SPID which needs to be supplied along with requests.</p>
+<h3><a class="header" href="#attestation-registry-on-chain" id="attestation-registry-on-chain">Attestation Registry On-Chain</a></h3>
+<p>It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the substraTEE-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.</p>
+<p>This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. substraTEE-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only substraTEE operators need to register with IAS.</p>
+<p><img src="./attestation_registry_sequence.svg" alt="Sequence Diagram" /></p>
+<p>The attestation report which is written to an on-chain registry contains:</p>
+<ul>
+<li>enclave quote
+<ul>
+<li>report body
+<ul>
+<li>MRENCLAVE (hash of enclave build)</li>
+<li>Product ID (hard-coded in substraTEE source)</li>
+<li>Security Version (hard-coded in substraTEE source)</li>
+<li>user data is hash of context:
+<ul>
+<li>enclave-individual signing pubkey</li>
+<li>latest block hash</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>...</li>
+</ul>
+</li>
+<li>IAS response
+<ul>
+<li>body
+<ul>
+<li>status (OK||CONFIGURATION_NEEDED|GROUP_REVOKED....)</li>
+<li>timestamp</li>
+<li>enclave quote</li>
+<li>...</li>
+</ul>
+</li>
+<li>IAS certificate </li>
+<li>IAS signature over above body</li>
+</ul>
+</li>
+</ul>
+<p>Any user can now verify IAS signature and MRENCLAVE (given the substraTEE enclave can be built deterministically). See the <a href="https://github.com/rodolfoams/sgx-retrieve-identity/blob/5be913b96b2a6e5a0e1158ad169b977507291faa/Makefile#L253">example</a> how you can extract MRENCLAVE after building the enclave</p>
+<p>The worker can now publish his sealing pubkey, signed with its enclave-individual signing key stated in the quote.</p>
+<p>workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)</p>
+<h3><a class="header" href="#enclave-registry-on-chain" id="enclave-registry-on-chain">Enclave Registry On-Chain</a></h3>
+<p>In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of substraTEE.</p>
+<p>substraTEE developers will propose code updates to be voted on. Validators check the code and 
+vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:</p>
+<pre><code>sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
+</code></pre>
+<p>TODO: we might need to provide a docker environment the achieve deterministic builds.</p>
+<h2><a class="header" href="#secret-provisioning" id="secret-provisioning">secret provisioning</a></h2>
+<p>In order to establish shared secrets among workers, they need to convince themselves mutually that they are genuine before entering some <em>Distributed Key Generation</em> (DKG) protocol.</p>
+<h2><a class="header" href="#sealing" id="sealing">Sealing</a></h2>
+<p>provisioned secrets are sealed with Intel's <a href="https://software.intel.com/en-us/blogs/2016/05/04/introduction-to-intel-sgx-sealing">SGX Sealing</a>. Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of a SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.</p>
+<p>However, for decentralized open source projects, MRSIGNER cannot apply as there is no authority that could sign builds.</p>
+<p>Therefore, <em>enclave identity</em> MRSIGNER must be applied.</p>
+<h3><a class="header" href="#sw-updates" id="sw-updates">SW updates</a></h3>
+<p>As SW updates will have a different measurement, the new build can't read the state that was encrypted by the old build. Local attestation allows the new version to request the provisioned secrets. </p>
+<p>We assume reproducible builds for enclaves which should be possible with Rust subject to  some assumptions. For now, watch <a href="https://github.com/rust-lang/rust/issues/34902">this issue</a> and <a href="https://github.com/rust-secure-code/cargo-repro">cargo-repro</a>.</p>
+<p>Simplified Protocol</p>
+<ol>
+<li>new version's TCB hash gets voted for by onchain consensus</li>
+<li>new version registers its attestation on-chain</li>
+<li>old version shares provisioned secret with new version running on same machine by means of local (intra-platform) attestation if new version's tcb corresponds to onchain registry</li>
+</ol>
+<p>See <a href="https://software.intel.com/en-us/articles/innovative-technology-for-cpu-based-attestation-and-sealing">Intel's sealing paper</a></p>
+<h2><a class="header" href="#ias" id="ias">IAS</a></h2>
+<p>Intel <a href="https://software.intel.com/en-us/blogs/2016/01/07/intel-sgx-debug-production-prelease-whats-the-difference">defines different modes</a> for running enclaves.</p>
+<p>compilation modes: <em>Debug</em>, <em>Release</em>, <em>Pre-Release</em>, <em>Simulation</em>
+lanching modes: <em>Debug</em>, <em>Production</em></p>
+<h3><a class="header" href="#epid" id="epid">EPID</a></h3>
+<p>Enhanced Privacy ID (EPID). A group signature key known only to the quoting enclave. Only used for remote attestation.</p>
+<h3><a class="header" href="#spid" id="spid">SPID</a></h3>
+<p>A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by <a href="https://software.intel.com/en-us/form/sgx-onboarding">registering with Intel</a> (only allows to attest DEBUG encalves!)</p>
+<p>You can request either <em>linkable</em> or <em>unlinkable</em> quote. </p>
+<p><strong>tl;dr</strong>: selecting UNLINKABLE is a safe choice. But don't expect to be anonymous.</p>
+<p>In both cases, the quoting enclave uses a group signature for a quote. You can just decide if you wish two subsequent signatures to be linkable (an observer learns &quot;quote was signed by same platform&quot;) or not.</p>
+<p>In any case, Intel can identify YOU by SSID as you use your SSID for remote attestation with IAS. It just doesn't learn about which HW platform the quote originates from.</p>
+<h3><a class="header" href="#production-vs-debug-mode" id="production-vs-debug-mode">Production vs. Debug Mode</a></h3>
+<p>Due to Intel policy, developers can only compile enclaves in <em>Debug</em>, <em>Pre-Release</em> or <em>Simulation</em> mode. This means that the enclave will always be launched in <em>Debug</em> mode which doesn't provide confidentiality as enclave memory isn't encrypted.</p>
+<p>In order to compile enclaves in <em>Release</em> mode (and run them in <em>Production</em> mode), the SW vendor has to apply for a SGX production license. 
+Moreover, remote attestation in production mode can only be taken out with such production license.</p>
+<p><em>SCS is looking into options how to apply such policy to a decentralized system with Intel.</em></p>
+<p><strong>solution candidate</strong></p>
+<ol>
+<li>A set of <em>companies</em> (i.e. SCS, web3 foundation) register a production license with Intel</li>
+<li>substraTEE-workers send their RA quotes to the chain.</li>
+<li>the <em>company</em> listens to new RA quotes and sends them to IAS with the <em>company's</em> SPID.</li>
+<li>the <em>company</em> sends the IAS report to the chain.</li>
+</ol>
+<h2><a class="header" href="#literature" id="literature">Literature</a></h2>
+<p>chaotic list of pointers:</p>
+<ul>
+<li><a href="https://davejingtian.org/2017/11/10/some-notes-on-the-monotonic-counter-in-intel-sgx-and-me/">review of SGX PSE for monotonic counters and trusted time</a></li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="trusted_execution.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="what_for.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="trusted_execution.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="what_for.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
