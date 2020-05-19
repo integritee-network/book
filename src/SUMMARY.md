@@ -5,8 +5,11 @@
 - [What is SubstraTEE Good For?](./what_for.md)
   - [Privacy](./privacy.md)
   - [Scalability](./scalability.md)
-  - [Interoperability](./interoperability.md)  
-- [Design]
+  - [Interoperability](./interoperability.md)
+  - [CDN](./use_case_cdn.md)  
+- [Design](./design.md)
+  - [Security](./security.md)
+  - [Benchmarks](./benchmarks.md)
 - [Howto](./guides.md)
   - [How To Run a Node](./howto_node.md)
   - [How To Run a Worker](./howto_worker.md)
