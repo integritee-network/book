@@ -17,6 +17,7 @@
   - [How To Run a Worker](./howto_worker.md)
   - [How To Perform a Private Transaction](./howto_private_tx.md)
   - [How To Access On-Chain Storage Trustlessly](./howto_access_onchain_storage.md)
+  - [How To Build Your Own Trusted STF](./howto_stf.md)
 - [Roadmap](./roadmap.md)
 - [Glossary](./glossary.md)
 

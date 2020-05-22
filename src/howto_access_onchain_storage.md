@@ -12,7 +12,7 @@ Until [#113](https://github.com/scs/substraTEE-worker/issues/113) is resolved, w
 
 Inside the enclave we don't have a trusted time source (We could use Intel's AESM with `sgx_get_trusted_time` but that would extend our trust assumptions). The blockchain delivers trusted time because every block includes a UTC timestamp which is agreed upon by consensus (within a certain tolerance).
 
-For this example, we access on-chain time using substrate's `timestamp` pallet. More precisely, we will enable you to call `Timestamp::<T>::now()` from any pallet in your STF. You will get the UTC timestamp from the block that includes your `TrustedCall`.
+For this example, we access on-chain time using substrate's [timestamp](https://crates.parity.io/pallet_timestamp/index.html) pallet. More precisely, we will enable you to call `Timestamp::<T>::now()` from any pallet in your STF. You will get the UTC timestamp from the block that includes your `TrustedCall`.
 
 ### Key Mapping
 
