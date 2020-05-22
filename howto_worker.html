@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html" class="active"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html" class="active"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,7 +148,48 @@
 
                 <div id="content" class="content">
                     <main>
-                        
+                        <h1><a class="header" href="#how-to-run-your-own-worker" id="how-to-run-your-own-worker">How To Run Your Own Worker</a></h1>
+<h2><a class="header" href="#hw-requirements" id="hw-requirements">HW requirements</a></h2>
+<p>While SGX is supported by most Intel CPU's that is not the case for all chipsets. Here we're just telling you what HW we are using and is known to work. </p>
+<h3><a class="header" href="#dell-poweredge-r340-server" id="dell-poweredge-r340-server">Dell PowerEdge R340 Server</a></h3>
+<p>CPU <strong>has to be</strong> Intel(R) Xeon(R) E-2276G CPU @ 3.80 GHz</p>
+<h3><a class="header" href="#enable-sgx-support-in-bios" id="enable-sgx-support-in-bios">Enable SGX support in BIOS</a></h3>
+<p>TODO</p>
+<h2><a class="header" href="#register-with-intel" id="register-with-intel">Register With Intel</a></h2>
+<p>TODO</p>
+<p>....Developer Account....</p>
+<h3><a class="header" href="#obtaining-a-commercial-sgx-license" id="obtaining-a-commercial-sgx-license">Obtaining a Commercial SGX License</a></h3>
+<p>TODO</p>
+<ul>
+<li>only legal entities</li>
+</ul>
+<h2><a class="header" href="#setup-server-with-ansible" id="setup-server-with-ansible">Setup Server with Ansible</a></h2>
+<p>TODO</p>
+<p>..ansible scripts on github.... </p>
+<h2><a class="header" href="#if-using-docker" id="if-using-docker">If using Docker</a></h2>
+<h3><a class="header" href="#enabling-sgx-hw-support" id="enabling-sgx-hw-support">Enabling SGX HW support</a></h3>
+<p>The demos are by default compiled for <a href="https://software.intel.com/en-us/blogs/2016/05/30/usage-of-simulation-mode-in-sgx-enhanced-application">Simulation Mode</a> meaning that you don't need an actual SGX platform to run the example. This is specified in the <code>DockerfileM*</code> on line 99 (<code>SGX_MODE=SW make</code>). If you are on a platform that supports the SGX, you can enable HW support by:</p>
+<ul>
+<li>Installing the Intel SGX Driver 2.5 and make sure that <code>/dev/isgx</code> appears</li>
+<li>Start the docker with SGX device support:
+<pre><code class="language-bash">$ docker run -v $(pwd):/substraTEE/backup -ti --device /dev/isgx substratee
+</code></pre>
+</li>
+<li>Start the aesm service inside the docker:
+<pre><code class="language-bash">root@&lt;DOCKERID&gt;:/# LD_LIBRARY_PATH=/opt/intel/libsgx-enclave-common/aesm /opt/intel/libsgx-enclave-common/aesm/aesm_service &amp;
+</code></pre>
+</li>
+<li>Compile the substraTEE-worker with HW support:
+<pre><code class="language-bash">root@&lt;DOCKERID&gt;:/substraTEE/substraTEE-worker-M1# make
+</code></pre>
+</li>
+<li>Re-run the demos.</li>
+</ul>
+<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker</p>
+<pre><code>*** Start the enclave
+[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
+</code></pre>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

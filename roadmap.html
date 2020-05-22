@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Design - The SubstraTEE Book</title>
+        <title>Roadmap - The SubstraTEE Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html" class="active"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li></ol></li><li class="expanded "><a href="roadmap.html" class="active"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,34 +148,47 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#design" id="design">Design</a></h1>
-<p>TODO: update and explain better</p>
-<h2><a class="header" href="#direct-invocation-vision" id="direct-invocation-vision">Direct Invocation (Vision)</a></h2>
-<p><img src="./fig/substraTEE-vision.png" alt="vision" />
-<em>SubstraTEE Target Architecture with Direct Invocation (future scenario)</em></p>
+                        <h1><a class="header" href="#roadmap" id="roadmap">Roadmap</a></h1>
+<h2><a class="header" href="#roadmap-1" id="roadmap-1">Roadmap</a></h2>
+<p>|    Milestone    	|    Request    Invocation    	|    STF                      	|    # Workers per STF    	|    On-chain tx per invocation    	|    read chain state from STF  | Supported TEE Manufact.                   	|  Remote Attestation Registry  |
+|-----------------	|-----------------------------	|-----------------------------	|-------------------------	|----------------------------------	|----------------------------------------------	| ---|---|
+|    M1 ☑          	|    Proxy                    	|    Rust                     	|    1                    	|    2                             	|   - 	|    Intel                                     	|   -  |
+|    M2 ☑          	|    Proxy                    	|    Rust or WASM             	|    1                    	|    2                             	|   - 	|    Intel                                     	|  -  |
+|    M3 ☑          	|    Proxy                    	|    Rust or WASM             	|    1                    	|    2                             	|   - 	|    Intel                                     	|  X  |
+|    M4 ☑          	|    Proxy                    	|    Rust or WASM             	|    N (redundant)        	|    1+N                           	|   - 	|    Intel                                     	|  X  |
+|    M5 ☑          	|    Proxy                    	|    Rust modular           	|    N (redundant)        	|    1+N                           	|   - 	|    Intel                                     	|  X  |
+|    M6 ☐          	|    Proxy                    	|    Rust modular           	|    N (redundant)        	|    1+N                           	|   X 	|    Intel                                     	|  X  |
+|    future ☐      	|    Proxy                    	|    Rust or <strong>Ink</strong>	|    N (redundant)        	|    2                             	|   X 	|    Intel + ARM TrustZone + Keystone   (?)    	|  X  |
+|    future ☐       |    <strong>Direct</strong>               	|    Rust or <strong>Ink</strong>	|    N (master + failover)    	|    <strong>&lt;&lt; 1</strong>                	|   X 	|    Intel + ARM TrustZone + Keystone   (?)    	|  X  |</p>
+<h3><a class="header" href="#m1-poc1-single-tee-confidential-state-transition-function" id="m1-poc1-single-tee-confidential-state-transition-function">M1 PoC1: single-TEE confidential state transition function</a></h3>
+<p>off-chain worker runs STF within an Intel SGX enclave. The state is persisted in a sealed file which can only be read by that very enclave.</p>
+<p>The demo STF will be a simple counter.</p>
+<h3><a class="header" href="#m2-poc2-single-tee-confidential-state-transition-function-in-wasm" id="m2-poc2-single-tee-confidential-state-transition-function-in-wasm">M2 PoC2: single-TEE confidential state transition function in WASM</a></h3>
+<p>In addition to M1, the STF is defined by WASM code which is run by a WASMI interpreter within an Intel SGX enclave.</p>
+<p>The demo STF will be a simple counter.</p>
+<h3><a class="header" href="#m3-remote-attestation-registry" id="m3-remote-attestation-registry">M3 Remote Attestation Registry</a></h3>
+<p>substraTEE-worker can remote-attest its own enclave with Intel Attestation Service (IAS). The report signed by IAS is then registered on-chain with substraTEE-registry runtime module. Users can verify a worker’s IAS report before interacting with it. So they can be certain that the correct code is running on a genuine SGX CPU.</p>
+<h3><a class="header" href="#m4-redundancy-and-secret-provisioning" id="m4-redundancy-and-secret-provisioning">M4 Redundancy and Secret Provisioning</a></h3>
+<p>Several substraTEE-workers running on different machines can redundantly operate on the same STF. This guarantees that the STF survives the loss of a few SGX machines (going offline, breaking down, denial-of-service). Moreover, this improves integrity guarantees as all the workers register call receipts including the hash of the new state. A single compromised enclave can therefore only break confidentiality, but not integrity, as manipulation would be evident to anyone.
+Secret sharing among a dynamic set of worker enclaves must be implemented for such redundancy.</p>
+<h3><a class="header" href="#m5-modular-stf-with-private-tx-example" id="m5-modular-stf-with-private-tx-example">M5 Modular STF with private-tx example</a></h3>
+<p>Since M5, the STF is modular and has its own crate which can easily be swapped. An example for private transactions has been added</p>
+<h3><a class="header" href="#m6-read-chain-state-from-stf" id="m6-read-chain-state-from-stf">M6 read chain state from STF</a></h3>
+<p>From M6 onwards, SubstraTEE STF can access chain state in a trustless way. A substrate light client verification logic will be included in the worker enclave that allows the STF to query chain state by means of subscribing to storage over RPC and verifying returned values within the enclave.</p>
+<h3><a class="header" href="#future" id="future"><em>FUTURE</em></a></h3>
+<h4><a class="header" href="#support-for-ink-contracts" id="support-for-ink-contracts">support for ink contracts</a></h4>
+<p><em>(development not yet funded)</em></p>
+<p><a href="https://medium.com/block-journal/introducing-substrate-smart-contracts-with-ink-d486289e2b59">ink!</a> is substrate's domain specific contract language on top of Rust. This milestone shall bring ink! contracts to substraTEE.</p>
+<h3><a class="header" href="#other" id="other">other</a></h3>
 <ul>
-<li>Shielding key: used by the substraTEE-client to encrypt the call in order to protect caller privacy. It is common to all enclaves.</li>
-<li>State encryption key: used to encrypt and decrypt the state storage. It is common to all enclaves.</li>
-<li>Signing key: used to sign transactions for the substraTEE-node. The corresponding account must be funded in order to pay for chain fees. It is unique for every enclave.</li>
+<li>direct invocation</li>
+<li>performance benchmarks and optimization</li>
+<li>testnet for stress-tests and showcasing</li>
+<li>use cases: bridges, payment hubs, ...</li>
 </ul>
-<h3><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h3>
-<p>The <em>substraTEE-node</em> is a substrate blockchain node with an additional runtime module:</p>
-<ul>
-<li>substraTEE-registry module: proxies requests to workers, verifies IAS reports and keeps track of the registered enclaves. It provides the following API interfaces:
-<ul>
-<li>Register an enclave</li>
-<li>Remove an enclave</li>
-<li>Get the list of enclaves</li>
-<li>invoke worker</li>
-<li>confirm processing of requests</li>
-</ul>
-</li>
-</ul>
-<p>The <em>substraTEE-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>substraTEE-registry module</em> to register his enclave. </p>
-<p>If there is already an enclave (belonging to a different substraTEE-worker) registered on the chain, the substraTEE-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
 <h2><a class="header" href="#indirect-invocation-m1-m5" id="indirect-invocation-m1-m5">Indirect Invocation (M1-M5)</a></h2>
 <p>The high level architecture of the current implementation can be seen in the following diagram:</p>
-<p><img src="./fig/substraTEE-worker-overview.svg" alt="Diagram" /></p>
+<p><img src="./substraTEE-worker-overview.svg" alt="Diagram" /></p>
 <p>The main building blocks can be found in the following repositories:</p>
 <ul>
 <li><a href="https://github.com/scs/substraTEE-node">substraTEE-node</a>: (custom substrate node) A substrate node with a custom runtime module</li>
@@ -184,7 +197,7 @@
 <h2><a class="header" href="#redundancy-m3-m5" id="redundancy-m3-m5">Redundancy (M3-M5)</a></h2>
 <p>The goal of redundancy is to allow multiple workers to operate on the same state to be resilient against outage of one or more workers.</p>
 <p>The high level architecture of the proposed architecture for M3 and M4 can be seen in the following diagram:
-<img src="./fig/substraTEE-architecture-M4.svg" alt="Diagram" /></p>
+<img src="./substraTEE-architecture-M4.svg" alt="Diagram" /></p>
 <p>where M3 includes only the <em>docker image 1</em> and the <em>Intel Attestation Service (IAS)</em> and M4 includes the three <em>docker images</em> and the <em>Intel Attestation Service (IAS)</em>.</p>
 
                     </main>
@@ -192,13 +205,13 @@
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="use_case_cdn.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="howto_access_onchain_storage.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="security.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="glossary.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -210,13 +223,13 @@
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="use_case_cdn.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a href="howto_access_onchain_storage.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="security.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a href="glossary.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

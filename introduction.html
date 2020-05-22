@@ -81,7 +81,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="guides.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li></ol></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html" class="active">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.1.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.2.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,8 +148,35 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p><img src="./fig/substraTEE-logo-scs.svg" alt="logo" /></p>
-<p><img src="./fig/web3_foundation_grants_badge_black.svg" alt="web3grant" /></p>
+                        <p align="center"><img src="./fig/substraTEE-logo-scs.png" height="300"/></p>
+<p><em>substraTEE</em> is a framework for <a href="https://docs.substrate.dev/">Parity Substrate</a>, allowing to call a custom state transition function (STF) inside a Trusted Execution Environment (TEE), namely an Intel SGX enclave thereby providing confidentiality and integrity. The enclaves operate on an encrypted state which can be read and written only by a set of provisioned and remote-attested enclaves.</p>
+<p>What substraTEE aims to enable:</p>
+<ul>
+<li>confidential decentralized state transition functions
+<ul>
+<li>private transactions</li>
+<li>private smart contracts</li>
+<li>off-chain confidential personal data records (GDPR)</li>
+<li>decentalized identity with selective disclosure</li>
+<li>subscription-based content delivery networks</li>
+</ul>
+</li>
+<li>scalability by providing a 2nd layer to substrate-based blockchains
+<ul>
+<li>off-chain smart contracts</li>
+<li>payment hubs</li>
+</ul>
+</li>
+<li>trusted chain bridges</li>
+<li>trusted oracles</li>
+</ul>
+<p>SubstraTEE is developed by <a href="https://www.scs.ch">Supercomputing Systems AG</a> and has been supported by grants from the <a href="https://web3.foundation/">Web3 Foundation</a>.</p>
+<p>We also thank the teams at</p>
+<ul>
+<li><a href="https://www.parity.io/">Parity Technologies</a> for building <a href="https://github.com/paritytech/substrate">substrate</a> and supporting us during development.</li>
+<li><a href="https://github.com/apache/incubator-teaclave-sgx-sdk">Teaclave's Rust-SGX-SDK</a> for their very helpful support and contributions.</li>
+</ul>
+<p align="center"><img src="./fig/web3_foundation_grants_badge_black.svg" width="300" height="300"/></p>
 
                     </main>
 
