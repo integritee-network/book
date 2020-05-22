@@ -386,12 +386,14 @@ The subscription metadata can include restrictions to archive access. </p>
 <img src="./fig/substraTEE-architecture-M4.svg" alt="Diagram" /></p>
 <p>where M3 includes only the <em>docker image 1</em> and the <em>Intel Attestation Service (IAS)</em> and M4 includes the three <em>docker images</em> and the <em>Intel Attestation Service (IAS)</em>.</p>
 <h1><a class="header" href="#sharding" id="sharding">Sharding</a></h1>
-<p>TODO</p>
+<p>SubstraTEE isolates confidential state from the blockchain by maintaining it off-chain and processing it in TEEs. This strategy allows application-specific sharding. Every use case can work on its own shard and even one use case could split into several shards.</p>
+<p>By default, SubstratTEE uses the MRENCLAVE of the worker enclave as shard identifier, so in most cases, your shard is directly linked to your specific TCB and there's nothing you have to worry about.</p>
+<p>If you want to use your TCB for more than one use case, you might want to split into shards.</p>
 <p><img src="./fig/SGX-TCB-shard-overview.svg" alt="Sharding UML" /></p>
+<p>A single SGX HW can run many worker instances, all operating on different shards (and possibly even different TCBs).</p>
 <h1><a class="header" href="#token-shielding" id="token-shielding">Token Shielding</a></h1>
 <p>Token shielding is the process of transferring on-chain tokens (where they are transferred transparently) to off-chain STF (where transactions are private). The on-chain tokens are kept in enclave custody on a bonding account until unshielded again.</p>
-<p>Unshielding is the reverse process, where off-chain </p>
-<p>TODO....</p>
+<p>Unshielding is the reverse process, where off-chain funds are transferred to on-chain acounts. The bonding account then releases these funds on behalf of the owner's public account.</p>
 <p><img src="./fig/shielding-unshielding-sequence-diagram.svg" alt="Sharding UML" /></p>
 <h1><a class="header" href="#substratee-security" id="substratee-security">SubstraTEE Security</a></h1>
 <p>The following is an overview of security aspects of substraTEE, mainly focusing on Intel SGX properties. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.</p>
@@ -671,11 +673,13 @@ Secret sharing among a dynamic set of worker enclaves must be implemented for su
 <h1><a class="header" href="#glossary" id="glossary">Glossary</a></h1>
 <table><thead><tr><th align="left"></th><th align="left"></th></tr></thead><tbody>
 <tr><td align="left">IAS</td><td align="left">Intel Attestation Services</td></tr>
+<tr><td align="left">MRENCLAVE</td><td align="left">enclave measurement (basically the hash of your enclave binary)</td></tr>
 <tr><td align="left">pallet</td><td align="left">a module for substrate runtimes</td></tr>
 <tr><td align="left">runtime</td><td align="left">the business logic of a substrate blockchain</td></tr>
 <tr><td align="left">SCS</td><td align="left">Supercomputing Systems AG</td></tr>
 <tr><td align="left">SGX</td><td align="left">Intel's Software Guard Extensions</td></tr>
 <tr><td align="left">STF</td><td align="left">State Transition Function</td></tr>
+<tr><td align="left">TCB</td><td align="left">Trusted Computing Base</td></tr>
 <tr><td align="left">TEE</td><td align="left">Trusted Execution Environment</td></tr>
 </tbody></table>
 
