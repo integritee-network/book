@@ -10,8 +10,11 @@
 - [Design](./design.md)
   - [Security](./security.md)
   - [Benchmarks](./benchmarks.md)
-- [Howto](./guides.md)
+- [Howto](./howto.md)
   - [How To Run a Node](./howto_node.md)
   - [How To Run a Worker](./howto_worker.md)
   - [How To Perform a Private Transaction](./howto_private_tx.md)
+  - [How To Access On-Chain Storage Trustlessly](./howto_access_onchain_storage.md)
+- [Roadmap](./roadmap.md)
+- [Glossary](./glossary.md)
 
