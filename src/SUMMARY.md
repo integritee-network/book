@@ -8,6 +8,8 @@
   - [Interoperability](./interoperability.md)
   - [CDN](./use_case_cdn.md)  
 - [Design](./design.md)
+  - [Sharding](./sharding.md)
+  - [Token Shielding](./token_shielding.md)
   - [Security](./security.md)
   - [Benchmarks](./benchmarks.md)
 - [Howto](./howto.md)
