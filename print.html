@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div id="sidebar-scrollbox" class="sidebar-scrollbox">
-                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="sharding.html"><strong aria-hidden="true">3.1.</strong> Sharding</a></li><li class="expanded "><a href="token_shielding.html"><strong aria-hidden="true">3.2.</strong> Token Shielding</a></li><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.3.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.4.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is SubstraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="sharding.html"><strong aria-hidden="true">3.1.</strong> Sharding</a></li><li class="expanded "><a href="token_shielding.html"><strong aria-hidden="true">3.2.</strong> Token Shielding</a></li><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.3.</strong> Security</a></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.4.</strong> Benchmarks</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li><li class="expanded "><a href="howto_stf.html"><strong aria-hidden="true">4.5.</strong> How To Build Your Own Trusted STF</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -179,6 +179,13 @@
 <li><a href="https://github.com/apache/incubator-teaclave-sgx-sdk">Teaclave's Rust-SGX-SDK</a> for their very helpful support and contributions.</li>
 </ul>
 <p align="center"><img src="./fig/web3_foundation_grants_badge_black.svg" width="300" height="300"/></p>
+<h1><a class="header" href="#trusted-execution" id="trusted-execution">Trusted Execution</a></h1>
+<p>We have become accustomed to the fact that we have to trust our IT administrators. While these administrators used to be in-house employees at our companies, today we often work on rented cloud platforms.</p>
+<p>These administrators can read and modify all the data processed on any machine they manage. Unfortunately, this ability extends not only to known administrators we trust but also to hackers who can obtain administrator privileges. No company, no matter how qualified, is immune to such attacks.</p>
+<p>Enter TEEs.</p>
+<p>You may envision a TEE as a co-processor that manages its own cryptographic keys and only executes programs whose hash, or fingerprint, corresponds to the original code. The manufacturer of the processor guarantees, by the design of their hardware, that nobody has access to the internal keys of the TEE or can read its memory. Moreover, the manufacturer can authenticate each TEE and provide remote attestation to a user to confirm that her untampered program is actually running on a genuine TEE, even if the machine is physically located in an off-site data center.</p>
+<p>TEEs promise, in short, integrity and confidentiality of (remote) computation. You should be aware, however, of possible <a href="./security.html">security threats</a>.</p>
+<p>Assuming we trust TEE manufacturers’ integrity and design competence, TEEs allow us to execute any state update without sharing our data with the blockchain validator or other users. Private token transfers, private smart contracts and private state channels thus become possible and relatively cheap.</p>
 <h1><a class="header" href="#remote-attestation" id="remote-attestation">Remote Attestation</a></h1>
 <p><em>TODO</em> </p>
 <p>The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.</p>
@@ -321,7 +328,53 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <p>a fork of substrate that has an Executor running in a TEE (Intel SGX)</p>
 <p>Main feature: many confidential transactions can be executed with every block</p>
 <p><img src="./substraTEE-stealth-node.svg" alt="node" /></p>
+<h1><a class="header" href="#privacy" id="privacy">Privacy</a></h1>
+<p>TODO</p>
+<h1><a class="header" href="#scalability" id="scalability">Scalability</a></h1>
+<p>TODO</p>
+<p>does apply as soon as SubstraTEE features <a href="./design.html#direct-invocation-vision">direct invocation</a></p>
 <h1><a class="header" href="#interoperability" id="interoperability">Interoperability</a></h1>
+<p>Chain interoperability is considered one of the more pressing challenges for blockchain technology. With <a href="https://github.com/scs/substraTEE">substraTEE</a>, we've built a tool that is well suited to solve trusted chain bridges, because the integrity of code execution is guaranteed by a TEE. </p>
+<h2><a class="header" href="#example-concept-for-eth-bridge" id="example-concept-for-eth-bridge">Example Concept for ETH Bridge</a></h2>
+<p>SubstraTEE-bridge will allow to:</p>
+<ul>
+<li>transfer ETH to a pegged token on substrate and back (PolkaETH).</li>
+<li>transfer ERC-20 token on Ethereum to a pegged token on substrate and back (PolkaXYZ).</li>
+<li>transfer any on-chain information between Ethereum and substrate.</li>
+<li>transfer any token on Polkadot to an Ethereum ERC20 token.</li>
+</ul>
+<p>substraTEE-bridge will build light clients of both chains. Block headers are stored in SGX sealed storage and transaction inclusion proofs are verified in Intel SGX enclaves. Backed value will be in custody of a set of TEEs. Correct execution is guaranteed by TEEs (Intel SGX).</p>
+<p>In contrast to an approach like <a href="https://https//www.xclaim.io/">XClaim</a>, substraTEE-bridge provides the following advantages:</p>
+<ul>
+<li>No full collateral needed. XClaim needs vaults (or <em>banks</em>) to lock collateral to the amount of backed value transferred through the bridge in order to punish misbehaving vaults. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In substraTEE-bridge, SGX guarantees integrity of computation. Therefore there is no need for full collateralization.</li>
+<li>No relay-contract with on-chain registry of block headers needed. Block headers are stored in the enclave's sealed storage. Less onchain storage is needed on the issuing chain.</li>
+<li>Less transactions needed as there is no need for a collateralized issue commitment.</li>
+</ul>
+<p>The term <em><strong>light client</strong></em> is used abiguously in the scene. We use the following definition of light client:</p>
+<blockquote>
+<p>a light client can be viewed as a client that downloads block headers by default, and verifies only a small portion of what needs to be verified, using a distributed hash table as a database for trie nodes in place of its local hard drive
+(<a href="https://github.com/ethereum/wiki/wiki/Light-client-protocol">source</a>)</p>
+</blockquote>
+<h3><a class="header" href="#technical-concept" id="technical-concept">Technical Concept</a></h3>
+<p>With regard to the document <a href="https://hackmd.io/UVzp6Z-bRAOo9Ny531yhmA">Polkadot Bridges: Design Considerations for bridging to PoW chains</a> as well as the <a href="https://https//www.xclaim.io/">XClaim Paper</a>, we intend to implement the <em>CentralClaim</em> Protocol with a single SGX instance as a first step (Protocols: <em>Issue</em> and <em>Redeem</em>. <em>Transfer</em> and <em>Swap</em> are off-topic). Because we leverage SGX, our CentralClaim already achieves <em>Consistency</em>, as there is no way to fraudulently issue PolkaETH without breaking SGX guarantees.</p>
+<p>As pointed out in XClaim, the CentralClaim protocol doesn't achieve <em>Redeemability</em> nor <em>Liveness</em>. In contrast to Xclaim we don't suggest a punishment scheme for fraudulent vaults as they have no economic incentive to misbehave in our scheme. Instead, we implement a shared custody of locked backing chain tokens (ETH) among a set of substraTEE-bridge enclaves. The set of substraTEE-bridge instances is unpermissioned, so anyone with suitable HW can register as a substraTEE-bridge along the design of <a href="https://github.com/scs/substraTEE">substraTEE</a>. A threshold signature scheme is applied in order to supply <em>Redeemability</em> and <em>Liveness</em>.</p>
+<p>The set of active substraTEE-bridge instances changes over time. Some instances will go offline, others will join. The multisig wallets will have to be updated with every mutation. One approach with improved forward security would be to generate new multisig wallets with every mutation (instead of updating members). This way TEE's that do not update their SGX platform with the most recent patches will lose access to funds as they will be rejected by the remote attestation process and therefore not be included in the new multisig set.</p>
+<p>We also need to guarantee <em>all-or-nothing fairness</em> (tx1 on the backing chain and tx2 on the issuing chain are either both included or both rejected). By using a TEE, we can make sure that bridges will correctly generate tx2 upon being shown a proof of inclusion for tx1. However, we can't guarantee that tx2 is included in the other chain by relying on a single TEE as the operator could prevent tx2 from being sent to the network among other attacks.<br />
+If users have many substraTEE-bridge operators to chose from, we rely on the fact that these operators have an economic incentive to follow the protocol: They can't access locked funds but they can collect fees. We only need M-of-N (configurable threshold) of these operators to play fair in order to guarantee <em>all-or-nothing fairness</em>.</p>
+<p>Further hardening (including timelocked transactions) is described in the <a href="https://eprint.iacr.org/2017/1153.pdf">Tesseract Paper</a> and is left for future work if security audits require it.</p>
+<h4><a class="header" href="#reference-light-client-implementations" id="reference-light-client-implementations">Reference Light Client Implementations</a></h4>
+<p>Substrate as well as Ethereum clients geth and parity come with the option to run as light clients (i.e. <code>parity --light</code>). We suggest to port ethereum parity's and substrate's light clients' validation logic into SGX enclaves. While the networking can be conventional untrusted code, the tracking of block headers as well as the validation of merkle proofs need to be performed in SGX enclaves, so the bridge operator can convince others (the receiving chain) of the validity of a statement.</p>
+<h4><a class="header" href="#risks" id="risks">Risks</a></h4>
+<p>Vulnerabilities in SGX may lead to total loss of locked funds as well as infinite issuance of unredeemable PolkaETH. This risk is mitigated by our M-of-N threshold signature scheme. At least M enclaves must be compromised in order to do any harm.</p>
+<p>If remote attestation is compromised as well, fake enclaves can join the set of substraTEE-bridges and outnumber the existing set of bridges.</p>
+<h3><a class="header" href="#related-work" id="related-work">Related Work</a></h3>
+<h4><a class="header" href="#parity-bridge" id="parity-bridge">parity-bridge</a></h4>
+<p><a href="https://github.com/paritytech/parity-bridge">Parity bridge</a> allows an Ethereum PoA chain to bridge to the Ethereum Mainnet using <a href="https://github.com/parity-contracts/bridge/blob/master/contracts/bridge.sol">contracts</a> on both chains. The bridge is generic (arbitrary information can be passed) and bidirectional. Trust in the PoA chain validators is required.</p>
+<p>substraTEE-bridge would replace this trust in PoA validators by trust in a single TEE or a set of TEE's (Intel SGX).</p>
+<h4><a class="header" href="#xclaim" id="xclaim">XClaim</a></h4>
+<p><a href="https://https//www.xclaim.io/">XClaim</a> solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than substraTEE-bridge.</p>
+<h4><a class="header" href="#tesseract" id="tesseract">Tesseract</a></h4>
+<p>The <a href="https://eprint.iacr.org/2017/1153.pdf">Tesseract Paper</a> describes a trusted cryptocurrency exchange design using Intel SGX. In section 7 they describe a bridge protocol.</p>
 <h1><a class="header" href="#use-case-cdn-subscriptions" id="use-case-cdn-subscriptions">Use Case CDN Subscriptions</a></h1>
 <p>SubstraTEE could be used to restrict (narrow- or broadband) content delivery to paying users. Examples could be blogs, articles, video streaming, video on-demand, music streaming or on-deman aso.</p>
 <h2><a class="header" href="#basic-substratee-application-for-cdn" id="basic-substratee-application-for-cdn">Basic SubstraTEE application for CDN</a></h2>
@@ -482,6 +535,42 @@ Similar to smart contracts reentrancy.</p>
 <h2><a class="header" href="#testsetup" id="testsetup">Testsetup</a></h2>
 <p>All tests have been performend on an Intel NUC NUC8i3BEH2, Bean Canyon i3-8109U 3.0 GHz.</p>
 <h1><a class="header" href="#howto" id="howto">Howto</a></h1>
+<p>Here you'll find some hands-on tutorials on how to use SubstraTEE for your use case</p>
+<h1><a class="header" href="#how-to-build-and-run-a-substratee-node" id="how-to-build-and-run-a-substratee-node">How to Build and Run a SubstraTEE-node</a></h1>
+<p>You don't need SGX to run a node (only workers do).</p>
+<h2><a class="header" href="#build" id="build">Build</a></h2>
+<p>In order to compile <em>ring</em> into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for ubuntu 18.04</p>
+<pre><code class="language-bash">wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 10
+export CC=/usr/bin/clang-10
+export AR=/usr/bin/llvm-ar-10
+cargo clean
+</code></pre>
+<p>Install Rust:</p>
+<pre><code class="language-bash">curl https://sh.rustup.rs -sSf | sh
+</code></pre>
+<p>Initialize your Wasm Build environment:</p>
+<pre><code class="language-bash">./scripts/init.sh
+</code></pre>
+<p>Build Wasm and native code:</p>
+<pre><code class="language-bash">cargo build --release
+</code></pre>
+<h3><a class="header" href="#with-docker" id="with-docker">with docker</a></h3>
+<p>If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):</p>
+<pre><code>docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+cargo build --release
+</code></pre>
+<h2><a class="header" href="#run" id="run">Run</a></h2>
+<h3><a class="header" href="#single-node-development-chain" id="single-node-development-chain">Single Node Development Chain</a></h3>
+<p>Purge any existing developer chain state:</p>
+<pre><code class="language-bash">./target/release/substratee-node purge-chain --dev
+</code></pre>
+<p>Start a development chain with:</p>
+<pre><code class="language-bash">./target/release/substratee-node --dev
+</code></pre>
+<p>Detailed logs may be shown by running the node with the following environment variables set: <code>RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev</code>.</p>
 <h1><a class="header" href="#how-to-run-your-own-worker" id="how-to-run-your-own-worker">How To Run Your Own Worker</a></h1>
 <h2><a class="header" href="#hw-requirements" id="hw-requirements">HW requirements</a></h2>
 <p>While SGX is supported by most Intel CPU's that is not the case for all chipsets. Here we're just telling you what HW we are using and is known to work. </p>
@@ -489,136 +578,179 @@ Similar to smart contracts reentrancy.</p>
 <p>CPU <strong>has to be</strong> Intel(R) Xeon(R) E-2276G CPU @ 3.80 GHz</p>
 <h3><a class="header" href="#enable-sgx-support-in-bios" id="enable-sgx-support-in-bios">Enable SGX support in BIOS</a></h3>
 <p>TODO</p>
-<h2><a class="header" href="#register-with-intel" id="register-with-intel">Register With Intel</a></h2>
-<p>TODO</p>
-<p>....Developer Account....</p>
-<h3><a class="header" href="#obtaining-a-commercial-sgx-license" id="obtaining-a-commercial-sgx-license">Obtaining a Commercial SGX License</a></h3>
-<p>TODO</p>
+<h2><a class="header" href="#intel-sgx-development-and-production-commercial-license" id="intel-sgx-development-and-production-commercial-license">Intel SGX development and production (commercial) license</a></h2>
+<p>In order to perform a remote attestation of the enclave, an <a href="https://api.portal.trustedservices.intel.com/EPID-attestation">Intel SGX Attestation Enhanced Service Privacy ID (EPID)</a> is needed. We use unlinkable quotes in our code. Developers need to <a href="https://software.intel.com/en-us/form/sgx-onboarding">register an account with Intel</a></p>
+<h3><a class="header" href="#development-access" id="development-access">Development Access</a></h3>
+<p>Copy your SPID and key to the following files (use Linux line endings):</p>
 <ul>
-<li>only legal entities</li>
+<li><code>bin/spid.txt</code>: SPID of your subscription</li>
+<li><code>bin/key.txt</code>: Key of your subscription (primary or secondary works)</li>
 </ul>
+<p>The enclave will be signed with the development key found under <code>enclave/Enclave_private.pem</code> and uses the configuration found under <code>enclave/Enclave.config.xml</code>.</p>
+<h3><a class="header" href="#production-access" id="production-access">Production Access</a></h3>
+<p>You need a commercial license with Intel to run your enclaves in production mode (the only mode that really is confidential). Only legal entities can get a commercial license with Intel. Get in touch with them to obtain one.</p>
+<p>Copy your SPID and key to the following files (use Linux line endings):</p>
+<ul>
+<li><code>bin/spid_production.txt</code>: SPID of your subscription</li>
+<li><code>bin/key_production.txt</code>: Key of your subscription (primary or secondary works)
+These files are used to access the Intel Remote Attestation Service.</li>
+</ul>
+<p>The enclave will be signed with the private key that was also registered and whitelisted at Intel's (in the process of obtaining a commercial license). Make sure that the key is exported as an environment variable called <code>SGX_COMMERCIAL_KEY</code>.</p>
+<p>The enclave in production mode uses the configuration found under <code>enclave/Enclave.config.production.xml</code>.
+TODO</p>
 <h2><a class="header" href="#setup-server-with-ansible" id="setup-server-with-ansible">Setup Server with Ansible</a></h2>
 <p>TODO</p>
 <p>..ansible scripts on github.... </p>
-<h2><a class="header" href="#if-using-docker" id="if-using-docker">If using Docker</a></h2>
+<h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
+<pre><code>git clone https://github.com/scs/substraTEE-worker.git
+cd substraTEE-worker
+make
+</code></pre>
+<p>this might take 10min+ on a fast machine.</p>
+<p>then you'll have to provide your SPID and KEY (see above)</p>
+<pre><code>echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
+echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
+</code></pre>
+<h2><a class="header" href="#run-worker" id="run-worker">Run Worker</a></h2>
+<pre><code>cd bin
+./substratee-worker init-shard
+./substratee-worker shielding-key
+./substratee-worker signing-key
+./substratee-worker run --ns &lt;yournodeip&gt;
+</code></pre>
+<h2><a class="header" href="#using-docker" id="using-docker">Using Docker</a></h2>
+<pre><code>docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.2
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+</code></pre>
+<p>Now you can build and run your worker inside docker. Just replace the make command above with </p>
+<pre><code>SGX_MODE=SW make
+</code></pre>
+<p>to run in <a href="https://software.intel.com/en-us/blogs/2016/05/30/usage-of-simulation-mode-in-sgx-enhanced-application">Simulation Mode</a> without the need of an actual SGX platform.</p>
 <h3><a class="header" href="#enabling-sgx-hw-support" id="enabling-sgx-hw-support">Enabling SGX HW support</a></h3>
-<p>The demos are by default compiled for <a href="https://software.intel.com/en-us/blogs/2016/05/30/usage-of-simulation-mode-in-sgx-enhanced-application">Simulation Mode</a> meaning that you don't need an actual SGX platform to run the example. This is specified in the <code>DockerfileM*</code> on line 99 (<code>SGX_MODE=SW make</code>). If you are on a platform that supports the SGX, you can enable HW support by:</p>
+<p>If you are on a platform that supports SGX, you can enable HW support by:</p>
 <ul>
-<li>Installing the Intel SGX Driver 2.5 and make sure that <code>/dev/isgx</code> appears</li>
+<li>Installing the Intel SGX Driver 2.9 and make sure that <code>/dev/isgx</code> appears</li>
 <li>Start the docker with SGX device support:
-<pre><code class="language-bash">$ docker run -v $(pwd):/substraTEE/backup -ti --device /dev/isgx substratee
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
 </code></pre>
 </li>
 <li>Start the aesm service inside the docker:
-<pre><code class="language-bash">root@&lt;DOCKERID&gt;:/# LD_LIBRARY_PATH=/opt/intel/libsgx-enclave-common/aesm /opt/intel/libsgx-enclave-common/aesm/aesm_service &amp;
+<pre><code class="language-bash">LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &amp;
 </code></pre>
 </li>
 <li>Compile the substraTEE-worker with HW support:
-<pre><code class="language-bash">root@&lt;DOCKERID&gt;:/substraTEE/substraTEE-worker-M1# make
+<pre><code class="language-bash">make
 </code></pre>
 </li>
-<li>Re-run the demos.</li>
+<li>run worker like described above</li>
 </ul>
 <p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker</p>
 <pre><code>*** Start the enclave
 [2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 </code></pre>
-<h1><a class="header" href="#m5-private-tx-demo" id="m5-private-tx-demo">M5 Private-tx demo</a></h1>
-<h2><a class="header" href="#with-docker-on-any-hardware" id="with-docker-on-any-hardware">with docker on any hardware</a></h2>
-<pre><code>./M5.sh
-</code></pre>
-<h2><a class="header" href="#on-sgx-hardware" id="on-sgx-hardware">on SGX hardware</a></h2>
-<p>To run a demo for private tokens (without docker containers) do the following:</p>
-<p>Assumptions:</p>
-<ul>
-<li>your machine has SGX support</li>
-<li>Intel SGX SDK installed.</li>
-<li>rust toolchain is ready to build substrate</li>
-</ul>
-<p>in terminal 1 run a substraTEE-node</p>
-<pre><code>git clone https://github.com/scs/substraTEE-node
-cd substraTEE-node
-git checkout tags/M5.2
-cargo build --release
-./target/release/substratee-node --dev --ws-port 9979 --rpc-port 9969
-</code></pre>
-<p>in terminal 2, run the worker</p>
-<pre><code>git clone https://github.com/scs/substraTEE-worker
+<h1><a class="header" href="#how-to-perform-private-transactions" id="how-to-perform-private-transactions">How to Perform Private Transactions</a></h1>
+<p>Private transactions are a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom.</p>
+<p>Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. SubstraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in SubstraTEE it is guaranteed by TEEs.</p>
+<p>The detailed design of the shielding and unshielding process is described in the chapter <a href="./token_shielding.html">Token Shielding</a>.</p>
+<p>In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need SGX HW to run the demo. </p>
+<h2><a class="header" href="#setup" id="setup">Setup</a></h2>
+<p>You'll need to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own SPID and KEY.</p>
+<p>Build node, worker and client in our docker:</p>
+<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.2
+mkdir demo &amp;&amp; cd demo
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+# now you are inside the container
+cd work
+git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-git checkout tags/M5.2
-make
-cd bin
-RUST_LOG=info ./substratee_worker -p 9979 worker
+git checkout M6
+SGX_MODE=SW make
+# this might take 10min+ on a fast machine
+
+echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
+echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
+
+cd ..
+git clone https://github.com/scs/substraTEE-node.git
+cd substraTEE-node
+git checkout M6
+cargo build --release
+# another 10min
 </code></pre>
-<p>in terminal 3, run the client</p>
-<pre><code>cd substraTEE-worker/bin
-./substratee_client --node-ws-port 9979
+<p>For a nicer overview of the demo, let's install tmux and split our docker console into multiple terminals</p>
+<pre><code>apt update
+apt install tmux
+tmux
+tmux split-window -v
+tmux split-window -h
 </code></pre>
-<p>Then you should see this in terminal 3:</p>
-<pre><code>*** Getting the amount of the registered workers
-[&lt;] Found 1  workers
-
-[&gt;] Getting the first worker's from the substraTEE-node
-[&lt;] Got first worker's coordinates:
-    W1's public key : &quot;5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar&quot;
-    W1's url: &quot;127.0.0.1:2000&quot;
-
-[&gt;] Get the shielding key from W1 (=5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar)
-[&lt;] Got worker shielding key Rsa3072KeyPair: { n:CF67550FB00AB959A76219EA35188B360380037123FCAA77B683A791A1F980331F9D9E11D04C7F5FB3B63787F8AAB579FDFFE1DCE79A29B6ACED2628635C8463965D5D839BD58072AA77B8CAE124E40562955FE9936DAE2976CD57B41A2DE89EEDBF9DA77C155365E8BB45DCA1E0EC3B32604D9489712762BE63B3D1F04801D796887F70115BFDD440450A04BFE81DEE7BE718F56F766E6B0C2D9DE270583C4DFBA64FD59B4DE39C07977F1FD2956588DDBF73987EECB5BB303AF2115C4E72879C5EC69B7CD5C00DAEF9F9B062B40ADA16984C574246C8AB882A79D2E1C2F597C1017FBA69D7449BAD85ADE822D92A775DB1766F21C886E762C3E260390B72C82515F1D48FD190059B419C639E3688BCC2070E9CDB6BDDD49202B7296EA2AB01EA2D3AC2990C5078446582A4C03194BBF8D7E557B4503FF4645C053D7288398C79781F642F3A8D399195E6D2E6F74B434791D881BC97BAA0F0B228BD031C40E357BC61644E68CC40F3E08BDCBBD92E306FA9353FAEA05FDCBFCF4729FECC008C, e:01000001 }
-
-[+] Alice's Incognito Pubkey: 5Dt1Wg85pXGLstt36t6TDdvXXoCtG6zkUL17KkyVaPYSrzGH
-
-[+] Bob's Incognito Pubkey: 5GTTq4EnvMk4oTXYJp2kqTd2T9hbnARuee5awLiKFKsxWgRy
-
-[+] pre-funding Alice's Incognito account (ROOT call)
-[+] Subscribed, waiting for event...
-
-[+] Received confirm call from 5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar
-[+] query Alice's Incognito account balance
-    got getter response from worker: Ok(&quot;State is 1000000&quot;)
-[+] query Bob's Incognito account balance
-    got getter response from worker: Ok(&quot;State is 0&quot;)
-
-*** incognito transfer from Alice to Bob
-
-[+] Subscribed, waiting for event...
-
-[+] Received confirm call from 5Gkzji8EtE1hTjVzTmZXWqrs6sqcHcbCooGqVH7iRRuxdnar
-[+] query Alice's Incognito account balance
-    got getter response from worker: Ok(&quot;State is 900000&quot;)
-[+] query Bob's Incognito account balance
-    got getter response from worker: Ok(&quot;State is 100000&quot;)
-
+<p>You should now see three terminals</p>
+<h2><a class="header" href="#launch-node-in-terminal-1" id="launch-node-in-terminal-1">launch node in terminal 1</a></h2>
+<pre><code>cd ~/work/substraTEE-node/
+./target/release/substratee-node --dev -lruntime=debug
 </code></pre>
-<h3><a class="header" href="#so-what-happens-here" id="so-what-happens-here">So, what happens here?</a></h3>
-<p>Alice wants to transfer 100k tokens privately to Bob. She doesn't use her substraTEE-node account for this as the transfer would be publicly visible.</p>
-<p>Instead, she creates an <em>incognito</em> account and she keeps her account secret (also the public key). This account will never hit the substraTEE-node blockchain transparently.</p>
-<p>The <em>Demo God</em> then gives Alice some initial Balance of 1M.</p>
-<p>Bob also creates an <em>incognito</em> account and tells Alice (and only her) his public key.</p>
-<p>Alice now uses SubstraTEE's <em>shielded transaction</em> feature to send 100k to Bob.</p>
-<h3><a class="header" href="#under-the-hood" id="under-the-hood">under the hood</a></h3>
-<p>TODO:</p>
-<ul>
-<li>block diagram</li>
-<li>sequence diagram</li>
-</ul>
+<p>blocks should be produced...</p>
+<h2><a class="header" href="#launch-worker-in-terminal-2" id="launch-worker-in-terminal-2">launch worker in terminal 2</a></h2>
+<p>use <code>Ctrl-B + cursors</code> to move between terminals</p>
+<pre><code>cd ~/work/substraTEE-worker/bin
+./substratee-worker init-shard
+./substratee-worker shielding-key
+./substratee-worker signing-key
+./substratee-worker run
+</code></pre>
+<h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">play in terminal 3</a></h2>
+<pre><code>cd ~/work/substraTEE-worker/bin
+./demo_shielding_unshielding.sh
+</code></pre>
+<p>Now you can watch the process of</p>
+<ol>
+<li>Alice creating a new <em>incognito</em> account. This account is never disclosed to the public.</li>
+<li>Alice shielding funds onto her <em>incognito</em> account</li>
+<li>Alice privately sending funds to Bobs <em>incognito</em> account</li>
+<li>Alice unshielding some funds back onto her public account</li>
+</ol>
 <h1><a class="header" href="#how-to-access-on-chain-storage-from-within-the-enclave-trustlessly" id="how-to-access-on-chain-storage-from-within-the-enclave-trustlessly">How To Access On-Chain Storage From Within The Enclave Trustlessly</a></h1>
 <p>SubstraTEE isolates <em>confidential state</em> (what the STF <code>TrustedCall</code> operates on inside the SGX enclave) from <em>on-chain state</em> (what is plaintext readable by the entire network of SubstraTEE-nodes). Some use cases, however, reqire read access to on-chain storage for their <code>TrustedCall</code>s. As the enclave can't trust it's worker service, it has to request and verify read proofs from the SubstraTEE-node.</p>
-<p>Our goal is that you can use the same pallets that you use on-chain also inside SubstraTEE enclaves. Therefore, we 
-are mapping storage keys directly between confidential state and on-chain state. 
-Your <code>TrustedCall</code> has to specify what storage keys it requires and these will be mapped to the confidential state befor executing the call.</p>
-<p>For this to work, the <a href="https://github.com/scs/sgx-runtime/tree/master/runtime">sgx-runtime</a> must be compatible with the <a href="https://github.com/scs/substraTEE-node/tree/master/runtime">node-runtime</a>. This means that the same substrate version must be used. However, it does not mean that the same pallets must be instantiated. </p>
+<p>Our goal is that you can use the same pallets that you use on-chain also inside SubstraTEE enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your <code>TrustedCall</code> has to specify what storage keys it requires and these will be mapped to the confidential state befor executing the call.</p>
+<p>For this to work, the <a href="https://github.com/scs/sgx-runtime/tree/master/runtime">sgx-runtime</a> must be compatible with the <a href="https://github.com/scs/substraTEE-node/tree/master/runtime">node-runtime</a>. This means that the same substrate version must be used. However, it does not mean that the same pallets must be instantiated.</p>
+<p>Until <a href="https://github.com/scs/substraTEE-worker/issues/113">#113</a> is resolved, we also have the restriction that <code>StorageMap</code> and <code>StorageDoubleMap</code> must use <code>StorageHasher::Blake2_128Concat</code>.</p>
 <h2><a class="header" href="#trusted-time-example" id="trusted-time-example">Trusted Time Example</a></h2>
 <p>Inside the enclave we don't have a trusted time source (We could use Intel's AESM with <code>sgx_get_trusted_time</code> but that would extend our trust assumptions). The blockchain delivers trusted time because every block includes a UTC timestamp which is agreed upon by consensus (within a certain tolerance).</p>
-<p>For this example, we access on-chain time using substrate's <code>timestamp</code> pallet. More precisely, we will enable you to call <code>timestamp::now()</code> from any pallet in your STF. You will get the UTC timestamp from the block that includes your <code>TrustedCall</code>.</p>
+<p>For this example, we access on-chain time using substrate's <a href="https://crates.parity.io/pallet_timestamp/index.html">timestamp</a> pallet. More precisely, we will enable you to call <code>Timestamp::&lt;T&gt;::now()</code> from any pallet in your STF. You will get the UTC timestamp from the block that includes your <code>TrustedCall</code>.</p>
 <h3><a class="header" href="#key-mapping" id="key-mapping">Key Mapping</a></h3>
 <p>In your STF, you'll have to define what on-chain storage keys shall be mapped for each <code>TrustedCall</code>:</p>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]
-</span>
-<span class="boring">fn main() {
-</span><span class="boring">}
+</span><span class="boring">fn main() {
+</span>pub fn get_storage_hashes_to_update(call: &amp;TrustedCall) -&gt; Vec&lt;Vec&lt;u8&gt;&gt; {
+    let mut key_hashes = Vec::new();
+    match call {
+        TrustedCall::your_time_aware_call(_) =&gt; {
+            key_hashes.push(
+                storage_value_key(&quot;Timestamp&quot;,&quot;Now&quot;));
+        }
+        // more calls ....
+    };
+    key_hashes
+}
+<span class="boring">}
 </span></code></pre></pre>
+<p>In your pallet you can now query timestamp as usual</p>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>decl_module! {
+    pub struct Module&lt;T: Trait&gt; for enum Call where origin: T::Origin {
+        #[weight = 10_000]
+        pub fn your_time_aware_call(origin) -&gt; dispatch::DispatchResult {
+            ensure!(Timestamp::&lt;T&gt;::now() &gt; EARLIEST_TIME_OF_EXECUTION, 
+                &quot;too early to call this&quot;);
+            // ...
+<span class="boring">}
+</span></code></pre></pre>
+<h1><a class="header" href="#how-to-build-your-own-trusted-stf" id="how-to-build-your-own-trusted-stf">How To Build Your Own Trusted STF</a></h1>
+<p>TODO</p>
+<p>see <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer</a> to learn how to build your own STF (TCB business logic).</p>
 <h1><a class="header" href="#roadmap" id="roadmap">Roadmap</a></h1>
 <h2><a class="header" href="#roadmap-1" id="roadmap-1">Roadmap</a></h2>
 <p>|    Milestone    	|    Request    Invocation    	|    STF                      	|    # Workers per STF    	|    On-chain tx per invocation    	|    read chain state from STF  | Supported TEE Manufact.                   	|  Remote Attestation Registry  |
