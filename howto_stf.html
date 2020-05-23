@@ -149,8 +149,299 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#how-to-build-your-own-trusted-stf" id="how-to-build-your-own-trusted-stf">How To Build Your Own Trusted STF</a></h1>
-<p>TODO</p>
-<p>see <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer</a> to learn how to build your own STF (TCB business logic).</p>
+<p>SubstraTEE is a framework that makes it easy for you to gain confidentiality for your decentralization endeavours.</p>
+<p>The development process integrates well with substrate: </p>
+<ol>
+<li>develop and debug your use case on substrate, writing your own pallets</li>
+<li>Once the logic works, move your sensitive pallets to SubstraTEE without modification and you'll get confidential state (and state updates)</li>
+</ol>
+<p>In the following we will assume that you know <a href="https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7">how to build custom substrate blockchains</a> and we will skip boring explanations.</p>
+<h2><a class="header" href="#example-use-case-encointer" id="example-use-case-encointer">Example Use Case Encointer</a></h2>
+<p>We will walk you through this process with a real-world example: <a href="https://encointer.org">Encointer</a></p>
+<p>Encointer has been developed as a substrate chain with 4 custom pallets added to the node-template:</p>
+<p><img src="./fig/Testnet-Gesell-Component-Interactions.svg" alt="gesell" /></p>
+<p>We will now show you how we can turn Testnet Gesell (all public) in to Testnet Cantillon, featuring confidentiality for sensitive pallets.</p>
+<p>In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below: </p>
+<p><img src="./fig/Testnet-Cantillon-Component-Interactions.svg" alt="cantillon" /></p>
+<p>The final code can be inspected on <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer github</a> </p>
+<h2><a class="header" href="#tee-runtime" id="tee-runtime">TEE Runtime</a></h2>
+<p>Substrate chains wrap all their business logic into a runtime made up of pallets. SubstraTEE does so too, so let's create our TEE runtime:</p>
+<pre><code>git clone https://github.com/scs/sgx-runtime.git
+</code></pre>
+<p>this is actually a fork of node-template, stripped from everything we don't need for our case.</p>
+<p>Now we need to include our pallets <em>balances</em> and <em>ceremonies</em> exactly the way you're used to from substrate</p>
+<h4><a class="header" href="#runtimesrclibrs" id="runtimesrclibrs">runtime/src/lib.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>construct_runtime!(
+	pub enum Runtime where
+		Block = Block,
+		NodeBlock = opaque::Block,
+		UncheckedExtrinsic = UncheckedExtrinsic
+	{
+		System: system::{Module, Call, Config, Storage, Event&lt;T&gt;},
+		Timestamp: timestamp::{Module, Call, Storage, Inherent},
+		Balances: balances::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
+		TransactionPayment: transaction_payment::{Module, Storage},
+		Sudo: sudo::{Module, Call, Config&lt;T&gt;, Storage, Event&lt;T&gt;},
+		EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
+		EncointerBalances: encointer_balances::{Module, Call, Storage, Event&lt;T&gt;},
+	}
+);
+<span class="boring">}
+</span></code></pre></pre>
+<p>Looks familiar? If not, <a href="https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7">learn from the best</a></p>
+<p>We will skip the nitty gritty of including your pallets.</p>
+<h2><a class="header" href="#substratee-node" id="substratee-node">SubstraTEE-node</a></h2>
+<p>The blockchain we'll be using is based on parity's node-template with one substraTEE-specific pallet that will take care of the worker registry and will proxy <code>TrustedCalls</code></p>
+<pre><code>git clone https://github.com/scs/substraTEE-node
+</code></pre>
+<p>Encointer will add its public pallets to this node tempalte: <em>scheduler</em> and <em>currencies</em>. See <a href="https://github.com/encointer/encointer-node/tree/sgx-master">encointer-node</a></p>
+<h2><a class="header" href="#substratee-worker" id="substratee-worker">SubstraTEE-worker</a></h2>
+<p>The SubstraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state. </p>
+<p>The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.</p>
+<p>The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface </p>
+<h2><a class="header" href="#trustedcall" id="trustedcall">TrustedCall</a></h2>
+<p>Now we need a way to call our custom pallet functions isolated in a TEE. </p>
+<p>SubstraTEE encapsulates all the application-specific stuff in its 
+<code>substratee-stf</code> crate that you can customize.</p>
+<pre><code>git clone https://github.com/scs/substraTEE-worker
+</code></pre>
+<p>Let's start by defining a new <code>TrustedCall</code>:</p>
+<h4><a class="header" href="#encointer-workerstfsrclibrs" id="encointer-workerstfsrclibrs">encointer-worker/stf/src/lib.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>#[derive(Encode, Decode, Clone)]
+#[allow(non_camel_case_types)]
+pub enum TrustedCall {
+    balance_transfer(AccountId, AccountId, CurrencyIdentifier, BalanceType),
+    ceremonies_register_participant(AccountId, CurrencyIdentifier, Option&lt;ProofOfAttendance&lt;MultiSignature, AccountId32&gt;&gt;)
+}
+
+impl TrustedCall {
+    fn account(&amp;self) -&gt; &amp;AccountId {
+        match self {
+            TrustedCall::balance_transfer(account, _, _, _) =&gt; account,
+            TrustedCall::ceremonies_register_participant(account, _, _) =&gt; account,
+        }
+    }
+...
+
+<span class="boring">}
+</span></code></pre></pre>
+<p><strong>Important</strong>: The first argument of each <code>TrustedCall</code> has to be the <em>incognito</em> <code>AccountId</code> which will sign the <code>TrustedCallSigned</code> which will then be encrypted and sent to the worker through the blockchain as a proxy.</p>
+<p>Now that we defined a new call we need to execute it:</p>
+<h4><a class="header" href="#encointer-workerstfsrcsgxrs" id="encointer-workerstfsrcsgxrs">encointer-worker/stf/src/sgx.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    pub fn execute(ext: &amp;mut State, call: TrustedCall, _nonce: u32, calls: &amp;mut Vec&lt;OpaqueCall&gt;) {
+        ext.execute_with(|| {
+            let _result = match call {
+                TrustedCall::balance_transfer(from, to, cid, value) =&gt; {
+                    let origin = sgx_runtime::Origin::signed(AccountId32::from(from));
+                    sgx_runtime::EncointerBalancesCall::&lt;Runtime&gt;::transfer(AccountId32::from(to), cid, value)
+                        .dispatch(origin)
+                }
+                TrustedCall::ceremonies_register_participant(from, cid, proof) =&gt; {
+                    let origin = sgx_runtime::Origin::signed(AccountId32::from(from));
+                    sgx_runtime::EncointerCeremoniesCall::&lt;Runtime&gt;::register_participant(cid, proof)
+                        .dispatch(origin)
+                }
+            };
+        });
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Now you see that <code>TrustedCall::ceremonies_register_participant()</code> calls <code>register_participant()</code> in our <code>ceremonies</code> pallet.</p>
+<p>This function call depends on the <code>scheduler</code> and <code>currencies</code> pallets which are not present in our TEE runtime. It is on-chain. So we need to tell SubstraTEE that it needs to fetch on-chain storage (and verify a read-proof) before executing our call:</p>
+<h4><a class="header" href="#encointer-workerstfsrcsgxrs-1" id="encointer-workerstfsrcsgxrs-1">encointer-worker/stf/src/sgx.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    pub fn get_storage_hashes_to_update(call: &amp;TrustedCall) -&gt; Vec&lt;Vec&lt;u8&gt;&gt; {
+        let mut key_hashes = Vec::new();
+        match call {
+            TrustedCall::balance_transfer(account, _, _, _) =&gt; { },
+            TrustedCall::ceremonies_register_participant(account, _, _) =&gt; {
+                key_hashes.push(storage_value_key(&quot;EncointerScheduler&quot;, &quot;CurrentPhase&quot;));
+                key_hashes.push(storage_value_key(&quot;EncointerScheduler&quot;, &quot;CurrentCeremonyIndex&quot;));
+                key_hashes.push(storage_value_key(&quot;EncointerCurrencies&quot;, &quot;CurrencyIdentifiers&quot;));
+            }
+        };
+        key_hashes
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>See <a href="./howto_access_onchain_storage.html">How to access on-chain storage</a> for more details.</p>
+<p><strong>Important</strong>: Make sure your on-chain runtime and TEE runtime depend on the same version of substrate. Otherwise, mapping storage keys between the two runtimes might fail.</p>
+<p>Finally, we will extend our CLI client to allow us to call our function:</p>
+<h4><a class="header" href="#encointer-workerstfsrcclirs" id="encointer-workerstfsrcclirs">encointer-worker/stf/src/cli.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span> ...
+         .add_cmd(
+            Command::new(&quot;register-participant&quot;)
+                .description(&quot;register participant for next encointer ceremony&quot;)
+                .options(|app| {
+                    app.arg(
+                        Arg::with_name(&quot;accountid&quot;)
+                            .takes_value(true)
+                            .required(true)
+                            .value_name(&quot;SS58&quot;)
+                            .help(&quot;AccountId in ss58check format&quot;),
+                    )
+                })
+                .runner(move |_args: &amp;str, matches: &amp;ArgMatches&lt;'_&gt;| {
+                    let arg_who = matches.value_of(&quot;accountid&quot;).unwrap();
+                    let who = get_pair_from_str(matches, arg_who);
+                    let (mrenclave, shard) = get_identifiers(matches);
+                    let tcall = TrustedCall::ceremonies_register_participant(
+                        sr25519_core::Public::from(who.public()),
+                        shard, // for encointer we assume that every currency has its own shard. so shard == cid
+                        None
+                    );
+                    let nonce = 0; // FIXME: hard coded for now
+                    let tscall =
+                        tcall.sign(&amp;sr25519_core::Pair::from(who), nonce, &amp;mrenclave, &amp;shard);
+                    println!(
+                        &quot;send trusted call register_participant for {}&quot;,
+                        tscall.call.account(),
+                    );
+                    perform_operation(matches, &amp;TrustedOperationSigned::call(tscall));
+                    Ok(())
+                }),
+        )
+<span class="boring">}
+</span></code></pre></pre>
+<p>This will allow us to call</p>
+<pre><code class="language-bash"> encointer-client trusted register-participant //AliceIncognito --mrenclave Jtpuqp6iA98JmhUYwhbcV8mvEgF9uFbksWaAeyALZQA --shard 3LjCHdiNbNLKEtwGtBf6qHGZnfKFyjLu9v3uxVgDL35C
+</code></pre>
+<p>The <code>--mrenclave</code> identifies the <a href="./glossary.html">TCB</a> while <code>--shard</code> identifies the local currency we're registering for.</p>
+<h2><a class="header" href="#sharding" id="sharding">Sharding</a></h2>
+<p>As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the <code>currencies</code> pallet). The balances for each local currency are maintained confidentially within SubstraTEE. One shard for each currency. This means that a worker has to decide what shard it operates on.</p>
+<p>See <a href="./sharding-md">Sharding</a> for more details.</p>
+<h2><a class="header" href="#trustedgetter" id="trustedgetter">TrustedGetter</a></h2>
+<p>Now that everything is super-isolated and confidential, how should we know if our call actually worked? </p>
+<p>That's why SubstraTEE-worker exposes a websocket interface for encrypted and authenticated queries.</p>
+<p>We will now implemet a getter that can only be called by the <code>AccountId</code> it refers to.</p>
+<h4><a class="header" href="#encointer-workerstfsrclibrs-1" id="encointer-workerstfsrclibrs-1">encointer-worker/stf/src/lib.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>#[derive(Encode, Decode, Clone)]
+#[allow(non_camel_case_types)]
+pub enum TrustedGetter {
+    balance(AccountId, CurrencyIdentifier),
+    ceremony_registration(AccountId, CurrencyIdentifier)
+}
+
+impl TrustedGetter {
+    pub fn account(&amp;self) -&gt; &amp;AccountId {
+        match self {
+            TrustedGetter::balance(account, _) =&gt; account,
+            TrustedGetter::ceremony_registration(account, _) =&gt; account,
+        }
+    }
+    ...
+<span class="boring">}
+</span></code></pre></pre>
+<p>Again, the first argument specifies the <code>AccountId</code> that is allowed to read its part of the state, authenticated by a signature.</p>
+<h4><a class="header" href="#encointer-workerstfsrcsgxrs-2" id="encointer-workerstfsrcsgxrs-2">encointer-worker/stf/src/sgx.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>    pub fn get_state(ext: &amp;mut State, getter: TrustedGetter) -&gt; Option&lt;Vec&lt;u8&gt;&gt; {
+        ext.execute_with(|| match getter {
+            TrustedGetter::balance(who, cid) =&gt; {
+                Some(get_encointer_balance(&amp;who, &amp;cid).encode())
+            },
+            TrustedGetter::ceremony_registration(who, cid) =&gt; {
+                Some(get_ceremony_registration(&amp;who, &amp;cid).encode())
+            }            
+        })
+    }
+    ...
+
+fn get_ceremony_registration(who: &amp;AccountId, cid: &amp;CurrencyIdentifier) -&gt; ParticipantIndexType {
+    let cindex = match sp_io::storage::get(&amp;storage_value_key(
+        &quot;EncointerScheduler&quot;,
+        &quot;CurrentCeremonyIndex&quot;)) {
+            Some(val) =&gt; if let Ok(v) = CeremonyIndexType::decode(&amp;mut val.as_slice()) { v } else { 0 },
+            None =&gt; 0
+    };
+    info!(&quot;cindex = {}&quot;, cindex);
+    if let Some(res) = sp_io::storage::get(&amp;storage_double_map_key(
+        &quot;EncointerCeremonies&quot;,
+        &quot;ParticipantIndex&quot;,
+        &amp;(cid,cindex), 
+        &amp;StorageHasher::Blake2_128Concat,
+        who,
+        &amp;StorageHasher::Blake2_128Concat,
+    )) {
+        if let Ok(pindex) = ParticipantIndexType::decode(&amp;mut res.as_slice()) {
+            pindex
+        } else {
+            debug!(&quot;can't decode ParticipantIndexType for {:x?}&quot;, res);
+            0
+        }
+    } else {
+        debug!(&quot;no registration for caller&quot;);
+        0
+    }
+}    
+<span class="boring">}
+</span></code></pre></pre>
+<p><em>Note</em>: Currently, the stf is not aware of the runtime metadata, so we have to hard-code hashers for <code>StorageMap</code> and <code>StorageDoubleMap</code>.</p>
+<p>Again, we will introduce our getter in the CLI:</p>
+<h4><a class="header" href="#encointer-workerstfsrcclirs-1" id="encointer-workerstfsrcclirs-1">encointer-worker/stf/src/cli.rs</a></h4>
+<pre><pre class="playpen"><code class="language-rust">
+<span class="boring">#![allow(unused_variables)]
+</span><span class="boring">fn main() {
+</span>.add_cmd(
+    Command::new(&quot;ceremony-registration&quot;)
+        .description(&quot;query state if registration for this ceremony&quot;)
+        .options(|app| {
+            app.arg(
+                Arg::with_name(&quot;accountid&quot;)
+                    .takes_value(true)
+                    .required(true)
+                    .value_name(&quot;SS58&quot;)
+                    .help(&quot;AccountId in ss58check format&quot;),
+            )
+        })
+        .runner(move |_args: &amp;str, matches: &amp;ArgMatches&lt;'_&gt;| {
+            let arg_who = matches.value_of(&quot;accountid&quot;).unwrap();
+            println!(&quot;arg_who = {:?}&quot;, arg_who);
+            let who = get_pair_from_str(matches, arg_who);
+            let (mrenclave, shard) = get_identifiers(matches);
+            let tgetter =
+                TrustedGetter::ceremony_registration(sr25519_core::Public::from(who.public()), shard);
+            let tsgetter = tgetter.sign(&amp;sr25519_core::Pair::from(who));
+            let res = perform_operation(matches, &amp;TrustedOperationSigned::get(tsgetter));
+            let ind = if let Some(v) = res {
+                if let Ok(vd) = ParticipantIndexType::decode(&amp;mut v.as_slice()) {
+                    vd
+                } else {
+                    info!(&quot;could not decode value {:x?}&quot;, v);
+                    0
+                }
+            } else {
+                0
+            };
+            println!(&quot;{}&quot;, ind);
+            Ok(())            
+        }),
+)
+<span class="boring">}
+</span></code></pre></pre>
+<p>So we can query our index in the particpant registry with our CLI</p>
+<pre><code class="language-bash">encointer-client trusted ceremony-registration //AliceIncognito --mrenclave Jtpuqp6iA98JmhUYwhbcV8mvEgF9uFbksWaAeyALZQA --shard 3LjCHdiNbNLKEtwGtBf6qHGZnfKFyjLu9v3uxVgDL35C
+</code></pre>
+<p>Happy coding!</p>
 
                     </main>
 
