@@ -150,11 +150,15 @@
                     <main>
                         <h1><a class="header" href="#how-to-run-your-own-worker" id="how-to-run-your-own-worker">How To Run Your Own Worker</a></h1>
 <h2><a class="header" href="#hw-requirements" id="hw-requirements">HW requirements</a></h2>
-<p>While SGX is supported by most Intel CPU's that is not the case for all chipsets. Here we're just telling you what HW we are using and is known to work. </p>
+<p>While SGX is supported by most Intel CPU's that is not the case for all chipsets. Here we're just telling you what HW we are using and is known to work.</p>
 <h3><a class="header" href="#dell-poweredge-r340-server" id="dell-poweredge-r340-server">Dell PowerEdge R340 Server</a></h3>
 <p>CPU <strong>has to be</strong> Intel(R) Xeon(R) E-2276G CPU @ 3.80 GHz</p>
 <h3><a class="header" href="#enable-sgx-support-in-bios" id="enable-sgx-support-in-bios">Enable SGX support in BIOS</a></h3>
-<p>TODO</p>
+<p>To enable SGX support in the Dell BIOS, enter the BIOS, go to <code>System Security</code> and set the following values:</p>
+<ul>
+<li><code>Intel SGX</code> to <code>On</code></li>
+<li><code>SGX Launch Control Policy</code> to <code>Unlocked</code></li>
+</ul>
 <h2><a class="header" href="#intel-sgx-development-and-production-commercial-license" id="intel-sgx-development-and-production-commercial-license">Intel SGX development and production (commercial) license</a></h2>
 <p>In order to perform a remote attestation of the enclave, an <a href="https://api.portal.trustedservices.intel.com/EPID-attestation">Intel SGX Attestation Enhanced Service Privacy ID (EPID)</a> is needed. We use unlinkable quotes in our code. Developers need to <a href="https://software.intel.com/en-us/form/sgx-onboarding">register an account with Intel</a></p>
 <h3><a class="header" href="#development-access" id="development-access">Development Access</a></h3>
@@ -173,11 +177,14 @@
 These files are used to access the Intel Remote Attestation Service.</li>
 </ul>
 <p>The enclave will be signed with the private key that was also registered and whitelisted at Intel's (in the process of obtaining a commercial license). Make sure that the key is exported as an environment variable called <code>SGX_COMMERCIAL_KEY</code>.</p>
-<p>The enclave in production mode uses the configuration found under <code>enclave/Enclave.config.production.xml</code>.
-TODO</p>
+<p>The enclave in production mode uses the configuration found under <code>enclave/Enclave.config.production.xml</code>.</p>
+<p>The only difference is that the option <code>DisableDebug</code> is set to <code>1</code>.</p>
 <h2><a class="header" href="#setup-server-with-ansible" id="setup-server-with-ansible">Setup Server with Ansible</a></h2>
-<p>TODO</p>
-<p>..ansible scripts on github.... </p>
+<p>You find a sample Ansible playbook under https://github.com/scs/intel_sgx_setup.</p>
+<p>Open the playbook with your editor and replace all the variables with <code>&lt;...&gt;</code> with your own settings.</p>
+<p>To execute the playbook and configure the remote machine, use the following command:</p>
+<pre><code class="language-bash">ansible-playbook site.yml -k
+</code></pre>
 <h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
 <pre><code>git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
@@ -199,7 +206,7 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 <pre><code>docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.2
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
 </code></pre>
-<p>Now you can build and run your worker inside docker. Just replace the make command above with </p>
+<p>Now you can build and run your worker inside docker. Just replace the make command above with</p>
 <pre><code>SGX_MODE=SW make
 </code></pre>
 <p>to run in <a href="https://software.intel.com/en-us/blogs/2016/05/30/usage-of-simulation-mode-in-sgx-enhanced-application">Simulation Mode</a> without the need of an actual SGX platform.</p>
