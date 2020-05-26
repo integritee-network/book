@@ -1,6 +1,6 @@
 # Design
 
-TODO: update and explain better
+In the following we explain how substraTEE works and how the different components play together.
 
 ## Direct Invocation (Vision)
 
@@ -26,7 +26,7 @@ The *substraTEE-worker* checks on the first start-up if "his" enclave is already
 
 If there is already an enclave (belonging to a different substraTEE-worker) registered on the chain, the substraTEE-worker requests provisioning of secrets (the *shielding and state encryption private key*) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.
 
-## Indirect Invocation (M1-M5)
+## Indirect Invocation (current implementation)
 
 The high level architecture of the current implementation can be seen in the following diagram:
 
