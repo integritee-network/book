@@ -178,7 +178,7 @@ cargo build --release
 # another 10min
 </code></pre>
 <p>For a nicer overview of the demo, let's install tmux and split our docker console into multiple terminals</p>
-<pre><code>apt update
+<pre><code class="language-bash">apt update
 apt install tmux
 tmux
 tmux split-window -v
@@ -186,20 +186,20 @@ tmux split-window -h
 </code></pre>
 <p>You should now see three terminals</p>
 <h2><a class="header" href="#launch-node-in-terminal-1" id="launch-node-in-terminal-1">launch node in terminal 1</a></h2>
-<pre><code>cd ~/work/substraTEE-node/
+<pre><code class="language-bash">cd ~/work/substraTEE-node/
 ./target/release/substratee-node --dev -lruntime=debug
 </code></pre>
 <p>blocks should be produced...</p>
 <h2><a class="header" href="#launch-worker-in-terminal-2" id="launch-worker-in-terminal-2">launch worker in terminal 2</a></h2>
 <p>use <code>Ctrl-B + cursors</code> to move between terminals</p>
-<pre><code>cd ~/work/substraTEE-worker/bin
+<pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
 ./substratee-worker run
 </code></pre>
 <h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">play in terminal 3</a></h2>
-<pre><code>cd ~/work/substraTEE-worker/bin
+<pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
 ./demo_shielding_unshielding.sh
 </code></pre>
 <p>Now you can watch the process of</p>

@@ -149,8 +149,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#scalability" id="scalability">Scalability</a></h1>
-<p>TODO</p>
-<p>does apply as soon as SubstraTEE features <a href="./design.html#direct-invocation-vision">direct invocation</a></p>
+<p>SubstraTEE with <a href="./design.html#direct-invocation-vision">direct invocation</a> is a 2nd layer technology: It allows to do state transitions without the individual transactions hitting the blockchain.</p>
+<ul>
+<li>more transactions per second because no global consensus must be reached on individual transactions (we trust the TEEs integrity)</li>
+<li>less latency because there's no need to wait for block inclusion</li>
+<li>disk usage and load balancing can be scaled horizontally: SubstraTEE also features <a href="./sharding.html">sharding</a></li>
+</ul>
 
                     </main>
 

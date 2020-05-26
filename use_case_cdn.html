@@ -153,10 +153,10 @@
 <h2><a class="header" href="#basic-substratee-application-for-cdn" id="basic-substratee-application-for-cdn">Basic SubstraTEE application for CDN</a></h2>
 <ul>
 <li>Subscriptions are managed on-chain, as are payments (can be flat subscription fees or pay-per-use)</li>
-<li>SubstraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key. 
+<li>SubstraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.
 No consumers or publishers nor operators have access</li>
 <li>publishers commit their content (encrypted with the CEK (RSA+AES)) to IPFS and register the content on-chain, providing the IPFS url</li>
-<li>consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which 
+<li>consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which
 <ul>
 <li>authenticates the consumer and looks up subscription status on-chain</li>
 <li>fetches the requested content from IPFS</li>
@@ -168,9 +168,9 @@ No consumers or publishers nor operators have access</li>
 <h2><a class="header" href="#cek-turnover" id="cek-turnover">CEK turnover</a></h2>
 <p>As a first implementation, the CEK can stay constant over time. However, we should be able to rotate this key if we need to revoke.</p>
 <h2><a class="header" href="#access-to-archive-prior-to-subscription" id="access-to-archive-prior-to-subscription">Access to Archive Prior to Subscription</a></h2>
-<p>Because the private CEK is known to all worker enclaves and never needs to be known to publishers or subscribers we do not need to trans-encrypt content. 
-It doesn't matter at what time a consumer subscribes. The worker can deliver all prior content to the subscriber. 
-The subscription metadata can include restrictions to archive access. </p>
+<p>Because the private CEK is known to all worker enclaves and never needs to be known to publishers or subscribers we do not need to trans-encrypt content.
+It doesn't matter at what time a consumer subscribes. The worker can deliver all prior content to the subscriber.
+The subscription metadata can include restrictions to archive access.</p>
 <h2><a class="header" href="#pay-per-use" id="pay-per-use">Pay per use</a></h2>
 <p>Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our <a href="./M5_DEMO.html">private-tx example</a> for how this could work.</p>
 

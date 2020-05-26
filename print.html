@@ -151,7 +151,7 @@
                 <div id="content" class="content">
                     <main>
                         <p align="center"><img src="./fig/substraTEE-logo-scs.png" height="300"/></p>
-<p><em>substraTEE</em> is a framework for <a href="https://docs.substrate.dev/">Parity Substrate</a>, allowing to call a custom state transition function (STF) inside a Trusted Execution Environment (TEE), namely an Intel SGX enclave thereby providing confidentiality and integrity. The enclaves operate on an encrypted state which can be read and written only by a set of provisioned and remote-attested enclaves.</p>
+<p>substraTEE is a framework for <a href="https://docs.substrate.dev/">Parity Substrate</a>, allowing to call a custom state transition function (STF) inside a Trusted Execution Environment (TEE), namely an Intel SGX enclave thereby providing confidentiality and integrity. The enclaves operate on an encrypted state which can be read and written only by a set of provisioned and remote-attested enclaves.</p>
 <p>What substraTEE aims to enable:</p>
 <ul>
 <li>confidential decentralized state transition functions
@@ -187,7 +187,7 @@
 <p>TEEs promise, in short, integrity and confidentiality of (remote) computation. You should be aware, however, of possible <a href="./security.html">security threats</a>.</p>
 <p>Assuming we trust TEE manufacturers’ integrity and design competence, TEEs allow us to execute any state update without sharing our data with the blockchain validator or other users. Private token transfers, private smart contracts and private state channels thus become possible and relatively cheap.</p>
 <h1><a class="header" href="#remote-attestation" id="remote-attestation">Remote Attestation</a></h1>
-<p><em>TODO</em> </p>
+<p>TODO</p>
 <p>The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.</p>
 <h2><a class="header" href="#convincing-the-substratee-user" id="convincing-the-substratee-user">convincing the substraTEE user</a></h2>
 <p>A user that interacts with substraTEE wants to be sure that the shielding pubkey she uses to encrypt her call to the STF originates form an enclave that</p>
@@ -244,9 +244,8 @@ The SP therefore requests a quote from the application and sends that quote to I
 <p>workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)</p>
 <h3><a class="header" href="#enclave-registry-on-chain" id="enclave-registry-on-chain">Enclave Registry On-Chain</a></h3>
 <p>In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of substraTEE.</p>
-<p>substraTEE developers will propose code updates to be voted on. Validators check the code and 
-vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:</p>
-<pre><code>sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
+<p>substraTEE developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:</p>
+<pre><code class="language-bash">sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
 </code></pre>
 <p>TODO: we might need to provide a docker environment the achieve deterministic builds.</p>
 <h2><a class="header" href="#secret-provisioning" id="secret-provisioning">secret provisioning</a></h2>
@@ -295,9 +294,9 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <li><a href="https://davejingtian.org/2017/11/10/some-notes-on-the-monotonic-counter-in-intel-sgx-and-me/">review of SGX PSE for monotonic counters and trusted time</a></li>
 </ul>
 <h1><a class="header" href="#what-to-use-tees-for" id="what-to-use-tees-for">What to use TEEs for</a></h1>
-<p><em>TODO</em></p>
+<p>TODO</p>
 <p>documentation for substraTEE, an extension of <a href="https://github.com/paritytech/substrate">parity substrate</a> allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality</p>
-<h1><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h1>
+<h2><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h2>
 <table><thead><tr><th>use case</th><th>substraTEE-signer <br>(off-chain stateless)</th><th>substraTEE-worker<br> (off-chain stateful)</th><th>substraTEE-node<br> (onchain-stateful)</th></tr></thead><tbody>
 <tr><td>hardware wallet</td><td>:+1: local TEE per user</td><td></td><td>:thumbsdown:</td></tr>
 <tr><td>atomic swaps<br>(cross-chain bridge)</td><td>:+1: light node in both chains</td><td>:+1:</td><td>:thumbsdown:</td></tr>
@@ -309,32 +308,38 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <tr><td>confidential smart contracts</td><td>:thumbsdown:</td><td>:+1: (Ekiden, PDO, <a href="https://encointer.org">encointer</a>)</td><td>computation time and storage expensive</td></tr>
 <tr><td><a href="https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/poet.html">POET</a> consensus</td><td>:thumbsdown:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
 </tbody></table>
-<h1><a class="header" href="#substratee-signer" id="substratee-signer">substraTEE-signer</a></h1>
+<h2><a class="header" href="#substratee-signer" id="substratee-signer">substraTEE-signer</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateless</em>: no state needs to be preserved (onchain - data or hash) between uses</p>
-<p><img src="./substraTEE-signer.svg" alt="signer" /></p>
-<p>One flavour of substraTEE is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX). </p>
+<p><img src="./fig/substraTEE-signer.svg" alt="signer" /></p>
+<p>One flavour of substraTEE is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).</p>
 <p>Main feature: trusted hardware custodian of your private keys</p>
-<h1><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h1>
+<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
-<p><img src="./substraTEE-offchain-contract.svg" alt="offchain-contract" /></p>
+<p><img src="./fig/substraTEE-offchain-contract.svg" alt="offchain-contract" /></p>
 <p>Similar to but still quite different than <a href="https://github.com/hyperledger-labs/private-data-objects">sawtooth PDO</a> or <a href="https://www.oasislabs.com/">Ekiden/OasisLabs</a></p>
-<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. SubstraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em> </p>
+<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. SubstraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em></p>
 <p>Dapps can commit WASM contracts and run their own TEE's or hire an enclave service to run confidential WASM smart contracts on. delegates are remote attested on the blockchain (the TCB doesn't include the WASM contract). They have to be fed with the most recent state, call and opaque payload. They then update the state that is written back to the chain.</p>
-<h1><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h1>
-<p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic. </p>
+<h2><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h2>
+<p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic.</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
 <p>a fork of substrate that has an Executor running in a TEE (Intel SGX)</p>
 <p>Main feature: many confidential transactions can be executed with every block</p>
-<p><img src="./substraTEE-stealth-node.svg" alt="node" /></p>
+<p><img src="./fig/substraTEE-stealth-node.svg" alt="node" /></p>
 <h1><a class="header" href="#privacy" id="privacy">Privacy</a></h1>
-<p>TODO</p>
+<p>SubstraTEE leverages the confidentiality guarantees of TEEs, namely Intel SGX.</p>
+<p>Whatever is computed inside SubstraTEE worker enclaves can't be observed by the network nor by the operator of the worker service nor by the root user nor a cloud provider admin.</p>
+<p>What SubstraTEE can't provide is network layer privacy. That's what <a href="https://www.torproject.org/">Tor</a> or <a href="https://nymtech.net">Nym</a> are for.</p>
 <h1><a class="header" href="#scalability" id="scalability">Scalability</a></h1>
-<p>TODO</p>
-<p>does apply as soon as SubstraTEE features <a href="./design.html#direct-invocation-vision">direct invocation</a></p>
+<p>SubstraTEE with <a href="./design.html#direct-invocation-vision">direct invocation</a> is a 2nd layer technology: It allows to do state transitions without the individual transactions hitting the blockchain.</p>
+<ul>
+<li>more transactions per second because no global consensus must be reached on individual transactions (we trust the TEEs integrity)</li>
+<li>less latency because there's no need to wait for block inclusion</li>
+<li>disk usage and load balancing can be scaled horizontally: SubstraTEE also features <a href="./sharding.html">sharding</a></li>
+</ul>
 <h1><a class="header" href="#interoperability" id="interoperability">Interoperability</a></h1>
-<p>Chain interoperability is considered one of the more pressing challenges for blockchain technology. With <a href="https://github.com/scs/substraTEE">substraTEE</a>, we've built a tool that is well suited to solve trusted chain bridges, because the integrity of code execution is guaranteed by a TEE. </p>
+<p>Chain interoperability is considered one of the more pressing challenges for blockchain technology. With <a href="https://github.com/scs/substraTEE">substraTEE</a>, we've built a tool that is well suited to solve trusted chain bridges, because the integrity of code execution is guaranteed by a TEE.</p>
 <h2><a class="header" href="#example-concept-for-eth-bridge" id="example-concept-for-eth-bridge">Example Concept for ETH Bridge</a></h2>
 <p>SubstraTEE-bridge will allow to:</p>
 <ul>
@@ -380,10 +385,10 @@ If users have many substraTEE-bridge operators to chose from, we rely on the fac
 <h2><a class="header" href="#basic-substratee-application-for-cdn" id="basic-substratee-application-for-cdn">Basic SubstraTEE application for CDN</a></h2>
 <ul>
 <li>Subscriptions are managed on-chain, as are payments (can be flat subscription fees or pay-per-use)</li>
-<li>SubstraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key. 
+<li>SubstraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.
 No consumers or publishers nor operators have access</li>
 <li>publishers commit their content (encrypted with the CEK (RSA+AES)) to IPFS and register the content on-chain, providing the IPFS url</li>
-<li>consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which 
+<li>consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which
 <ul>
 <li>authenticates the consumer and looks up subscription status on-chain</li>
 <li>fetches the requested content from IPFS</li>
@@ -395,9 +400,9 @@ No consumers or publishers nor operators have access</li>
 <h2><a class="header" href="#cek-turnover" id="cek-turnover">CEK turnover</a></h2>
 <p>As a first implementation, the CEK can stay constant over time. However, we should be able to rotate this key if we need to revoke.</p>
 <h2><a class="header" href="#access-to-archive-prior-to-subscription" id="access-to-archive-prior-to-subscription">Access to Archive Prior to Subscription</a></h2>
-<p>Because the private CEK is known to all worker enclaves and never needs to be known to publishers or subscribers we do not need to trans-encrypt content. 
-It doesn't matter at what time a consumer subscribes. The worker can deliver all prior content to the subscriber. 
-The subscription metadata can include restrictions to archive access. </p>
+<p>Because the private CEK is known to all worker enclaves and never needs to be known to publishers or subscribers we do not need to trans-encrypt content.
+It doesn't matter at what time a consumer subscribes. The worker can deliver all prior content to the subscriber.
+The subscription metadata can include restrictions to archive access.</p>
 <h2><a class="header" href="#pay-per-use" id="pay-per-use">Pay per use</a></h2>
 <p>Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our <a href="./M5_DEMO.html">private-tx example</a> for how this could work.</p>
 <h1><a class="header" href="#design" id="design">Design</a></h1>
@@ -435,10 +440,10 @@ The subscription metadata can include restrictions to archive access. </p>
 </ul>
 <h3><a class="header" href="#request-lifetime-end-to-end" id="request-lifetime-end-to-end">Request Lifetime end-to-end</a></h3>
 <p><img src="./fig/substraTEE_request_format_end2end.svg" alt="request-end-to-end" /></p>
-<h2><a class="header" href="#redundancy-m3-m5" id="redundancy-m3-m5">Redundancy (M3-M5)</a></h2>
+<h2><a class="header" href="#redundancy-m3-onwards" id="redundancy-m3-onwards">Redundancy (M3 onwards)</a></h2>
 <p>The goal of redundancy is to allow multiple workers to operate on the same state to be resilient against outage of one or more workers.</p>
-<p>The high level architecture of the proposed architecture for M3 and M4 can be seen in the following diagram:
-<img src="./fig/substraTEE-architecture-M4.svg" alt="Diagram" /></p>
+<p>The high level architecture for M3 and M4 can be seen in the following diagram:</p>
+<p><img src="./fig/substraTEE-architecture-M4.svg" alt="Diagram" /></p>
 <p>where M3 includes only the <em>docker image 1</em> and the <em>Intel Attestation Service (IAS)</em> and M4 includes the three <em>docker images</em> and the <em>Intel Attestation Service (IAS)</em>.</p>
 <h1><a class="header" href="#sharding" id="sharding">Sharding</a></h1>
 <p>SubstraTEE isolates confidential state from the blockchain by maintaining it off-chain and processing it in TEEs. This strategy allows application-specific sharding. Every use case can work on its own shard and even one use case could split into several shards.</p>
@@ -463,14 +468,14 @@ The subscription metadata can include restrictions to archive access. </p>
 <h3><a class="header" href="#rollbackreplay-attack" id="rollbackreplay-attack">Rollback/Replay Attack</a></h3>
 <p>An enclave has no way to verify that it is operating on the latest state (i.e. read from a sealed file on disk).</p>
 <p>It cannot be assured that calls to the enclave happen sequentially. They can happen in parallel, possibly leaking secrets i.e. because a secret with weak randomness is encrypted many times with the same nonce, weakening the confidentiality.</p>
-<p><strong>Countermeasures</strong></p>
+<h4><a class="header" href="#countermeasures" id="countermeasures">Countermeasures</a></h4>
 <ul>
 <li>monotonic counter (i.e. Intel PSE, based on ME. Not available on server HW). If you choose to trust Intel ME!</li>
 <li>Blockchain registers the hash of the latest state, so a state update is only valid when it refers to the latest registered state. This doesn't solve the cause, but the symptoms.</li>
 </ul>
 <h3><a class="header" href="#global-state-malleability" id="global-state-malleability">Global State Malleability</a></h3>
 <p>An enclave ecall can be interrupted at any time by interrupts. Instead of returning after the interrupt, an attacker can then call the same ecall again.</p>
-<p><strong>Countermeasures</strong></p>
+<h4><a class="header" href="#countermeasures-1" id="countermeasures-1">Countermeasures</a></h4>
 <ul>
 <li>verify-first-write-last: not only for sealed storage, but also for global state variables.</li>
 </ul>
@@ -478,32 +483,32 @@ The subscription metadata can include restrictions to archive access. </p>
 <p>Can be a special case of the <em>Rollback Attack</em>.
 Similar to smart contracts reentrancy.</p>
 <p><a href="https://medium.com/@gus_tavo_guim/reentrancy-attack-on-smart-contracts-how-to-identify-the-exploitable-and-an-example-of-an-attack-4470a2d8dfe4">Explanation of reentrancy attack for smart contracts</a></p>
-<p><strong>Countermeasures</strong></p>
+<h4><a class="header" href="#countermeasures-2" id="countermeasures-2">Countermeasures</a></h4>
 <ul>
-<li>verify-first-write-last </li>
+<li>verify-first-write-last</li>
 </ul>
 <h3><a class="header" href="#simulator-attacks" id="simulator-attacks">Simulator Attacks</a></h3>
 <p>Some emulator pretends to be an enclave.</p>
-<p><strong>Countermeasure</strong></p>
+<h4><a class="header" href="#countermeasure" id="countermeasure">Countermeasure</a></h4>
 <ul>
 <li>Remote Attestation with IAS</li>
 </ul>
 <h3><a class="header" href="#man-in-the-middle-attack" id="man-in-the-middle-attack">Man-In-The-Middle Attack</a></h3>
 <p>Intel could attack a service provider by always replying to RA requests positively and put a simulated enclave as a MITM.
 (Intel knows, which SP is requesting a RA as it knows the SPID)</p>
-<p><strong>Countermeasure</strong></p>
+<h4><a class="header" href="#countermeasure-1" id="countermeasure-1">Countermeasure</a></h4>
 <p>none.</p>
 <p>See <a href="https://youtu.be/0ZxBO3vLB-A">black hat presentation by Swami</a> at 34:50</p>
 <h3><a class="header" href="#foreshadow" id="foreshadow">Foreshadow</a></h3>
 <p>This side-channel attack compromised both integrity and confidentiality (and therefore Remote Attestation as well). It has been fixed in Intel's recent microcode.</p>
 <p><a href="https://en.wikipedia.org/wiki/Foreshadow_(security_vulnerability)">Foreshadow</a></p>
-<p><strong>Countermeasures</strong></p>
+<h4><a class="header" href="#countermeasures-3" id="countermeasures-3">Countermeasures</a></h4>
 <ul>
 <li>update your SGX HW</li>
 <li>verify SGX is up-to-date for all substraTEE-workers (IAS tells us with their remote attestation report)</li>
 </ul>
 <h1><a class="header" href="#benchmark" id="benchmark">Benchmark</a></h1>
-<p><em>TODO</em> </p>
+<p><em>TODO</em> Outdated</p>
 <table><thead><tr><th>ops</th><th>call_counter_wasm</th><th>call_counter</th><th>no compose_extrinsic</th><th>msg decryption</th><th>counter update</th><th>sgx_file_read</th><th>counter update + no_ops ocall</th></tr></thead><tbody>
 <tr><td>ecall</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td></tr>
 <tr><td>sgx::fs::read (rsa key)</td><td>☑</td><td>☑</td><td>☑</td><td>☑</td><td></td><td>☑</td><td>☑</td></tr>
@@ -560,7 +565,7 @@ cargo clean
 </code></pre>
 <h3><a class="header" href="#with-docker" id="with-docker">with docker</a></h3>
 <p>If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):</p>
-<pre><code>docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
 cargo build --release
 </code></pre>
@@ -598,9 +603,9 @@ cargo build --release
 <p>Copy your SPID and key to the following files (use Linux line endings):</p>
 <ul>
 <li><code>bin/spid_production.txt</code>: SPID of your subscription</li>
-<li><code>bin/key_production.txt</code>: Key of your subscription (primary or secondary works)
-These files are used to access the Intel Remote Attestation Service.</li>
+<li><code>bin/key_production.txt</code>: Key of your subscription (primary or secondary works)</li>
 </ul>
+<p>These files are used to access the Intel Remote Attestation Service.</p>
 <p>The enclave will be signed with the private key that was also registered and whitelisted at Intel's (in the process of obtaining a commercial license). Make sure that the key is exported as an environment variable called <code>SGX_COMMERCIAL_KEY</code>.</p>
 <p>The enclave in production mode uses the configuration found under <code>enclave/Enclave.config.production.xml</code>.</p>
 <p>The only difference is that the option <code>DisableDebug</code> is set to <code>1</code>.</p>
@@ -619,17 +624,17 @@ These files are used to access the Intel Remote Attestation Service.</li>
 <pre><code class="language-bash">ansible-playbook site.yml -k
 </code></pre>
 <h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
-<pre><code>git clone https://github.com/scs/substraTEE-worker.git
+<pre><code class="language-bash">git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 make
 </code></pre>
 <p>this might take 10min+ on a fast machine.</p>
 <p>then you'll have to provide your SPID and KEY (see above)</p>
-<pre><code>echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
+<pre><code class="language-bash">echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
 echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 </code></pre>
 <h2><a class="header" href="#run-worker" id="run-worker">Run Worker</a></h2>
-<pre><code>cd bin
+<pre><code class="language-bash">cd bin
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
@@ -714,7 +719,7 @@ cargo build --release
 # another 10min
 </code></pre>
 <p>For a nicer overview of the demo, let's install tmux and split our docker console into multiple terminals</p>
-<pre><code>apt update
+<pre><code class="language-bash">apt update
 apt install tmux
 tmux
 tmux split-window -v
@@ -722,20 +727,20 @@ tmux split-window -h
 </code></pre>
 <p>You should now see three terminals</p>
 <h2><a class="header" href="#launch-node-in-terminal-1" id="launch-node-in-terminal-1">launch node in terminal 1</a></h2>
-<pre><code>cd ~/work/substraTEE-node/
+<pre><code class="language-bash">cd ~/work/substraTEE-node/
 ./target/release/substratee-node --dev -lruntime=debug
 </code></pre>
 <p>blocks should be produced...</p>
 <h2><a class="header" href="#launch-worker-in-terminal-2" id="launch-worker-in-terminal-2">launch worker in terminal 2</a></h2>
 <p>use <code>Ctrl-B + cursors</code> to move between terminals</p>
-<pre><code>cd ~/work/substraTEE-worker/bin
+<pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
 ./substratee-worker run
 </code></pre>
 <h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">play in terminal 3</a></h2>
-<pre><code>cd ~/work/substraTEE-worker/bin
+<pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
 ./demo_shielding_unshielding.sh
 </code></pre>
 <p>Now you can watch the process of</p>
@@ -797,12 +802,12 @@ tmux split-window -h
 <p>Encointer has been developed as a substrate chain with 4 custom pallets added to the node-template:</p>
 <p><img src="./fig/Testnet-Gesell-Component-Interactions.svg" alt="gesell" /></p>
 <p>We will now show you how we can turn Testnet Gesell (all public) in to Testnet Cantillon, featuring confidentiality for sensitive pallets.</p>
-<p>In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below: </p>
+<p>In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:</p>
 <p><img src="./fig/Testnet-Cantillon-Component-Interactions.svg" alt="cantillon" /></p>
-<p>The final code can be inspected on <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer github</a> </p>
+<p>The final code can be inspected on <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer github</a></p>
 <h2><a class="header" href="#tee-runtime" id="tee-runtime">TEE Runtime</a></h2>
 <p>Substrate chains wrap all their business logic into a runtime made up of pallets. SubstraTEE does so too, so let's create our TEE runtime:</p>
-<pre><code>git clone https://github.com/scs/sgx-runtime.git
+<pre><code class="language-bash">git clone https://github.com/scs/sgx-runtime.git
 </code></pre>
 <p>this is actually a fork of node-template, stripped from everything we don't need for our case.</p>
 <p>Now we need to include our pallets <em>balances</em> and <em>ceremonies</em> exactly the way you're used to from substrate</p>
@@ -811,19 +816,19 @@ tmux split-window -h
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>construct_runtime!(
-	pub enum Runtime where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic
-	{
-		System: system::{Module, Call, Config, Storage, Event&lt;T&gt;},
-		Timestamp: timestamp::{Module, Call, Storage, Inherent},
-		Balances: balances::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
-		TransactionPayment: transaction_payment::{Module, Storage},
-		Sudo: sudo::{Module, Call, Config&lt;T&gt;, Storage, Event&lt;T&gt;},
-		EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
-		EncointerBalances: encointer_balances::{Module, Call, Storage, Event&lt;T&gt;},
-	}
+    pub enum Runtime where
+        Block = Block,
+        NodeBlock = opaque::Block,
+        UncheckedExtrinsic = UncheckedExtrinsic
+    {
+        System: system::{Module, Call, Config, Storage, Event&lt;T&gt;},
+        Timestamp: timestamp::{Module, Call, Storage, Inherent},
+        Balances: balances::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
+        TransactionPayment: transaction_payment::{Module, Storage},
+        Sudo: sudo::{Module, Call, Config&lt;T&gt;, Storage, Event&lt;T&gt;},
+        EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
+        EncointerBalances: encointer_balances::{Module, Call, Storage, Event&lt;T&gt;},
+    }
 );
 <span class="boring">}
 </span></code></pre></pre>
@@ -831,7 +836,7 @@ tmux split-window -h
 <p>We will skip the nitty gritty of including your pallets.</p>
 <h2><a class="header" href="#substratee-node" id="substratee-node">SubstraTEE-node</a></h2>
 <p>The blockchain we'll be using is based on parity's node-template with one substraTEE-specific pallet that will take care of the worker registry and will proxy <code>TrustedCalls</code></p>
-<pre><code>git clone https://github.com/scs/substraTEE-node
+<pre><code class="language-bash">git clone https://github.com/scs/substraTEE-node
 </code></pre>
 <p>Encointer will add its public pallets to this node tempalte: <em>scheduler</em> and <em>currencies</em>. See <a href="https://github.com/encointer/encointer-node/tree/sgx-master">encointer-node</a></p>
 <h2><a class="header" href="#substratee-worker-1" id="substratee-worker-1">SubstraTEE-worker</a></h2>
@@ -839,10 +844,9 @@ tmux split-window -h
 <p>The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.</p>
 <p>The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface </p>
 <h2><a class="header" href="#trustedcall" id="trustedcall">TrustedCall</a></h2>
-<p>Now we need a way to call our custom pallet functions isolated in a TEE. </p>
-<p>SubstraTEE encapsulates all the application-specific stuff in its 
-<code>substratee-stf</code> crate that you can customize.</p>
-<pre><code>git clone https://github.com/scs/substraTEE-worker
+<p>Now we need a way to call our custom pallet functions isolated in a TEE.</p>
+<p>SubstraTEE encapsulates all the application-specific stuff in its <code>substratee-stf</code> crate that you can customize.</p>
+<pre><code class="language-bash">git clone https://github.com/scs/substraTEE-worker
 </code></pre>
 <p>Let's start by defining a new <code>TrustedCall</code>:</p>
 <h4><a class="header" href="#encointer-workerstfsrclibrs" id="encointer-workerstfsrclibrs">encointer-worker/stf/src/lib.rs</a></h4>
@@ -997,7 +1001,7 @@ impl TrustedGetter {
             },
             TrustedGetter::ceremony_registration(who, cid) =&gt; {
                 Some(get_ceremony_registration(&amp;who, &amp;cid).encode())
-            }            
+            }
         })
     }
     ...
@@ -1028,7 +1032,7 @@ fn get_ceremony_registration(who: &amp;AccountId, cid: &amp;CurrencyIdentifier) 
         debug!(&quot;no registration for caller&quot;);
         0
     }
-}    
+}
 <span class="boring">}
 </span></code></pre></pre>
 <p><em>Note</em>: Currently, the stf is not aware of the runtime metadata, so we have to hard-code hashers for <code>StorageMap</code> and <code>StorageDoubleMap</code>.</p>
@@ -1069,7 +1073,7 @@ fn get_ceremony_registration(who: &amp;AccountId, cid: &amp;CurrencyIdentifier) 
                 0
             };
             println!(&quot;{}&quot;, ind);
-            Ok(())            
+            Ok(())
         }),
 )
 <span class="boring">}
@@ -1080,16 +1084,16 @@ fn get_ceremony_registration(who: &amp;AccountId, cid: &amp;CurrencyIdentifier) 
 <p>Happy coding!</p>
 <h1><a class="header" href="#roadmap" id="roadmap">Roadmap</a></h1>
 <h2><a class="header" href="#roadmap-1" id="roadmap-1">Roadmap</a></h2>
-<p>|    Milestone    	|    Request    Invocation    	|    STF                      	|    # Workers per STF    	|    On-chain tx per invocation    	|    read chain state from STF  | Supported TEE Manufact.                   	|  Remote Attestation Registry  |
-|-----------------	|-----------------------------	|-----------------------------	|-------------------------	|----------------------------------	|----------------------------------------------	| ---|---|
-|    M1 ☑          	|    Proxy                    	|    Rust                     	|    1                    	|    2                             	|   - 	|    Intel                                     	|   -  |
-|    M2 ☑          	|    Proxy                    	|    Rust or WASM             	|    1                    	|    2                             	|   - 	|    Intel                                     	|  -  |
-|    M3 ☑          	|    Proxy                    	|    Rust or WASM             	|    1                    	|    2                             	|   - 	|    Intel                                     	|  X  |
-|    M4 ☑          	|    Proxy                    	|    Rust or WASM             	|    N (redundant)        	|    1+N                           	|   - 	|    Intel                                     	|  X  |
-|    M5 ☑          	|    Proxy                    	|    Rust modular           	|    N (redundant)        	|    1+N                           	|   - 	|    Intel                                     	|  X  |
-|    M6 ☐          	|    Proxy                    	|    Rust modular           	|    N (redundant)        	|    1+N                           	|   X 	|    Intel                                     	|  X  |
-|    future ☐      	|    Proxy                    	|    Rust or <strong>Ink</strong>	|    N (redundant)        	|    2                             	|   X 	|    Intel + ARM TrustZone + Keystone   (?)    	|  X  |
-|    future ☐       |    <strong>Direct</strong>               	|    Rust or <strong>Ink</strong>	|    N (master + failover)    	|    <strong>&lt;&lt; 1</strong>                	|   X 	|    Intel + ARM TrustZone + Keystone   (?)    	|  X  |</p>
+<table><thead><tr><th>Milestone</th><th>Request Invocation</th><th>STF</th><th># Workers per STF</th><th>On-chain tx per invocation</th><th>read chain state from STF</th><th>Supported TEE Manufact.</th><th>Remote Attestation Registry</th></tr></thead><tbody>
+<tr><td>M1 ☑</td><td>Proxy</td><td>Rust</td><td>1</td><td>2</td><td>-</td><td>Intel</td><td>-</td></tr>
+<tr><td>M2 ☑</td><td>Proxy</td><td>Rust or WASM</td><td>1</td><td>2</td><td>-</td><td>Intel</td><td>-</td></tr>
+<tr><td>M3 ☑</td><td>Proxy</td><td>Rust or WASM</td><td>1</td><td>2</td><td>-</td><td>Intel</td><td>X</td></tr>
+<tr><td>M4 ☑</td><td>Proxy</td><td>Rust or WASM</td><td>N (redundant)</td><td>1+N</td><td>-</td><td>Intel</td><td>X</td></tr>
+<tr><td>M5 ☑</td><td>Proxy</td><td>Rust modular</td><td>N (redundant)</td><td>1+N</td><td>-</td><td>Intel</td><td>X</td></tr>
+<tr><td>M6+M7 ☑</td><td>Proxy</td><td>Rust modular</td><td>N (redundant)</td><td>1+N</td><td><strong>X</strong></td><td>Intel</td><td>X</td></tr>
+<tr><td>future ☐</td><td>Proxy</td><td>Rust or <strong>Ink</strong></td><td>N (redundant)</td><td>2</td><td>X</td><td>Intel + ARM TrustZone + Keystone (?)</td><td>X</td></tr>
+<tr><td>future ☐</td><td><strong>Direct</strong></td><td>Rust or Ink</td><td>N (master + failover)</td><td><strong>&lt;&lt; 1</strong></td><td>X</td><td>Intel + ARM TrustZone + Keystone   (?)</td><td>X</td></tr>
+</tbody></table>
 <h3><a class="header" href="#m1-poc1-single-tee-confidential-state-transition-function" id="m1-poc1-single-tee-confidential-state-transition-function">M1 PoC1: single-TEE confidential state transition function</a></h3>
 <p>off-chain worker runs STF within an Intel SGX enclave. The state is persisted in a sealed file which can only be read by that very enclave.</p>
 <p>The demo STF will be a simple counter.</p>
@@ -1116,19 +1120,6 @@ Secret sharing among a dynamic set of worker enclaves must be implemented for su
 <li>testnet for stress-tests and showcasing</li>
 <li>use cases: bridges, payment hubs, ...</li>
 </ul>
-<h2><a class="header" href="#indirect-invocation-m1-m5-1" id="indirect-invocation-m1-m5-1">Indirect Invocation (M1-M5)</a></h2>
-<p>The high level architecture of the current implementation can be seen in the following diagram:</p>
-<p><img src="./substraTEE-worker-overview.svg" alt="Diagram" /></p>
-<p>The main building blocks can be found in the following repositories:</p>
-<ul>
-<li><a href="https://github.com/scs/substraTEE-node">substraTEE-node</a>: (custom substrate node) A substrate node with a custom runtime module</li>
-<li><a href="https://github.com/scs/substraTEE-worker">substraTEE-worker</a>: (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function</li>
-</ul>
-<h2><a class="header" href="#redundancy-m3-m5-1" id="redundancy-m3-m5-1">Redundancy (M3-M5)</a></h2>
-<p>The goal of redundancy is to allow multiple workers to operate on the same state to be resilient against outage of one or more workers.</p>
-<p>The high level architecture of the proposed architecture for M3 and M4 can be seen in the following diagram:
-<img src="./substraTEE-architecture-M4.svg" alt="Diagram" /></p>
-<p>where M3 includes only the <em>docker image 1</em> and the <em>Intel Attestation Service (IAS)</em> and M4 includes the three <em>docker images</em> and the <em>Intel Attestation Service (IAS)</em>.</p>
 <h1><a class="header" href="#glossary" id="glossary">Glossary</a></h1>
 <table><thead><tr><th align="left"></th><th align="left"></th></tr></thead><tbody>
 <tr><td align="left">IAS</td><td align="left">Intel Attestation Services</td></tr>

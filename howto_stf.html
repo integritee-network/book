@@ -161,12 +161,12 @@
 <p>Encointer has been developed as a substrate chain with 4 custom pallets added to the node-template:</p>
 <p><img src="./fig/Testnet-Gesell-Component-Interactions.svg" alt="gesell" /></p>
 <p>We will now show you how we can turn Testnet Gesell (all public) in to Testnet Cantillon, featuring confidentiality for sensitive pallets.</p>
-<p>In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below: </p>
+<p>In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:</p>
 <p><img src="./fig/Testnet-Cantillon-Component-Interactions.svg" alt="cantillon" /></p>
-<p>The final code can be inspected on <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer github</a> </p>
+<p>The final code can be inspected on <a href="https://github.com/encointer/encointer-worker/tree/master/stf">encointer github</a></p>
 <h2><a class="header" href="#tee-runtime" id="tee-runtime">TEE Runtime</a></h2>
 <p>Substrate chains wrap all their business logic into a runtime made up of pallets. SubstraTEE does so too, so let's create our TEE runtime:</p>
-<pre><code>git clone https://github.com/scs/sgx-runtime.git
+<pre><code class="language-bash">git clone https://github.com/scs/sgx-runtime.git
 </code></pre>
 <p>this is actually a fork of node-template, stripped from everything we don't need for our case.</p>
 <p>Now we need to include our pallets <em>balances</em> and <em>ceremonies</em> exactly the way you're used to from substrate</p>
@@ -175,19 +175,19 @@
 <span class="boring">#![allow(unused_variables)]
 </span><span class="boring">fn main() {
 </span>construct_runtime!(
-	pub enum Runtime where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic
-	{
-		System: system::{Module, Call, Config, Storage, Event&lt;T&gt;},
-		Timestamp: timestamp::{Module, Call, Storage, Inherent},
-		Balances: balances::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
-		TransactionPayment: transaction_payment::{Module, Storage},
-		Sudo: sudo::{Module, Call, Config&lt;T&gt;, Storage, Event&lt;T&gt;},
-		EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
-		EncointerBalances: encointer_balances::{Module, Call, Storage, Event&lt;T&gt;},
-	}
+    pub enum Runtime where
+        Block = Block,
+        NodeBlock = opaque::Block,
+        UncheckedExtrinsic = UncheckedExtrinsic
+    {
+        System: system::{Module, Call, Config, Storage, Event&lt;T&gt;},
+        Timestamp: timestamp::{Module, Call, Storage, Inherent},
+        Balances: balances::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
+        TransactionPayment: transaction_payment::{Module, Storage},
+        Sudo: sudo::{Module, Call, Config&lt;T&gt;, Storage, Event&lt;T&gt;},
+        EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config&lt;T&gt;, Event&lt;T&gt;},
+        EncointerBalances: encointer_balances::{Module, Call, Storage, Event&lt;T&gt;},
+    }
 );
 <span class="boring">}
 </span></code></pre></pre>
@@ -195,7 +195,7 @@
 <p>We will skip the nitty gritty of including your pallets.</p>
 <h2><a class="header" href="#substratee-node" id="substratee-node">SubstraTEE-node</a></h2>
 <p>The blockchain we'll be using is based on parity's node-template with one substraTEE-specific pallet that will take care of the worker registry and will proxy <code>TrustedCalls</code></p>
-<pre><code>git clone https://github.com/scs/substraTEE-node
+<pre><code class="language-bash">git clone https://github.com/scs/substraTEE-node
 </code></pre>
 <p>Encointer will add its public pallets to this node tempalte: <em>scheduler</em> and <em>currencies</em>. See <a href="https://github.com/encointer/encointer-node/tree/sgx-master">encointer-node</a></p>
 <h2><a class="header" href="#substratee-worker" id="substratee-worker">SubstraTEE-worker</a></h2>
@@ -203,10 +203,9 @@
 <p>The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.</p>
 <p>The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface </p>
 <h2><a class="header" href="#trustedcall" id="trustedcall">TrustedCall</a></h2>
-<p>Now we need a way to call our custom pallet functions isolated in a TEE. </p>
-<p>SubstraTEE encapsulates all the application-specific stuff in its 
-<code>substratee-stf</code> crate that you can customize.</p>
-<pre><code>git clone https://github.com/scs/substraTEE-worker
+<p>Now we need a way to call our custom pallet functions isolated in a TEE.</p>
+<p>SubstraTEE encapsulates all the application-specific stuff in its <code>substratee-stf</code> crate that you can customize.</p>
+<pre><code class="language-bash">git clone https://github.com/scs/substraTEE-worker
 </code></pre>
 <p>Let's start by defining a new <code>TrustedCall</code>:</p>
 <h4><a class="header" href="#encointer-workerstfsrclibrs" id="encointer-workerstfsrclibrs">encointer-worker/stf/src/lib.rs</a></h4>
@@ -361,7 +360,7 @@ impl TrustedGetter {
             },
             TrustedGetter::ceremony_registration(who, cid) =&gt; {
                 Some(get_ceremony_registration(&amp;who, &amp;cid).encode())
-            }            
+            }
         })
     }
     ...
@@ -392,7 +391,7 @@ fn get_ceremony_registration(who: &amp;AccountId, cid: &amp;CurrencyIdentifier) 
         debug!(&quot;no registration for caller&quot;);
         0
     }
-}    
+}
 <span class="boring">}
 </span></code></pre></pre>
 <p><em>Note</em>: Currently, the stf is not aware of the runtime metadata, so we have to hard-code hashers for <code>StorageMap</code> and <code>StorageDoubleMap</code>.</p>
@@ -433,7 +432,7 @@ fn get_ceremony_registration(who: &amp;AccountId, cid: &amp;CurrencyIdentifier) 
                 0
             };
             println!(&quot;{}&quot;, ind);
-            Ok(())            
+            Ok(())
         }),
 )
 <span class="boring">}

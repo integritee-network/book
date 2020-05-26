@@ -149,9 +149,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#what-to-use-tees-for" id="what-to-use-tees-for">What to use TEEs for</a></h1>
-<p><em>TODO</em></p>
+<p>TODO</p>
 <p>documentation for substraTEE, an extension of <a href="https://github.com/paritytech/substrate">parity substrate</a> allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality</p>
-<h1><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h1>
+<h2><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h2>
 <table><thead><tr><th>use case</th><th>substraTEE-signer <br>(off-chain stateless)</th><th>substraTEE-worker<br> (off-chain stateful)</th><th>substraTEE-node<br> (onchain-stateful)</th></tr></thead><tbody>
 <tr><td>hardware wallet</td><td>:+1: local TEE per user</td><td></td><td>:thumbsdown:</td></tr>
 <tr><td>atomic swaps<br>(cross-chain bridge)</td><td>:+1: light node in both chains</td><td>:+1:</td><td>:thumbsdown:</td></tr>
@@ -163,25 +163,25 @@
 <tr><td>confidential smart contracts</td><td>:thumbsdown:</td><td>:+1: (Ekiden, PDO, <a href="https://encointer.org">encointer</a>)</td><td>computation time and storage expensive</td></tr>
 <tr><td><a href="https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/poet.html">POET</a> consensus</td><td>:thumbsdown:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
 </tbody></table>
-<h1><a class="header" href="#substratee-signer" id="substratee-signer">substraTEE-signer</a></h1>
+<h2><a class="header" href="#substratee-signer" id="substratee-signer">substraTEE-signer</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateless</em>: no state needs to be preserved (onchain - data or hash) between uses</p>
-<p><img src="./substraTEE-signer.svg" alt="signer" /></p>
-<p>One flavour of substraTEE is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX). </p>
+<p><img src="./fig/substraTEE-signer.svg" alt="signer" /></p>
+<p>One flavour of substraTEE is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).</p>
 <p>Main feature: trusted hardware custodian of your private keys</p>
-<h1><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h1>
+<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
-<p><img src="./substraTEE-offchain-contract.svg" alt="offchain-contract" /></p>
+<p><img src="./fig/substraTEE-offchain-contract.svg" alt="offchain-contract" /></p>
 <p>Similar to but still quite different than <a href="https://github.com/hyperledger-labs/private-data-objects">sawtooth PDO</a> or <a href="https://www.oasislabs.com/">Ekiden/OasisLabs</a></p>
-<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. SubstraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em> </p>
+<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. SubstraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em></p>
 <p>Dapps can commit WASM contracts and run their own TEE's or hire an enclave service to run confidential WASM smart contracts on. delegates are remote attested on the blockchain (the TCB doesn't include the WASM contract). They have to be fed with the most recent state, call and opaque payload. They then update the state that is written back to the chain.</p>
-<h1><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h1>
-<p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic. </p>
+<h2><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h2>
+<p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic.</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
 <p>a fork of substrate that has an Executor running in a TEE (Intel SGX)</p>
 <p>Main feature: many confidential transactions can be executed with every block</p>
-<p><img src="./substraTEE-stealth-node.svg" alt="node" /></p>
+<p><img src="./fig/substraTEE-stealth-node.svg" alt="node" /></p>
 
                     </main>
 

@@ -149,7 +149,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#remote-attestation" id="remote-attestation">Remote Attestation</a></h1>
-<p><em>TODO</em> </p>
+<p>TODO</p>
 <p>The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.</p>
 <h2><a class="header" href="#convincing-the-substratee-user" id="convincing-the-substratee-user">convincing the substraTEE user</a></h2>
 <p>A user that interacts with substraTEE wants to be sure that the shielding pubkey she uses to encrypt her call to the STF originates form an enclave that</p>
@@ -206,9 +206,8 @@ The SP therefore requests a quote from the application and sends that quote to I
 <p>workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)</p>
 <h3><a class="header" href="#enclave-registry-on-chain" id="enclave-registry-on-chain">Enclave Registry On-Chain</a></h3>
 <p>In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of substraTEE.</p>
-<p>substraTEE developers will propose code updates to be voted on. Validators check the code and 
-vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:</p>
-<pre><code>sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
+<p>substraTEE developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:</p>
+<pre><code class="language-bash">sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
 </code></pre>
 <p>TODO: we might need to provide a docker environment the achieve deterministic builds.</p>
 <h2><a class="header" href="#secret-provisioning" id="secret-provisioning">secret provisioning</a></h2>
