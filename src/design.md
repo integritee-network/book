@@ -36,6 +36,9 @@ The main building blocks can be found in the following repositories:
 * [substraTEE-node](https://github.com/scs/substraTEE-node): (custom substrate node) A substrate node with a custom runtime module
 * [substraTEE-worker](https://github.com/scs/substraTEE-worker): (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function
 
+### Request Lifetime end-to-end 
+![request-end-to-end](./fig/substraTEE_request_format_end2end.svg)
+
 ## Redundancy (M3-M5)
 The goal of redundancy is to allow multiple workers to operate on the same state to be resilient against outage of one or more workers.
 
