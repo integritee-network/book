@@ -149,7 +149,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#design" id="design">Design</a></h1>
-<p>TODO: update and explain better</p>
+<p>In the following we explain how substraTEE works and how the different components play together.</p>
 <h2><a class="header" href="#direct-invocation-vision" id="direct-invocation-vision">Direct Invocation (Vision)</a></h2>
 <p><img src="./fig/substraTEE-vision.png" alt="vision" />
 <em>SubstraTEE Target Architecture with Direct Invocation (future scenario)</em></p>
@@ -173,7 +173,7 @@
 </ul>
 <p>The <em>substraTEE-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>substraTEE-registry module</em> to register his enclave. </p>
 <p>If there is already an enclave (belonging to a different substraTEE-worker) registered on the chain, the substraTEE-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
-<h2><a class="header" href="#indirect-invocation-m1-m5" id="indirect-invocation-m1-m5">Indirect Invocation (M1-M5)</a></h2>
+<h2><a class="header" href="#indirect-invocation-current-implementation" id="indirect-invocation-current-implementation">Indirect Invocation (current implementation)</a></h2>
 <p>The high level architecture of the current implementation can be seen in the following diagram:</p>
 <p><img src="./fig/substraTEE-worker-overview.svg" alt="Diagram" /></p>
 <p>The main building blocks can be found in the following repositories:</p>

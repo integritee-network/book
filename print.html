@@ -409,7 +409,7 @@ The subscription metadata can include restrictions to archive access.</p>
 <h2><a class="header" href="#pay-per-use" id="pay-per-use">Pay per use</a></h2>
 <p>Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our <a href="./M5_DEMO.html">private-tx example</a> for how this could work.</p>
 <h1><a class="header" href="#design" id="design">Design</a></h1>
-<p>TODO: update and explain better</p>
+<p>In the following we explain how substraTEE works and how the different components play together.</p>
 <h2><a class="header" href="#direct-invocation-vision" id="direct-invocation-vision">Direct Invocation (Vision)</a></h2>
 <p><img src="./fig/substraTEE-vision.png" alt="vision" />
 <em>SubstraTEE Target Architecture with Direct Invocation (future scenario)</em></p>
@@ -433,7 +433,7 @@ The subscription metadata can include restrictions to archive access.</p>
 </ul>
 <p>The <em>substraTEE-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>substraTEE-registry module</em> to register his enclave. </p>
 <p>If there is already an enclave (belonging to a different substraTEE-worker) registered on the chain, the substraTEE-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
-<h2><a class="header" href="#indirect-invocation-m1-m5" id="indirect-invocation-m1-m5">Indirect Invocation (M1-M5)</a></h2>
+<h2><a class="header" href="#indirect-invocation-current-implementation" id="indirect-invocation-current-implementation">Indirect Invocation (current implementation)</a></h2>
 <p>The high level architecture of the current implementation can be seen in the following diagram:</p>
 <p><img src="./fig/substraTEE-worker-overview.svg" alt="Diagram" /></p>
 <p>The main building blocks can be found in the following repositories:</p>
