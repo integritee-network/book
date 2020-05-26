@@ -1,6 +1,6 @@
 # Benchmark
 
-*TODO* 
+*TODO* Outdated
 
 ops  				| call_counter_wasm 	| call_counter 			| no compose_extrinsic 	| msg decryption		| counter update 		| sgx_file_read     | counter update + no_ops ocall
 --------------------|-----------------------|-----------------------|-----------------------|-----------------------|-----------------------|-------------------------------|---------------------------
@@ -27,11 +27,12 @@ compose extrinsic 	| &#9745;				| &#9745;				| 						| 						| 						| 					| &#
 - **invokations/s:** stands for the number of executions per seconds that can be achieved. This does roughly correspond to tx/s.
 
 ## Analysis
+
 - RSA decryption is by far the most expensive step in the whole pipeline. This, however, is hard to migitate as long as no more efficient asymmetric encryption exists.
 - The effect of sgx::fs::read does only have a small impact.
 - wasm invokation's impact is negligible
 - If the current RSA de/-encryption process is optimized, >1000 tx/s, is achievable.
 
-
 ## Testsetup
+
 All tests have been performend on an Intel NUC NUC8i3BEH2, Bean Canyon i3-8109U 3.0 GHz.

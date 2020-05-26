@@ -1,5 +1,7 @@
 # Scalability
 
-TODO
+SubstraTEE with [direct invocation](./design.md#direct-invocation-vision) is a 2nd layer technology: It allows to do state transitions without the individual transactions hitting the blockchain.
 
-does apply as soon as SubstraTEE features [direct invocation](./design.md#direct-invocation-vision)
+* more transactions per second because no global consensus must be reached on individual transactions (we trust the TEEs integrity)
+* less latency because there's no need to wait for block inclusion
+* disk usage and load balancing can be scaled horizontally: SubstraTEE also features [sharding](./sharding.md)

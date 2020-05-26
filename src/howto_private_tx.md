@@ -8,9 +8,8 @@ The detailed design of the shielding and unshielding process is described in the
 
 In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need SGX HW to run the demo.
 
-
-
 ## Setup
+
 You'll need to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own SPID and KEY.
 
 Build node, worker and client in our docker:
@@ -40,7 +39,7 @@ cargo build --release
 
 For a nicer overview of the demo, let's install tmux and split our docker console into multiple terminals
 
-```
+```bash
 apt update
 apt install tmux
 tmux
@@ -51,16 +50,19 @@ tmux split-window -h
 You should now see three terminals
 
 ## launch node in terminal 1
-```
+
+```bash
 cd ~/work/substraTEE-node/
 ./target/release/substratee-node --dev -lruntime=debug
 ```
+
 blocks should be produced...
 
 ## launch worker in terminal 2
+
 use `Ctrl-B + cursors` to move between terminals
 
-```
+```bash
 cd ~/work/substraTEE-worker/bin
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
@@ -70,7 +72,7 @@ cd ~/work/substraTEE-worker/bin
 
 ## play in terminal 3
 
-```
+```bash
 cd ~/work/substraTEE-worker/bin
 ./demo_shielding_unshielding.sh
 ```

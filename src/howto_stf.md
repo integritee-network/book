@@ -3,12 +3,14 @@
 SubstraTEE is a framework that makes it easy for you to gain confidentiality for your decentralization endeavours.
 
 The development process integrates well with substrate: 
+
 1. develop and debug your use case on substrate, writing your own pallets
 2. Once the logic works, move your sensitive pallets to SubstraTEE without modification and you'll get confidential state (and state updates)
 
 In the following we will assume that you know [how to build custom substrate blockchains](https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7) and we will skip boring explanations.
 
 ## Example Use Case Encointer
+
 We will walk you through this process with a real-world example: [Encointer](https://encointer.org)
 
 Encointer has been developed as a substrate chain with 4 custom pallets added to the node-template:
@@ -17,41 +19,44 @@ Encointer has been developed as a substrate chain with 4 custom pallets added to
 
 We will now show you how we can turn Testnet Gesell (all public) in to Testnet Cantillon, featuring confidentiality for sensitive pallets.
 
-In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below: 
+In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:
 
 ![cantillon](./fig/Testnet-Cantillon-Component-Interactions.svg)
 
-The final code can be inspected on [encointer github](https://github.com/encointer/encointer-worker/tree/master/stf) 
+The final code can be inspected on [encointer github](https://github.com/encointer/encointer-worker/tree/master/stf)
 
 ## TEE Runtime
 
 Substrate chains wrap all their business logic into a runtime made up of pallets. SubstraTEE does so too, so let's create our TEE runtime:
 
-```
+```bash
 git clone https://github.com/scs/sgx-runtime.git
 ```
+
 this is actually a fork of node-template, stripped from everything we don't need for our case.
 
 Now we need to include our pallets *balances* and *ceremonies* exactly the way you're used to from substrate
 
 #### runtime/src/lib.rs
+
 ```rust
 construct_runtime!(
-	pub enum Runtime where
-		Block = Block,
-		NodeBlock = opaque::Block,
-		UncheckedExtrinsic = UncheckedExtrinsic
-	{
-		System: system::{Module, Call, Config, Storage, Event<T>},
-		Timestamp: timestamp::{Module, Call, Storage, Inherent},
-		Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
-		TransactionPayment: transaction_payment::{Module, Storage},
-		Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
-		EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config<T>, Event<T>},
-		EncointerBalances: encointer_balances::{Module, Call, Storage, Event<T>},
-	}
+    pub enum Runtime where
+        Block = Block,
+        NodeBlock = opaque::Block,
+        UncheckedExtrinsic = UncheckedExtrinsic
+    {
+        System: system::{Module, Call, Config, Storage, Event<T>},
+        Timestamp: timestamp::{Module, Call, Storage, Inherent},
+        Balances: balances::{Module, Call, Storage, Config<T>, Event<T>},
+        TransactionPayment: transaction_payment::{Module, Storage},
+        Sudo: sudo::{Module, Call, Config<T>, Storage, Event<T>},
+        EncointerCeremonies: encointer_ceremonies::{Module, Call, Storage, Config<T>, Event<T>},
+        EncointerBalances: encointer_balances::{Module, Call, Storage, Event<T>},
+    }
 );
 ```
+
 Looks familiar? If not, [learn from the best](https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7)
 
 We will skip the nitty gritty of including your pallets.
@@ -59,9 +64,11 @@ We will skip the nitty gritty of including your pallets.
 ## SubstraTEE-node
 
 The blockchain we'll be using is based on parity's node-template with one substraTEE-specific pallet that will take care of the worker registry and will proxy `TrustedCalls`
-```
+
+```bash
 git clone https://github.com/scs/substraTEE-node
 ```
+
 Encointer will add its public pallets to this node tempalte: *scheduler* and *currencies*. See [encointer-node](https://github.com/encointer/encointer-node/tree/sgx-master)
 
 ## SubstraTEE-worker
@@ -74,18 +81,18 @@ The worker itself will not need to be modified, it is the framework which runs y
 
 ## TrustedCall
 
-Now we need a way to call our custom pallet functions isolated in a TEE. 
+Now we need a way to call our custom pallet functions isolated in a TEE.
 
-SubstraTEE encapsulates all the application-specific stuff in its 
-`substratee-stf` crate that you can customize.
+SubstraTEE encapsulates all the application-specific stuff in its `substratee-stf` crate that you can customize.
 
-```
+```bash
 git clone https://github.com/scs/substraTEE-worker
 ```
 
 Let's start by defining a new `TrustedCall`:
 
 #### encointer-worker/stf/src/lib.rs
+
 ```rust
 #[derive(Encode, Decode, Clone)]
 #[allow(non_camel_case_types)]
@@ -110,6 +117,7 @@ impl TrustedCall {
 Now that we defined a new call we need to execute it:
 
 #### encointer-worker/stf/src/sgx.rs
+
 ```rust
     pub fn execute(ext: &mut State, call: TrustedCall, _nonce: u32, calls: &mut Vec<OpaqueCall>) {
         ext.execute_with(|| {
@@ -128,11 +136,13 @@ Now that we defined a new call we need to execute it:
         });
     }
 ```
+
 Now you see that `TrustedCall::ceremonies_register_participant()` calls `register_participant()` in our `ceremonies` pallet.
 
 This function call depends on the `scheduler` and `currencies` pallets which are not present in our TEE runtime. It is on-chain. So we need to tell SubstraTEE that it needs to fetch on-chain storage (and verify a read-proof) before executing our call:
 
 #### encointer-worker/stf/src/sgx.rs
+
 ```rust
     pub fn get_storage_hashes_to_update(call: &TrustedCall) -> Vec<Vec<u8>> {
         let mut key_hashes = Vec::new();
@@ -147,6 +157,7 @@ This function call depends on the `scheduler` and `currencies` pallets which are
         key_hashes
     }
 ```
+
 See [How to access on-chain storage](./howto_access_onchain_storage.md) for more details.
 
 **Important**: Make sure your on-chain runtime and TEE runtime depend on the same version of substrate. Otherwise, mapping storage keys between the two runtimes might fail.
@@ -154,6 +165,7 @@ See [How to access on-chain storage](./howto_access_onchain_storage.md) for more
 Finally, we will extend our CLI client to allow us to call our function:
 
 #### encointer-worker/stf/src/cli.rs
+
 ```rust 
  ...
          .add_cmd(
@@ -191,9 +203,11 @@ Finally, we will extend our CLI client to allow us to call our function:
 ```
 
 This will allow us to call
+
 ```bash 
  encointer-client trusted register-participant //AliceIncognito --mrenclave Jtpuqp6iA98JmhUYwhbcV8mvEgF9uFbksWaAeyALZQA --shard 3LjCHdiNbNLKEtwGtBf6qHGZnfKFyjLu9v3uxVgDL35C
 ```
+
 The `--mrenclave` identifies the [TCB](./glossary.md) while `--shard` identifies the local currency we're registering for.
 
 ## Sharding
@@ -211,6 +225,7 @@ That's why SubstraTEE-worker exposes a websocket interface for encrypted and aut
 We will now implemet a getter that can only be called by the `AccountId` it refers to.
 
 #### encointer-worker/stf/src/lib.rs
+
 ```rust
 #[derive(Encode, Decode, Clone)]
 #[allow(non_camel_case_types)]
@@ -228,9 +243,11 @@ impl TrustedGetter {
     }
     ...
 ```
+
 Again, the first argument specifies the `AccountId` that is allowed to read its part of the state, authenticated by a signature.
 
 #### encointer-worker/stf/src/sgx.rs
+
 ```rust
     pub fn get_state(ext: &mut State, getter: TrustedGetter) -> Option<Vec<u8>> {
         ext.execute_with(|| match getter {
@@ -239,7 +256,7 @@ Again, the first argument specifies the `AccountId` that is allowed to read its 
             },
             TrustedGetter::ceremony_registration(who, cid) => {
                 Some(get_ceremony_registration(&who, &cid).encode())
-            }            
+            }
         })
     }
     ...
@@ -270,7 +287,7 @@ fn get_ceremony_registration(who: &AccountId, cid: &CurrencyIdentifier) -> Parti
         debug!("no registration for caller");
         0
     }
-}    
+}
 ```
 
 *Note*: Currently, the stf is not aware of the runtime metadata, so we have to hard-code hashers for `StorageMap` and `StorageDoubleMap`.
@@ -278,6 +295,7 @@ fn get_ceremony_registration(who: &AccountId, cid: &CurrencyIdentifier) -> Parti
 Again, we will introduce our getter in the CLI:
 
 #### encointer-worker/stf/src/cli.rs
+
 ```rust
 .add_cmd(
     Command::new("ceremony-registration")
@@ -311,14 +329,14 @@ Again, we will introduce our getter in the CLI:
                 0
             };
             println!("{}", ind);
-            Ok(())            
+            Ok(())
         }),
 )
 ```
 
 So we can query our index in the particpant registry with our CLI
 
-```bash 
+```bash
 encointer-client trusted ceremony-registration //AliceIncognito --mrenclave Jtpuqp6iA98JmhUYwhbcV8mvEgF9uFbksWaAeyALZQA --shard 3LjCHdiNbNLKEtwGtBf6qHGZnfKFyjLu9v3uxVgDL35C
 ```
 

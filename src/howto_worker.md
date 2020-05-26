@@ -15,10 +15,13 @@ To enable SGX support in the Dell BIOS, enter the BIOS, go to `System Security` 
 * `SGX Launch Control Policy` to `Unlocked`
 
 ## Intel SGX development and production (commercial) license
+
 In order to perform a remote attestation of the enclave, an [Intel SGX Attestation Enhanced Service Privacy ID (EPID)](https://api.portal.trustedservices.intel.com/EPID-attestation) is needed. We use unlinkable quotes in our code. Developers need to [register an account with Intel](https://software.intel.com/en-us/form/sgx-onboarding)
 
 ### Development Access
+
 Copy your SPID and key to the following files (use Linux line endings):
+
 * `bin/spid.txt`: SPID of your subscription
 * `bin/key.txt`: Key of your subscription (primary or secondary works)
 
@@ -29,8 +32,10 @@ The enclave will be signed with the development key found under `enclave/Enclave
 You need a commercial license with Intel to run your enclaves in production mode (the only mode that really is confidential). Only legal entities can get a commercial license with Intel. Get in touch with them to obtain one.
 
 Copy your SPID and key to the following files (use Linux line endings):
+
 * `bin/spid_production.txt`: SPID of your subscription
 * `bin/key_production.txt`: Key of your subscription (primary or secondary works)
+
 These files are used to access the Intel Remote Attestation Service.
 
 The enclave will be signed with the private key that was also registered and whitelisted at Intel's (in the process of obtaining a commercial license). Make sure that the key is exported as an environment variable called `SGX_COMMERCIAL_KEY`.
@@ -42,6 +47,7 @@ The only difference is that the option `DisableDebug` is set to `1`.
 ## SW Requirements
 
 You need the following components installed to start developing/compiling the code:
+
 * [Intel SGX driver](https://github.com/intel/linux-sgx-driver), [SGX and PSW](https://github.com/intel/linux-sgx)
 * [Rust](https://www.rust-lang.org/)
 * [Rust SGX SDK](https://github.com/apache/incubator-teaclave-sgx-sdk)
@@ -54,13 +60,14 @@ You find a sample Ansible playbook under https://github.com/scs/intel_sgx_setup.
 Open the playbook with your editor and replace all the variables with `<...>` with your own settings.
 
 To execute the playbook and configure the remote machine, use the following command:
+
 ```bash
 ansible-playbook site.yml -k
 ```
 
 ## Build Worker
 
-```
+```bash
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 make
@@ -70,14 +77,14 @@ this might take 10min+ on a fast machine.
 
 then you'll have to provide your SPID and KEY (see above)
 
-```
+```bash
 echo "<YOUR SPID>" > bin/spid.txt
 echo "<YOUR KEY>" > bin/key.txt
 ```
 
 ## Run Worker
 
-```
+```bash
 cd bin
 ./substratee-worker init-shard
 ./substratee-worker shielding-key

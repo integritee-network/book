@@ -33,11 +33,11 @@ Build Wasm and native code:
 cargo build --release
 ```
 
-### with docker 
+### with docker
 
 If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):
 
-```
+```bash
 docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
 cargo build --release
@@ -60,7 +60,3 @@ Start a development chain with:
 ```
 
 Detailed logs may be shown by running the node with the following environment variables set: `RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev`.
-
-
-
-

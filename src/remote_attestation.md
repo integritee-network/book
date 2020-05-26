@@ -1,9 +1,8 @@
 # Remote Attestation
 
-*TODO* 
+TODO
 
 The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.
-
 
 ## convincing the substraTEE user
 
@@ -29,6 +28,7 @@ This does change the the attestation protocol. Now the SP and the enclave in the
 ![Sequence Diagram](./attestation_registry_sequence.svg)
 
 The attestation report which is written to an on-chain registry contains:
+
 * enclave quote
    * report body
       * MRENCLAVE (hash of enclave build)
@@ -54,11 +54,12 @@ The worker can now publish his sealing pubkey, signed with its enclave-individua
 workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)
 
 ### Enclave Registry On-Chain
+
 In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of substraTEE.
 
-substraTEE developers will propose code updates to be voted on. Validators check the code and 
-vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:
-```
+substraTEE developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:
+
+```bash
 sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
 ```
 
@@ -67,7 +68,6 @@ TODO: we might need to provide a docker environment the achieve deterministic bu
 ## secret provisioning
 
 In order to establish shared secrets among workers, they need to convince themselves mutually that they are genuine before entering some *Distributed Key Generation* (DKG) protocol.
-
 
 ## Sealing
 
@@ -78,11 +78,13 @@ However, for decentralized open source projects, MRSIGNER cannot apply as there 
 Therefore, *enclave identity* MRSIGNER must be applied.
 
 ### SW updates
+
 As SW updates will have a different measurement, the new build can't read the state that was encrypted by the old build. Local attestation allows the new version to request the provisioned secrets. 
 
 We assume reproducible builds for enclaves which should be possible with Rust subject to  some assumptions. For now, watch [this issue](https://github.com/rust-lang/rust/issues/34902) and [cargo-repro](https://github.com/rust-secure-code/cargo-repro).
 
 Simplified Protocol
+
 1. new version's TCB hash gets voted for by onchain consensus
 1. new version registers its attestation on-chain
 1. old version shares provisioned secret with new version running on same machine by means of local (intra-platform) attestation if new version's tcb corresponds to onchain registry
@@ -97,9 +99,11 @@ compilation modes: *Debug*, *Release*, *Pre-Release*, *Simulation*
 lanching modes: *Debug*, *Production*
 
 ### EPID 
+
 Enhanced Privacy ID (EPID). A group signature key known only to the quoting enclave. Only used for remote attestation.
 
 ### SPID
+
 A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by [registering with Intel](https://software.intel.com/en-us/form/sgx-onboarding) (only allows to attest DEBUG encalves!)
 
 You can request either *linkable* or *unlinkable* quote. 
@@ -120,12 +124,14 @@ Moreover, remote attestation in production mode can only be taken out with such 
 *SCS is looking into options how to apply such policy to a decentralized system with Intel.*
 
 **solution candidate**
+
 1. A set of *companies* (i.e. SCS, web3 foundation) register a production license with Intel
 1. substraTEE-workers send their RA quotes to the chain.
 1. the *company* listens to new RA quotes and sends them to IAS with the *company's* SPID.
 1. the *company* sends the IAS report to the chain.
 
 ## Literature
+
 chaotic list of pointers:
 
 * [review of SGX PSE for monotonic counters and trusted time](https://davejingtian.org/2017/11/10/some-notes-on-the-monotonic-counter-in-intel-sgx-and-me/)
