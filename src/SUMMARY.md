@@ -15,6 +15,8 @@
   - [Token Shielding](./token_shielding.md)
   - [Security](./security.md)
   - [Benchmarks](./benchmarks.md)
+  - [HW Diversification](./hw_diversification.md)
+    - [Distributor-Level Remote Attestation](./hw_ra_by_distributor.md)
 - [Howto](./howto.md)
   - [How To Run a Node](./howto_node.md)
   - [How To Run a Worker](./howto_worker.md)
