@@ -4,7 +4,12 @@ You don't need SGX to run a node (only workers do).
 
 ## Build
 
-In order to compile *ring* into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for ubuntu 18.04
+Install Rust:
+```bash
+curl https://sh.rustup.rs -sSf | sh
+```
+
+In order to compile *ring* into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for Ubuntu 18.04
 
 ```bash
 wget https://apt.llvm.org/llvm.sh
@@ -12,23 +17,15 @@ chmod +x llvm.sh
 sudo ./llvm.sh 10
 export CC=/usr/bin/clang-10
 export AR=/usr/bin/llvm-ar-10
-cargo clean
-```
-
-Install Rust:
-
-```bash
-curl https://sh.rustup.rs -sSf | sh
+# if you already built, make sure to run cargo clean
 ```
 
 Initialize your Wasm Build environment:
-
 ```bash
 ./scripts/init.sh
 ```
 
 Build Wasm and native code:
-
 ```bash
 cargo build --release
 ```
