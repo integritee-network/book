@@ -149,56 +149,10 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#substratee-security" id="substratee-security">SubstraTEE Security</a></h1>
-<p>The following is an overview of security aspects of substraTEE, mainly focusing on Intel SGX properties. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.</p>
-<h2><a class="header" href="#exploitable-properties-of-sgx" id="exploitable-properties-of-sgx">exploitable properties of SGX</a></h2>
+<p>The following is an overview of security aspects of substraTEE. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.</p>
 <ul>
-<li>An enclave has no way to control how many instances of that enclave are instantiated.</li>
-<li>An enclave process can be interrupted at any point. </li>
-<li>monotonic counter and trusted time provided by Platform Services (PSE) rely on Intel ME, which <a href="https://en.wikipedia.org/wiki/Intel_Management_Engine#Security_vulnerabilities">doesn't have a good reputation for security</a>.</li>
-</ul>
-<p>See: <a href="https://youtu.be/0ZxBO3vLB-A">black hat presentation by Swami</a></p>
-<h2><a class="header" href="#attacks" id="attacks">Attacks</a></h2>
-<h3><a class="header" href="#rollbackreplay-attack" id="rollbackreplay-attack">Rollback/Replay Attack</a></h3>
-<p>An enclave has no way to verify that it is operating on the latest state (i.e. read from a sealed file on disk).</p>
-<p>It cannot be assured that calls to the enclave happen sequentially. They can happen in parallel, possibly leaking secrets i.e. because a secret with weak randomness is encrypted many times with the same nonce, weakening the confidentiality.</p>
-<h4><a class="header" href="#countermeasures" id="countermeasures">Countermeasures</a></h4>
-<ul>
-<li>monotonic counter (i.e. Intel PSE, based on ME. Not available on server HW). If you choose to trust Intel ME!</li>
-<li>Blockchain registers the hash of the latest state, so a state update is only valid when it refers to the latest registered state. This doesn't solve the cause, but the symptoms.</li>
-</ul>
-<h3><a class="header" href="#global-state-malleability" id="global-state-malleability">Global State Malleability</a></h3>
-<p>An enclave ecall can be interrupted at any time by interrupts. Instead of returning after the interrupt, an attacker can then call the same ecall again.</p>
-<h4><a class="header" href="#countermeasures-1" id="countermeasures-1">Countermeasures</a></h4>
-<ul>
-<li>verify-first-write-last: not only for sealed storage, but also for global state variables.</li>
-</ul>
-<h3><a class="header" href="#reentrancy-attack--global-state-malleability" id="reentrancy-attack--global-state-malleability">Reentrancy Attack / Global state Malleability</a></h3>
-<p>Can be a special case of the <em>Rollback Attack</em>.
-Similar to smart contracts reentrancy.</p>
-<p><a href="https://medium.com/@gus_tavo_guim/reentrancy-attack-on-smart-contracts-how-to-identify-the-exploitable-and-an-example-of-an-attack-4470a2d8dfe4">Explanation of reentrancy attack for smart contracts</a></p>
-<h4><a class="header" href="#countermeasures-2" id="countermeasures-2">Countermeasures</a></h4>
-<ul>
-<li>verify-first-write-last</li>
-</ul>
-<h3><a class="header" href="#simulator-attacks" id="simulator-attacks">Simulator Attacks</a></h3>
-<p>Some emulator pretends to be an enclave.</p>
-<h4><a class="header" href="#countermeasure" id="countermeasure">Countermeasure</a></h4>
-<ul>
-<li>Remote Attestation with IAS</li>
-</ul>
-<h3><a class="header" href="#man-in-the-middle-attack" id="man-in-the-middle-attack">Man-In-The-Middle Attack</a></h3>
-<p>Intel could attack a service provider by always replying to RA requests positively and put a simulated enclave as a MITM.
-(Intel knows, which SP is requesting a RA as it knows the SPID)</p>
-<h4><a class="header" href="#countermeasure-1" id="countermeasure-1">Countermeasure</a></h4>
-<p>none.</p>
-<p>See <a href="https://youtu.be/0ZxBO3vLB-A">black hat presentation by Swami</a> at 34:50</p>
-<h3><a class="header" href="#foreshadow" id="foreshadow">Foreshadow</a></h3>
-<p>This side-channel attack compromised both integrity and confidentiality (and therefore Remote Attestation as well). It has been fixed in Intel's recent microcode.</p>
-<p><a href="https://en.wikipedia.org/wiki/Foreshadow_(security_vulnerability)">Foreshadow</a></p>
-<h4><a class="header" href="#countermeasures-3" id="countermeasures-3">Countermeasures</a></h4>
-<ul>
-<li>update your SGX HW</li>
-<li>verify SGX is up-to-date for all substraTEE-workers (IAS tells us with their remote attestation report)</li>
+<li><a href="security_intel_sgx.html">Intel SGX security</a></li>
+<li><a href="security_chain_relay.html">Threat model of the ChainRelay</a></li>
 </ul>
 
                     </main>
