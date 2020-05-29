@@ -40,7 +40,7 @@ Main feature: trusted hardware custodian of your private keys
 
 Similar to but still quite different than [sawtooth PDO](https://github.com/hyperledger-labs/private-data-objects) or [Ekiden/OasisLabs](https://www.oasislabs.com/)
 
-*Do not confuse substraTEE-worker with substrate's [off-chain workers](https://github.com/paritytech/substrate/pull/1942). The latter are a part of the node's codebase. SubstraTEE worker is a standalone service interfacing substrate node using RPC or websockets*
+*Do not confuse substraTEE-worker with substrate's [off-chain workers](https://github.com/paritytech/substrate/pull/1942). The latter are a part of the node's codebase. substraTEE worker is a standalone service interfacing substrate node using RPC or websockets*
 
 Dapps can commit WASM contracts and run their own TEE's or hire an enclave service to run confidential WASM smart contracts on. delegates are remote attested on the blockchain (the TCB doesn't include the WASM contract). They have to be fed with the most recent state, call and opaque payload. They then update the state that is written back to the chain.
 

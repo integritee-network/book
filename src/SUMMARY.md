@@ -4,7 +4,7 @@
 
 - [What is Trusted Execution?](./trusted_execution.md)
   - [Remote Attestation](./remote_attestation.md)
-- [What is SubstraTEE Good For?](./what_for.md)
+- [What is substraTEE Good For?](./what_for.md)
   - [Privacy](./privacy.md)
   - [Scalability](./scalability.md)
   - [Interoperability](./interoperability.md)

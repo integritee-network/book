@@ -1,8 +1,8 @@
 # How To Access On-Chain Storage From Within The Enclave Trustlessly
 
-SubstraTEE isolates *confidential state* (what the STF `TrustedCall` operates on inside the SGX enclave) from *on-chain state* (what is plaintext readable by the entire network of SubstraTEE-nodes). Some use cases, however, reqire read access to on-chain storage for their `TrustedCall`s. As the enclave can't trust it's worker service, it has to request and verify read proofs from the SubstraTEE-node.
+substraTEE isolates *confidential state* (what the STF `TrustedCall` operates on inside the SGX enclave) from *on-chain state* (what is plaintext readable by the entire network of substraTEE-nodes). Some use cases, however, reqire read access to on-chain storage for their `TrustedCall`s. As the enclave can't trust it's worker service, it has to request and verify read proofs from the substraTEE-node.
 
-Our goal is that you can use the same pallets that you use on-chain also inside SubstraTEE enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your `TrustedCall` has to specify what storage keys it requires and these will be mapped to the confidential state befor executing the call.
+Our goal is that you can use the same pallets that you use on-chain also inside substraTEE enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your `TrustedCall` has to specify what storage keys it requires and these will be mapped to the confidential state befor executing the call.
 
 For this to work, the [sgx-runtime](https://github.com/scs/sgx-runtime/tree/master/runtime) must be compatible with the [node-runtime](https://github.com/scs/substraTEE-node/tree/master/runtime). This means that the same substrate version must be used. However, it does not mean that the same pallets must be instantiated.
 
@@ -39,7 +39,7 @@ decl_module! {
     pub struct Module<T: Trait> for enum Call where origin: T::Origin {
         #[weight = 10_000]
         pub fn your_time_aware_call(origin) -> dispatch::DispatchResult {
-            ensure!(Timestamp::<T>::now() > EARLIEST_TIME_OF_EXECUTION, 
+            ensure!(Timestamp::<T>::now() > EARLIEST_TIME_OF_EXECUTION,
                 "too early to call this");
             // ...
 ```

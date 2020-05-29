@@ -2,7 +2,7 @@
 
 Private transactions are a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom.
 
-Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. SubstraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in SubstraTEE it is guaranteed by TEEs.
+Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. substraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in substraTEE it is guaranteed by TEEs.
 
 The detailed design of the shielding and unshielding process is described in the chapter [Token Shielding](./token_shielding.md).
 

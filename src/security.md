@@ -1,4 +1,4 @@
-# SubstraTEE Security
+# substraTEE Security
 
 The following is an overview of security aspects of substraTEE. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.
 

@@ -1,6 +1,6 @@
 # Sharding
 
-SubstraTEE isolates confidential state from the blockchain by maintaining it off-chain and processing it in TEEs. This strategy allows application-specific sharding. Every use case can work on its own shard and even one use case could split into several shards.
+substraTEE isolates confidential state from the blockchain by maintaining it off-chain and processing it in TEEs. This strategy allows application-specific sharding. Every use case can work on its own shard and even one use case could split into several shards.
 
 By default, SubstratTEE uses the MRENCLAVE of the worker enclave as shard identifier, so in most cases, your shard is directly linked to your specific TCB and there's nothing you have to worry about.
 

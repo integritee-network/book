@@ -16,7 +16,7 @@ What substraTEE aims to enable:
 * trusted chain bridges
 * trusted oracles
 
-SubstraTEE is developed by [Supercomputing Systems AG](https://www.scs.ch) and has been supported by grants from the [Web3 Foundation](https://web3.foundation/).
+substraTEE is developed by [Supercomputing Systems AG](https://www.scs.ch) and has been supported by grants from the [Web3 Foundation](https://web3.foundation/).
 
 We also thank the teams at
 

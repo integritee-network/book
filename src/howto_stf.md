@@ -1,11 +1,11 @@
 # How To Build Your Own Trusted STF
 
-SubstraTEE is a framework that makes it easy for you to gain confidentiality for your decentralization endeavours.
+substraTEE is a framework that makes it easy for you to gain confidentiality for your decentralization endeavours.
 
-The development process integrates well with substrate: 
+The development process integrates well with substrate:
 
 1. develop and debug your use case on substrate, writing your own pallets
-2. Once the logic works, move your sensitive pallets to SubstraTEE without modification and you'll get confidential state (and state updates)
+2. Once the logic works, move your sensitive pallets to substraTEE without modification and you'll get confidential state (and state updates)
 
 In the following we will assume that you know [how to build custom substrate blockchains](https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7) and we will skip boring explanations.
 
@@ -19,7 +19,7 @@ Encointer has been developed as a substrate chain with 4 custom pallets added to
 
 We will now show you how we can turn Testnet Gesell (all public) in to Testnet Cantillon, featuring confidentiality for sensitive pallets.
 
-In order to protect the privacy of users we will move the balances and ceremony pallets into the SubstraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:
+In order to protect the privacy of users we will move the balances and ceremony pallets into the substraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:
 
 ![cantillon](./fig/Testnet-Cantillon-Component-Interactions.svg)
 
@@ -27,7 +27,7 @@ The final code can be inspected on [encointer github](https://github.com/encoint
 
 ## TEE Runtime
 
-Substrate chains wrap all their business logic into a runtime made up of pallets. SubstraTEE does so too, so let's create our TEE runtime:
+Substrate chains wrap all their business logic into a runtime made up of pallets. substraTEE does so too, so let's create our TEE runtime:
 
 ```bash
 git clone https://github.com/scs/sgx-runtime.git
@@ -61,7 +61,7 @@ Looks familiar? If not, [learn from the best](https://www.substrate.io/tutorials
 
 We will skip the nitty gritty of including your pallets.
 
-## SubstraTEE-node
+## substraTEE-node
 
 The blockchain we'll be using is based on parity's node-template with one substraTEE-specific pallet that will take care of the worker registry and will proxy `TrustedCalls`
 
@@ -71,19 +71,19 @@ git clone https://github.com/scs/substraTEE-node
 
 Encointer will add its public pallets to this node tempalte: *scheduler* and *currencies*. See [encointer-node](https://github.com/encointer/encointer-node/tree/sgx-master)
 
-## SubstraTEE-worker
+## substraTEE-worker
 
-The SubstraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state. 
+The substraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.
 
 The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.
 
-The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface 
+The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface
 
 ## TrustedCall
 
 Now we need a way to call our custom pallet functions isolated in a TEE.
 
-SubstraTEE encapsulates all the application-specific stuff in its `substratee-stf` crate that you can customize.
+substraTEE encapsulates all the application-specific stuff in its `substratee-stf` crate that you can customize.
 
 ```bash
 git clone https://github.com/scs/substraTEE-worker
@@ -139,7 +139,7 @@ Now that we defined a new call we need to execute it:
 
 Now you see that `TrustedCall::ceremonies_register_participant()` calls `register_participant()` in our `ceremonies` pallet.
 
-This function call depends on the `scheduler` and `currencies` pallets which are not present in our TEE runtime. It is on-chain. So we need to tell SubstraTEE that it needs to fetch on-chain storage (and verify a read-proof) before executing our call:
+This function call depends on the `scheduler` and `currencies` pallets which are not present in our TEE runtime. It is on-chain. So we need to tell substraTEE that it needs to fetch on-chain storage (and verify a read-proof) before executing our call:
 
 #### encointer-worker/stf/src/sgx.rs
 
@@ -166,7 +166,7 @@ Finally, we will extend our CLI client to allow us to call our function:
 
 #### encointer-worker/stf/src/cli.rs
 
-```rust 
+```rust
  ...
          .add_cmd(
             Command::new("register-participant")
@@ -204,7 +204,7 @@ Finally, we will extend our CLI client to allow us to call our function:
 
 This will allow us to call
 
-```bash 
+```bash
  encointer-client trusted register-participant //AliceIncognito --mrenclave Jtpuqp6iA98JmhUYwhbcV8mvEgF9uFbksWaAeyALZQA --shard 3LjCHdiNbNLKEtwGtBf6qHGZnfKFyjLu9v3uxVgDL35C
 ```
 
@@ -212,15 +212,15 @@ The `--mrenclave` identifies the [TCB](./glossary.md) while `--shard` identifies
 
 ## Sharding
 
-As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the `currencies` pallet). The balances for each local currency are maintained confidentially within SubstraTEE. One shard for each currency. This means that a worker has to decide what shard it operates on.
+As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the `currencies` pallet). The balances for each local currency are maintained confidentially within substraTEE. One shard for each currency. This means that a worker has to decide what shard it operates on.
 
 See [Sharding](./sharding-md) for more details.
 
 ## TrustedGetter
 
-Now that everything is super-isolated and confidential, how should we know if our call actually worked? 
+Now that everything is super-isolated and confidential, how should we know if our call actually worked?
 
-That's why SubstraTEE-worker exposes a websocket interface for encrypted and authenticated queries.
+That's why substraTEE-worker exposes a websocket interface for encrypted and authenticated queries.
 
 We will now implemet a getter that can only be called by the `AccountId` it refers to.
 
@@ -272,7 +272,7 @@ fn get_ceremony_registration(who: &AccountId, cid: &CurrencyIdentifier) -> Parti
     if let Some(res) = sp_io::storage::get(&storage_double_map_key(
         "EncointerCeremonies",
         "ParticipantIndex",
-        &(cid,cindex), 
+        &(cid,cindex),
         &StorageHasher::Blake2_128Concat,
         who,
         &StorageHasher::Blake2_128Concat,

@@ -1,4 +1,4 @@
-# How to Build and Run a SubstraTEE-node
+# How to Build and Run a substraTEE-node
 
 You don't need SGX to run a node (only workers do).
 

@@ -40,7 +40,7 @@ Since M5, the STF is modular and has its own crate which can easily be swapped. 
 
 ### M6 read chain state from STF
 
-From M6 onwards, SubstraTEE STF can access chain state in a trustless way. A substrate light client verification logic will be included in the worker enclave that allows the STF to query chain state by means of subscribing to storage over RPC and verifying returned values within the enclave.
+From M6 onwards, substraTEE STF can access chain state in a trustless way. A substrate light client verification logic will be included in the worker enclave that allows the STF to query chain state by means of subscribing to storage over RPC and verifying returned values within the enclave.
 
 ### *FUTURE*
 
