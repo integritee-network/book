@@ -56,4 +56,6 @@ Start a development chain with:
 ./target/release/substratee-node --dev
 ```
 
+If you want the substraTEE-node to expose a different websocket port, use the option `--ws-port xxx`. If external workers or clients need to access, add the option `--ws-external`.
+
 Detailed logs may be shown by running the node with the following environment variables set: `RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev`.
