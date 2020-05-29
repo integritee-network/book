@@ -53,7 +53,7 @@ You need the following components installed to start developing/compiling the co
 * [Rust SGX SDK](https://github.com/apache/incubator-teaclave-sgx-sdk)
 * [IPFS](https://ipfs.io/)
 
-### Setup Worker with Ansible
+### Setup SGX hardware with Ansible
 
 You find a sample Ansible playbook under https://github.com/scs/intel_sgx_setup.
 
@@ -63,6 +63,65 @@ To execute the playbook and configure the remote machine, use the following comm
 
 ```bash
 ansible-playbook site.yml -k
+```
+
+### Using Docker
+We provide docker images with all the required tools installed. They can be found on [dockerhub](https://hub.docker.com/repository/docker/scssubstratee/substratee_dev).
+
+The tag has the following format: `<Ubuntu version>-<Intel SGX SDK version>-<Rust SGX SDK version>`. We don't provide any *latest* so you must specify the tag.
+
+If you execute
+
+```bash
+docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+```
+
+you get a docker image with
+
+* Ubuntu 18.04
+* Intel SGX SDK 2.9.1
+* Rust SGX SDK 1.1.2 (which includes the correct Rust version)
+* IPFS 0.4.21
+
+The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.
+
+```bash
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+```
+
+Now you can build and run your worker inside docker.
+
+#### Enabling SGX HW Support in Docker
+
+If you are on a platform that supports SGX, you can enable HW support by:
+
+* Enable the SGX support in the BIOS
+* Instal the [Intel SGX Driver](https://github.com/intel/linux-sgx-driver) and the [Intel SGX SDK](https://github.com/intel/linux-sgx) and make sure that `/dev/isgx` appears
+* Start the docker with SGX device support:
+
+  ```bash
+  docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+  ```
+
+* Start the aesm service inside the docker:
+
+  ```bash
+  LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &
+  ```
+
+* Compile the substraTEE-worker:
+
+  ```bash
+  make
+  ```
+
+* run worker like described below
+
+If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker
+
+```bash
+*** Start the enclave
+[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 ```
 
 ## Build Worker
@@ -92,67 +151,4 @@ cd bin
 ./substratee-worker run --ns <yournodeip>
 ```
 
-## Using Docker
 
-We provide docker images with all the required tools installed. They can be found on [dockerhub](https://hub.docker.com/repository/docker/scssubstratee/substratee_dev).
-
-The tag has the following format: `<Ubuntu version>-<Intel SGX SDK version>-<Rust SGX SDK version>`. We don't provide any *latest* so you must specify the tag.
-
-If you execute
-
-```bash
-docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
-```
-
-you get a docker image with
-
-* Ubuntu 18.04
-* Intel SGX SDK 2.9.1
-* Rust SGX SDK 1.1.2 (which includes the correct Rust version)
-* IPFS 0.4.21
-
-The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.
-
-```bash
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
-```
-
-Now you can build and run your worker inside docker. Just replace the make command above with
-
-```bash
-SGX_MODE=SW make
-```
-
-to run in [Simulation Mode](https://software.intel.com/en-us/blogs/2016/05/30/usage-of-simulation-mode-in-sgx-enhanced-application) without the need of an actual SGX platform. You will not be able to perform remote attestation in SW mode
-
-### Enabling SGX HW Support in Docker
-
-If you are on a platform that supports SGX, you can enable HW support by:
-
-* Installing the Intel SGX Driver 2.9 and make sure that `/dev/isgx` appears
-* Start the docker with SGX device support:
-  
-  ```bash
-  docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
-  ```
-
-* Start the aesm service inside the docker:
-
-  ```bash
-  LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &
-  ```
-
-* Compile the substraTEE-worker with HW support:
-
-  ```bash
-  make
-  ```
-
-* run worker like described above
-
-If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker
-
-```bash
-*** Start the enclave
-[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
-```

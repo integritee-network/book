@@ -6,11 +6,11 @@ Substrate blockchains are usually account-based and pseudonymous by nature: The 
 
 The detailed design of the shielding and unshielding process is described in the chapter [Token Shielding](./token_shielding.md).
 
-In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need SGX HW to run the demo.
+In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making `/dev/isgx` and the aesm service available).
 
 ## Setup
 
-You'll need to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own SPID and KEY.
+You'll need SGX enabled hardware and to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own SPID and KEY.
 
 Build node, worker and client in our docker:
 
@@ -23,7 +23,7 @@ cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 git checkout M6
-SGX_MODE=SW make
+make
 # this might take 10min+ on a fast machine
 
 echo "<YOUR SPID>" > bin/spid.txt
