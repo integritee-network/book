@@ -645,6 +645,7 @@ cargo build --release
 <p>Start a development chain with:</p>
 <pre><code class="language-bash">./target/release/substratee-node --dev
 </code></pre>
+<p>If you want the substraTEE-node to expose a different websocket port, use the option <code>--ws-port xxx</code>. If external workers or clients need to access, add the option <code>--ws-external</code>.</p>
 <p>Detailed logs may be shown by running the node with the following environment variables set: <code>RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev</code>.</p>
 <h1><a class="header" href="#how-to-run-your-own-worker" id="how-to-run-your-own-worker">How To Run Your Own Worker</a></h1>
 <h2><a class="header" href="#hw-requirements" id="hw-requirements">HW requirements</a></h2>
@@ -685,11 +686,60 @@ cargo build --release
 <li><a href="https://github.com/apache/incubator-teaclave-sgx-sdk">Rust SGX SDK</a></li>
 <li><a href="https://ipfs.io/">IPFS</a></li>
 </ul>
-<h3><a class="header" href="#setup-worker-with-ansible" id="setup-worker-with-ansible">Setup Worker with Ansible</a></h3>
+<h3><a class="header" href="#setup-sgx-hardware-with-ansible" id="setup-sgx-hardware-with-ansible">Setup SGX hardware with Ansible</a></h3>
 <p>You find a sample Ansible playbook under https://github.com/scs/intel_sgx_setup.</p>
 <p>Open the playbook with your editor and replace all the variables with <code>&lt;...&gt;</code> with your own settings.</p>
 <p>To execute the playbook and configure the remote machine, use the following command:</p>
 <pre><code class="language-bash">ansible-playbook site.yml -k
+</code></pre>
+<h3><a class="header" href="#using-docker" id="using-docker">Using Docker</a></h3>
+<p>We provide docker images with all the required tools installed. They can be found on <a href="https://hub.docker.com/repository/docker/scssubstratee/substratee_dev">dockerhub</a>.</p>
+<p>The tag has the following format: <code>&lt;Ubuntu version&gt;-&lt;Intel SGX SDK version&gt;-&lt;Rust SGX SDK version&gt;</code>. We don't provide any <em>latest</em> so you must specify the tag.</p>
+<p>If you execute</p>
+<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+</code></pre>
+<p>you get a docker image with</p>
+<ul>
+<li>Ubuntu 18.04</li>
+<li>Intel SGX SDK 2.9.1</li>
+<li>Rust SGX SDK 1.1.2 (which includes the correct Rust version)</li>
+<li>IPFS 0.4.21</li>
+</ul>
+<p>The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.</p>
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+</code></pre>
+<p>Now you can build and run your worker inside docker.</p>
+<h4><a class="header" href="#enabling-sgx-hw-support-in-docker" id="enabling-sgx-hw-support-in-docker">Enabling SGX HW Support in Docker</a></h4>
+<p>If you are on a platform that supports SGX, you can enable HW support by:</p>
+<ul>
+<li>
+<p>Enable the SGX support in the BIOS</p>
+</li>
+<li>
+<p>Instal the <a href="https://github.com/intel/linux-sgx-driver">Intel SGX Driver</a> and the <a href="https://github.com/intel/linux-sgx">Intel SGX SDK</a> and make sure that <code>/dev/isgx</code> appears</p>
+</li>
+<li>
+<p>Start the docker with SGX device support:</p>
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+</code></pre>
+</li>
+<li>
+<p>Start the aesm service inside the docker:</p>
+<pre><code class="language-bash">LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &amp;
+</code></pre>
+</li>
+<li>
+<p>Compile the substraTEE-worker:</p>
+<pre><code class="language-bash">make
+</code></pre>
+</li>
+<li>
+<p>run worker like described below</p>
+</li>
+</ul>
+<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker</p>
+<pre><code class="language-bash">*** Start the enclave
+[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 </code></pre>
 <h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
 <pre><code class="language-bash">git clone https://github.com/scs/substraTEE-worker.git
@@ -708,62 +758,13 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 ./substratee-worker signing-key
 ./substratee-worker run --ns &lt;yournodeip&gt;
 </code></pre>
-<h2><a class="header" href="#using-docker" id="using-docker">Using Docker</a></h2>
-<p>We provide docker images with all the required tools installed. They can be found on <a href="https://hub.docker.com/repository/docker/scssubstratee/substratee_dev">dockerhub</a>.</p>
-<p>The tag has the following format: <code>&lt;Ubuntu version&gt;-&lt;Intel SGX SDK version&gt;-&lt;Rust SGX SDK version&gt;</code>. We don't provide any <em>latest</em> so you must specify the tag.</p>
-<p>If you execute</p>
-<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
-</code></pre>
-<p>you get a docker image with</p>
-<ul>
-<li>Ubuntu 18.04</li>
-<li>Intel SGX SDK 2.9.1</li>
-<li>Rust SGX SDK 1.1.2 (which includes the correct Rust version)</li>
-<li>IPFS 0.4.21</li>
-</ul>
-<p>The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.</p>
-<pre><code class="language-bash">docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
-</code></pre>
-<p>Now you can build and run your worker inside docker. Just replace the make command above with</p>
-<pre><code class="language-bash">SGX_MODE=SW make
-</code></pre>
-<p>to run in <a href="https://software.intel.com/en-us/blogs/2016/05/30/usage-of-simulation-mode-in-sgx-enhanced-application">Simulation Mode</a> without the need of an actual SGX platform. You will not be able to perform remote attestation in SW mode</p>
-<h3><a class="header" href="#enabling-sgx-hw-support-in-docker" id="enabling-sgx-hw-support-in-docker">Enabling SGX HW Support in Docker</a></h3>
-<p>If you are on a platform that supports SGX, you can enable HW support by:</p>
-<ul>
-<li>
-<p>Installing the Intel SGX Driver 2.9 and make sure that <code>/dev/isgx</code> appears</p>
-</li>
-<li>
-<p>Start the docker with SGX device support:</p>
-<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
-</code></pre>
-</li>
-<li>
-<p>Start the aesm service inside the docker:</p>
-<pre><code class="language-bash">LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &amp;
-</code></pre>
-</li>
-<li>
-<p>Compile the substraTEE-worker with HW support:</p>
-<pre><code class="language-bash">make
-</code></pre>
-</li>
-<li>
-<p>run worker like described above</p>
-</li>
-</ul>
-<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker</p>
-<pre><code class="language-bash">*** Start the enclave
-[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
-</code></pre>
 <h1><a class="header" href="#how-to-perform-private-transactions" id="how-to-perform-private-transactions">How to Perform Private Transactions</a></h1>
 <p>Private transactions are a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom.</p>
 <p>Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. substraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in substraTEE it is guaranteed by TEEs.</p>
 <p>The detailed design of the shielding and unshielding process is described in the chapter <a href="./token_shielding.html">Token Shielding</a>.</p>
-<p>In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need SGX HW to run the demo.</p>
+<p>In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making <code>/dev/isgx</code> and the aesm service available).</p>
 <h2><a class="header" href="#setup" id="setup">Setup</a></h2>
-<p>You'll need to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own SPID and KEY.</p>
+<p>You'll need SGX enabled hardware and to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own SPID and KEY.</p>
 <p>Build node, worker and client in our docker:</p>
 <pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
 mkdir demo &amp;&amp; cd demo
@@ -773,7 +774,7 @@ cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 git checkout M6
-SGX_MODE=SW make
+make
 # this might take 10min+ on a fast machine
 
 echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt

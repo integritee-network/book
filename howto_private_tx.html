@@ -152,9 +152,9 @@
 <p>Private transactions are a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom.</p>
 <p>Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. substraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in substraTEE it is guaranteed by TEEs.</p>
 <p>The detailed design of the shielding and unshielding process is described in the chapter <a href="./token_shielding.html">Token Shielding</a>.</p>
-<p>In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need SGX HW to run the demo.</p>
+<p>In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making <code>/dev/isgx</code> and the aesm service available).</p>
 <h2><a class="header" href="#setup" id="setup">Setup</a></h2>
-<p>You'll need to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own SPID and KEY.</p>
+<p>You'll need SGX enabled hardware and to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own SPID and KEY.</p>
 <p>Build node, worker and client in our docker:</p>
 <pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
 mkdir demo &amp;&amp; cd demo
@@ -164,7 +164,7 @@ cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 git checkout M6
-SGX_MODE=SW make
+make
 # this might take 10min+ on a fast machine
 
 echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt

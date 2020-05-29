@@ -182,6 +182,7 @@ cargo build --release
 <p>Start a development chain with:</p>
 <pre><code class="language-bash">./target/release/substratee-node --dev
 </code></pre>
+<p>If you want the substraTEE-node to expose a different websocket port, use the option <code>--ws-port xxx</code>. If external workers or clients need to access, add the option <code>--ws-external</code>.</p>
 <p>Detailed logs may be shown by running the node with the following environment variables set: <code>RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev</code>.</p>
 
                     </main>
