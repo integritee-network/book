@@ -9,9 +9,9 @@ The goal of remote attestation is to enable the Verifier to trust a Member. The 
 
 The Verifier is concerned about integrity and confidentiality and requires a proof that:
 
-1.     Member’s hardware is genuine, attested by the provision entity in a manner that the verifier is able to identify devices in the field by secure cryptographic methods
-1.     Member’s hardware runs exactly the code as published open source by the Trusted Software Source
-1.     Data supplied to the TEE is treated confidentially (fulfilled if all the above holds and the TEE design is trusted)
+1.   Member’s hardware is genuine, attested by the provision entity in a manner that the verifier is able to identify devices in the field by secure cryptographic methods
+1.   Member’s hardware runs exactly the code as published open source by the Trusted Software Source
+1.   Data supplied to the TEE is treated confidentially (fulfilled if all the above holds and the TEE design is trusted)
 
 To fulfill these requirements each role is specified in the following sections.
 
