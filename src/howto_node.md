@@ -59,3 +59,34 @@ Start a development chain with:
 If you want the substraTEE-node to expose a different websocket port, use the option `--ws-port xxx`. If external workers or clients need to access, add the option `--ws-external`.
 
 Detailed logs may be shown by running the node with the following environment variables set: `RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev`.
+
+### Node as a System Service
+If you want to run your node as a system service in Linux, create (as root or user with sudo permissions) a file in `/etc/systemd/system` called `substraTEE-node.service` with the following content:
+```bash
+[Unit]
+Description=SubstraTEE Node
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=<USER TO RUN THE NODE>
+ExecStart=<ABSOLUTE PATH TO>/substratee-node --chain <PATH TO CHAIN JSON> --name <NAME OF THE NODE>
+
+[Install]
+WantedBy=multi-user.target
+```
+Where:
+* `StartLimitIntervalSec` makes that systemd will try to re-start the service forever.
+* `RestartSec` indicates the interval between two restarts.
+* `User` specifies the user that should run the node.
+* `ExecStart` specifies the path to the binary. Use absolute paths here.
+
+Update the systemd daemon with `systemctrl daemon-reload`.
+
+Use the following commands:
+* `systemctrl start substraTEE-node.service` to start the node.
+* `systemctrl stop substraTEE-node.service` to stop the node.
+* `systemctrl status substraTEE-node.service` to check the status of the node/service.
