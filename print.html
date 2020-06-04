@@ -647,6 +647,37 @@ cargo build --release
 </code></pre>
 <p>If you want the substraTEE-node to expose a different websocket port, use the option <code>--ws-port xxx</code>. If external workers or clients need to access, add the option <code>--ws-external</code>.</p>
 <p>Detailed logs may be shown by running the node with the following environment variables set: <code>RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev</code>.</p>
+<h3><a class="header" href="#node-as-a-system-service" id="node-as-a-system-service">Node as a System Service</a></h3>
+<p>If you want to run your node as a system service in Linux, create (as root or user with sudo permissions) a file in <code>/etc/systemd/system</code> called <code>substraTEE-node.service</code> with the following content:</p>
+<pre><code class="language-bash">[Unit]
+Description=SubstraTEE Node
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+User=&lt;USER TO RUN THE NODE&gt;
+ExecStart=&lt;ABSOLUTE PATH TO&gt;/substratee-node --chain &lt;PATH TO CHAIN JSON&gt; --name &lt;NAME OF THE NODE&gt;
+
+[Install]
+WantedBy=multi-user.target
+</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>StartLimitIntervalSec</code> makes that systemd will try to re-start the service forever.</li>
+<li><code>RestartSec</code> indicates the interval between two restarts.</li>
+<li><code>User</code> specifies the user that should run the node.</li>
+<li><code>ExecStart</code> specifies the path to the binary. Use absolute paths here.</li>
+</ul>
+<p>Update the systemd daemon with <code>systemctrl daemon-reload</code>.</p>
+<p>Use the following commands:</p>
+<ul>
+<li><code>systemctrl start substraTEE-node.service</code> to start the node.</li>
+<li><code>systemctrl stop substraTEE-node.service</code> to stop the node.</li>
+<li><code>systemctrl status substraTEE-node.service</code> to check the status of the node/service.</li>
+</ul>
 <h1><a class="header" href="#how-to-run-your-own-worker" id="how-to-run-your-own-worker">How To Run Your Own Worker</a></h1>
 <h2><a class="header" href="#hw-requirements" id="hw-requirements">HW requirements</a></h2>
 <p>While SGX is supported by most Intel CPU's that is not the case for all chipsets. Here we're just telling you what HW we are using and is known to work.</p>
