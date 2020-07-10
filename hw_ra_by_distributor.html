@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Distributor-Level Remote Attestation - The substraTEE Book</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is substraTEE Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li><ol class="section"><li class="expanded "><a href="interoperability-bridges.html"><strong aria-hidden="true">2.3.1.</strong> Bridges</a></li></ol></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="sharding.html"><strong aria-hidden="true">3.1.</strong> Sharding</a></li><li class="expanded "><a href="token_shielding.html"><strong aria-hidden="true">3.2.</strong> Token Shielding</a></li><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.3.</strong> Security</a></li><li><ol class="section"><li class="expanded "><a href="security_intel_sgx.html"><strong aria-hidden="true">3.3.1.</strong> Intel SGX</a></li><li class="expanded "><a href="security_tm_chainrelay.html"><strong aria-hidden="true">3.3.2.</strong> Threat model ChainRelay</a></li></ol></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.4.</strong> Benchmarks</a></li><li class="expanded "><a href="hw_diversification.html"><strong aria-hidden="true">3.5.</strong> HW Diversification</a></li><li><ol class="section"><li class="expanded "><a href="hw_ra_by_distributor.html" class="active"><strong aria-hidden="true">3.5.1.</strong> Distributor-Level Remote Attestation</a></li></ol></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.4.</strong> How To Access On-Chain Storage Trustlessly</a></li><li class="expanded "><a href="howto_stf.html"><strong aria-hidden="true">4.5.</strong> How To Build Your Own Trusted STF</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The substraTEE Book</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#distributor-level-remote-attestation" id="distributor-level-remote-attestation">Distributor-Level Remote Attestation</a></h1>
+<p>If manufaturers don't offer remote attestation, the HW distributor could jump in as the second trusted entity in the supply chain.</p>
+<h2><a class="header" href="#concept" id="concept">Concept</a></h2>
+<p>The goal of remote attestation is to enable the verifier to trust a member. The verifier wants to trust the hardware and software, which is physically at the member's site. The assumption is that the verifier has never accessed the hardware of the member. Therefore, other parties offer a root of trust, which is implanted in the hardware. In the picture below are three other parties, where most important one is the provision entity. She is a distributor of hardware and has also the ability to program the devices. So, they take hardware from the official manufacturers and combine it with software from a source, which is trusted by the verifier. Afterwards, this bundle is purchasable by everyone, who wants to participate. In conclusion, if somebody wants to become a member of the service, he has to buy a device from provision entity. These devices are ready to perform remote attestation.</p>
+<p><img src="./fig/ra-by-distributor-overview.svg" alt="Concept" /></p>
+<p>The verifier is concerned about integrity and confidentiality and requires a proof that:</p>
+<ol>
+<li>Member’s hardware is genuine, attested by the provision entity in a manner that the verifier is able to identify devices in the field by secure cryptographic methods</li>
+<li>Member’s hardware runs exactly the code as published open source by the Trusted Software Source</li>
+<li>Data supplied to the TEE is treated confidentially </li>
+</ol>
+<p>To fulfill these requirements each role is specified in the following sections.</p>
+<h2><a class="header" href="#roles" id="roles">Roles</a></h2>
+<ul>
+<li>Hardware Manufacturer: produces hardware</li>
+<li>Trusted Software Source: writes open source software that is supposed to be run on TEEs</li>
+<li>Provision Entity: Distributor with the possibility to provision devices</li>
+<li>Member: operates TEE hardware on their own premises and always has physical access to it</li>
+<li>Verifier: wants to run software from the Trusted Software Source with its own confidential data on member's hardware</li>
+</ul>
+<h3><a class="header" href="#hardware-manufacturer" id="hardware-manufacturer">Hardware Manufacturer</a></h3>
+<p>The hardware manufacturer has to be trusted.</p>
+<h3><a class="header" href="#trusted-software-source" id="trusted-software-source">Trusted Software Source</a></h3>
+<p>To generate an open source flash image, which is signed, is problematic. Because the one who is signing is a new root of trust. Therefore, in this concept this root is spread over a multiple participants to get to an open source like root of trust. The parties should be as independent as possible. The diagram below visualizes our approach. On the left side is the open source code visible for everyone. Everything that follows is constructed under the assumption that the parties have established secure communication channels. All parties (Web3, SCS, ...) collaborate in the Multi-Party-Computation (MPC) RSA generation. As a result, everyone receives the public key and a part of the private key. Therefore, they can only together generate a signature. This is used to build a binary that only can be signed by all parties together. They take the source code and build it deterministically. Afterwards, they sign their binary and exchange it with each other. Then, they check the binaries from the other parties, if they are the same, they combine the signatures to the final signature. This signature can be verified with the public key.</p>
+<p><img src="./fig/ra-by-distributor-trusted-software-source.svg" alt="Concept" /></p>
+<h3><a class="header" href="#provision-entity" id="provision-entity">Provision Entity</a></h3>
+<p>The provision entity has the task to prepare the devices for remote attestation. This makes her the main root of trust. Therefore she has to be trustworthy and she also needs appropriate hardware. Which means that she needs at least HSM (Hardware Security Module). Better she has an access authorisation system for the facilities. To provision devices, the provision entity has to execute the following steps.</p>
+<ul>
+<li>Get hardware from the hardware manufacturer</li>
+<li>Get the software from the trusted software source</li>
+<li>Check the hardware and the software</li>
+<li>Enable secure boot</li>
+<li>Generate the attestation data</li>
+<li>Sell the devices publicly</li>
+</ul>
+<p><img src="./fig/ra-by-distributor-pe-1.svg" alt="Concept" /></p>
+<p>The first two steps are obvious. Get the hard and software from the corresponding sources. The next step is important. The provision entity has to check, if the hardware is not tampered. Because later, with her signature, she states that the hardware is trustworthy.</p>
+<p>The next step is to enable secure boot. This means that the provision entity takes the public key from the trusted software source (the one generated in the MPC process) burn it into the devices. Also eFuses are burnt to harden the device. This step is hardware dependent. In some devices only the hash of this public key is burnt in, but its enough to enable secure boot. In the literature this key is often referred as the vendor key.</p>
+<p>Afterwards, the attestation data is made. The provision entity generates with the HSM a per device unique key pair. This key pair is called the Attestation Identifier Key, because it is used to identify the device for attestation. Then also a device unique key called Endorsement Key (EK) is used. The origin of this key is hardware dependent. In some devices this key is already embedded in the device. And in others the key can be chosen and written to OTP (One Time Programmable Memory). Where it is impossible to read it back and only accessible through the on chip crypto engine. The EK is then used to encrypt the private part of the AIK. Then the public AIK and the encrypted private AIK are signed with the provision entity Key (PE-Key). These three parts form the attestation data.</p>
+<p>The PE-Key is certified by a root CA and the public part of this key has to be publicly available. The verifier later needs this key.</p>
+<p>The attestation data is added to the device. Because the attestation data is not confidential. It can be saved anywhere on the device.</p>
+<p>Another important point is that the provision entity has to guarantee that she forget the EK and the AIK. In some devices the provision entity has never access to the EK. This is good nor bad, because it just shifts trust from the provision entity to the hardware manufacturer.</p>
+<p>The last step is to sell the provisioned devices to people who want to operate the hardware. They are called members, because they can become a part of the network.</p>
+<p><img src="./fig/ra-by-distributor-pe-2.svg" alt="Concept" /></p>
+<h3><a class="header" href="#member" id="member">Member</a></h3>
+<p>The member buys a device from the provision entity. This device can only boot from signed images, which are signed by the trusted software source. These images then perform a secure boot. This image sets up a system, that is split in two halves. In one half starts a rich OS, which is considered untrusted. In the other half starts a secure OS. This half is protected from the other side with ARM Trust Zone. The secure OS such as OPTEE, is able to host different TEEs in parallel and ensures encapsulation of these TEEs.</p>
+<p><img src="./fig/ra-by-distributor-member.svg" alt="Concept" /></p>
+<h3><a class="header" href="#verifier" id="verifier">Verifier</a></h3>
+<p>To do an actual remote attestation, the verifier needs at first the public key from the provision entity. Then the verifier waits on request from the member. When he wants to join, he send his request, the attestation data. The verifier then validates the attestation data. If the data is valid, he knows the public AKI. To validate the public AIK, he generates a challenge. The simplest challenge is a random number. This number is sent to the member. The member decrypts the private AIK and signs the random number with it. Afterwards he sends the signature back with some system measurements. The verifier can validate the signature. If the signature is valid, the verifier can make the following assumptions:</p>
+<ol>
+<li>The private AIK used to forge the signature belongs to the public AIK from the attestation data, therefore there a valid key pair</li>
+<li>The AIK was generated by the provision entity, because it is signed with the PE-Key</li>
+<li>The device is a provisioned hardware, because the hardware is the only one which knows the EK and is able to decrypt the private AIK.</li>
+<li>The hardware has booted a trustful system, because the eFuses were burnt by the provision entity</li>
+</ol>
+<p><img src="./fig/ra-by-distributor-verifier.svg" alt="Concept" /></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="hw_diversification.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="howto.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="hw_diversification.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="howto.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
