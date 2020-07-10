@@ -8,6 +8,6 @@ Diversification would have a positive effect on TEE *integrity* because a vulner
 
 However, diversification could have a negative impact on *confidentiality*. If secrets are provisioned to several types of TEEs, it only takes a single TEE to leak the secret to compromise it for all.
 
-## Open Source Remote Attestation
+## Open Source Remote Attestation Process
 
 See [Distributor-Level Remote Attestation](./hw_ra_by_distributor.md)
