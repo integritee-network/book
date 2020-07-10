@@ -17,6 +17,8 @@
     - [Intel SGX](./security_intel_sgx.md)
     - [Threat model ChainRelay](./security_tm_chainrelay.md)
   - [Benchmarks](./benchmarks.md)
+  - [HW Diversification](./hw_diversification.md)
+    - [Distributor-Level Remote Attestation](./hw_ra_by_distributor.md)
 - [Howto](./howto.md)
   - [How To Run a Node](./howto_node.md)
   - [How To Run a Worker](./howto_worker.md)
