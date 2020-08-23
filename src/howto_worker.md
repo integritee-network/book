@@ -55,7 +55,7 @@ You need the following components installed to start developing/compiling the co
 
 ### Setup SGX hardware with Ansible
 
-You find a sample Ansible playbook under https://github.com/scs/intel_sgx_setup.
+You find a sample Ansible playbook [here](https://github.com/scs/intel_sgx_setup)
 
 Open the playbook with your editor and replace all the variables with `<...>` with your own settings.
 
