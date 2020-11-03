@@ -859,42 +859,52 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 <p>In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making <code>/dev/isgx</code> and the aesm service available).</p>
 <h2><a class="header" href="#setup" id="setup">Setup</a></h2>
 <p>You'll need SGX enabled hardware and to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own SPID and KEY.</p>
-<p>Build node, worker and client in our docker:</p>
-<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+<p>Build worker, client and node in our docker:</p>
+<pre><code class="language-bash"># get the docker image
+# check for updates on https://hub.docker.com/repository/docker/scssubstratee/substratee_dev
+docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+
+# create a dedicated demo directory and start the docker container
 mkdir demo &amp;&amp; cd demo
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+docker run -it -v $(pwd):/root/work -v /var/run/aesm:/var/run/aesm --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+
 # now you are inside the container
+# clone and build the worker and the client
+# info: change the tag to the latest
 cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-git checkout M6
+git checkout v0.6.12-sub2.0.0
 make
 # this might take 10min+ on a fast machine
 
+# use your SPID and KEY from Intel
 echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
 echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 
+# clone and build the node
+# info: change the tag to the latest
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
-git checkout M6
+git checkout v0.6.12-sub2.0.0
 cargo build --release
 # another 10min
 </code></pre>
 <p>For a nicer overview of the demo, let's install tmux and split our docker console into multiple terminals</p>
 <pre><code class="language-bash">apt update
-apt install tmux
+apt install -y tmux
 tmux
 tmux split-window -v
 tmux split-window -h
 </code></pre>
 <p>You should now see three terminals</p>
-<h2><a class="header" href="#launch-node-in-terminal-1" id="launch-node-in-terminal-1">launch node in terminal 1</a></h2>
+<h2><a class="header" href="#launch-node-in-terminal-1" id="launch-node-in-terminal-1">Launch node in terminal 1</a></h2>
 <pre><code class="language-bash">cd ~/work/substraTEE-node/
 ./target/release/substratee-node --dev -lruntime=debug
 </code></pre>
 <p>blocks should be produced...</p>
-<h2><a class="header" href="#launch-worker-in-terminal-2" id="launch-worker-in-terminal-2">launch worker in terminal 2</a></h2>
+<h2><a class="header" href="#launch-worker-in-terminal-2" id="launch-worker-in-terminal-2">Launch worker in terminal 2</a></h2>
 <p>use <code>Ctrl-B + cursors</code> to move between terminals</p>
 <pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
 ./substratee-worker init-shard
@@ -902,8 +912,8 @@ tmux split-window -h
 ./substratee-worker signing-key
 ./substratee-worker run
 </code></pre>
-<h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">play in terminal 3</a></h2>
-<pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
+<h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">Play in terminal 3</a></h2>
+<pre><code class="language-bash">cd ~/work/substraTEE-worker/client
 ./demo_shielding_unshielding.sh
 </code></pre>
 <p>Now you can watch the process of</p>
@@ -913,6 +923,19 @@ tmux split-window -h
 <li>Alice privately sending funds to Bobs <em>incognito</em> account</li>
 <li>Alice unshielding some funds back onto her public account</li>
 </ol>
+<h2><a class="header" href="#cleanup" id="cleanup">Cleanup</a></h2>
+<p>The files created in the docker container belong to <code>root</code>. This makes it hard to delete them on your normal system. We now give them back to your standard user.</p>
+<p>Note: This step is optional.</p>
+<pre><code class="language-bash">cd /root/work
+ls -la
+
+# write down the numbers on the line containing '.'
+# example output: drwxrwxr-x 17 1002 1002   4096 Nov  2 15:10 .
+#  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
+
+# give all files back to the external user
+chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker substraTEE-node
+</code></pre>
 <h1><a class="header" href="#how-to-access-on-chain-storage-from-within-the-enclave-trustlessly" id="how-to-access-on-chain-storage-from-within-the-enclave-trustlessly">How To Access On-Chain Storage From Within The Enclave Trustlessly</a></h1>
 <p>substraTEE isolates <em>confidential state</em> (what the STF <code>TrustedCall</code> operates on inside the SGX enclave) from <em>on-chain state</em> (what is plaintext readable by the entire network of substraTEE-nodes). Some use cases, however, reqire read access to on-chain storage for their <code>TrustedCall</code>s. As the enclave can't trust it's worker service, it has to request and verify read proofs from the substraTEE-node.</p>
 <p>Our goal is that you can use the same pallets that you use on-chain also inside substraTEE enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your <code>TrustedCall</code> has to specify what storage keys it requires and these will be mapped to the confidential state befor executing the call.</p>
