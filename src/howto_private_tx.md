@@ -12,27 +12,37 @@ In the following demo we show how Alice can send tokens to Bob privately. The de
 
 You'll need SGX enabled hardware and to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own SPID and KEY.
 
-Build node, worker and client in our docker:
+Build worker, client and node in our docker:
 
 ```bash
+# get the docker image
+# check for updates on https://hub.docker.com/repository/docker/scssubstratee/substratee_dev
 docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+
+# create a dedicated demo directory and start the docker container
 mkdir demo && cd demo
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+docker run -it -v $(pwd):/root/work -v /var/run/aesm:/var/run/aesm --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+
 # now you are inside the container
+# clone and build the worker and the client
+# info: change the tag to the latest
 cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-git checkout M6
+git checkout v0.6.12-sub2.0.0
 make
 # this might take 10min+ on a fast machine
 
+# use your SPID and KEY from Intel
 echo "<YOUR SPID>" > bin/spid.txt
 echo "<YOUR KEY>" > bin/key.txt
 
+# clone and build the node
+# info: change the tag to the latest
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
-git checkout M6
+git checkout v0.6.12-sub2.0.0
 cargo build --release
 # another 10min
 ```
@@ -41,7 +51,7 @@ For a nicer overview of the demo, let's install tmux and split our docker consol
 
 ```bash
 apt update
-apt install tmux
+apt install -y tmux
 tmux
 tmux split-window -v
 tmux split-window -h
@@ -49,7 +59,7 @@ tmux split-window -h
 
 You should now see three terminals
 
-## launch node in terminal 1
+## Launch node in terminal 1
 
 ```bash
 cd ~/work/substraTEE-node/
@@ -58,7 +68,7 @@ cd ~/work/substraTEE-node/
 
 blocks should be produced...
 
-## launch worker in terminal 2
+## Launch worker in terminal 2
 
 use `Ctrl-B + cursors` to move between terminals
 
@@ -70,10 +80,10 @@ cd ~/work/substraTEE-worker/bin
 ./substratee-worker run
 ```
 
-## play in terminal 3
+## Play in terminal 3
 
 ```bash
-cd ~/work/substraTEE-worker/bin
+cd ~/work/substraTEE-worker/client
 ./demo_shielding_unshielding.sh
 ```
 
@@ -83,3 +93,20 @@ Now you can watch the process of
 2. Alice shielding funds onto her *incognito* account
 3. Alice privately sending funds to Bobs *incognito* account
 4. Alice unshielding some funds back onto her public account
+
+## Cleanup
+The files created in the docker container belong to `root`. This makes it hard to delete them on your normal system. We now give them back to your standard user.
+
+Note: This step is optional.
+
+```bash
+cd /root/work
+ls -la
+
+# write down the numbers on the line containing '.'
+# example output: drwxrwxr-x 17 1002 1002   4096 Nov  2 15:10 .
+#  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
+
+# give all files back to the external user
+chown -R <NUMBER1>:<NUMBER2> substraTEE-worker substraTEE-node
+```
