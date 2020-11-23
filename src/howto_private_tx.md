@@ -113,7 +113,14 @@ cd ~/work/substraTEE-worker/bin
 ./substratee-worker run
 ```
 
-Note: Docker environment is currently not working. In case 
+Note: When launching the worker from within the docker environment, the following error is currently occurring:
+```bash
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: SGX_ERROR_NO_DEVICE', worker/src/main.rs:180:31
+```
+To workaround this problem, enter:
+```bash
+LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service & 
+```
 
 ## Play in terminal 3
 
