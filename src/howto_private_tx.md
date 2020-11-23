@@ -32,6 +32,36 @@ cd substraTEE-worker
 git checkout v0.6.12-sub2.0.0
 make
 # this might take 10min+ on a fast machine
+```
+
+In case you encounter the error 
+```bash
+error: failed to get `sgx-runtime` as a dependency of package `substratee-stf v0.6.12-sub2.0.0 (/root/work/substraTEE-worker/stf)`
+Caused by:
+  failed to load source for dependency `sgx-runtime`
+```
+you need to edit the file Cargo.lock manually. Find the package inclusion of sgx-runtime, looking similiar to:
+```rust
+[[package]]
+name = "sgx-runtime"
+version = "0.6.12-sub2.0.0"
+source = "git+https://github.com/scs/sgx-runtime?tag=v0.6.12-sub2.0.0#daace7e56a250e79132962311ac0e7935faa8385"
+dependencies = [
+*--snip
+]
+```
+and delete the last bit after (and with) the # tag of the source:
+```rust
+source = "git+https://github.com/scs/sgx-runtime?tag=v0.6.12-sub2.0.0"
+```
+and save your changes. If you can not save the changes due to permission denied follow the steps described in the Cleanup section below. Since the directory substraTEE-node has not yet been cloned only change the permission of substraTEE-worker. Saving should now work.
+
+Re-enter the substraTEE-worker directory and try to make again:
+```bash
+cd substraTEE-worker
+make
+# this might take 10min+ on a fast machine
+```
 
 # use your SPID and KEY from Intel
 echo "<YOUR SPID>" > bin/spid.txt
@@ -79,6 +109,8 @@ cd ~/work/substraTEE-worker/bin
 ./substratee-worker signing-key
 ./substratee-worker run
 ```
+
+Note: Docker environment is currently not working. In case 
 
 ## Play in terminal 3
 
