@@ -34,13 +34,13 @@ make
 # this might take 10min+ on a fast machine
 ```
 
-In case you encounter the error 
+In case you get the error:
 ```bash
 error: failed to get `sgx-runtime` as a dependency of package `substratee-stf v0.6.12-sub2.0.0 (/root/work/substraTEE-worker/stf)`
 Caused by:
   failed to load source for dependency `sgx-runtime`
 ```
-you need to edit the file Cargo.lock manually. Find the package inclusion of sgx-runtime, looking similiar to:
+you need to edit the file Cargo.lock manually. Within the file, find the inclusion of the package sgx-runtime. It should look similiar to:
 ```rust
 [[package]]
 name = "sgx-runtime"
@@ -54,7 +54,7 @@ and delete the last bit after (and with) the # tag of the source:
 ```rust
 source = "git+https://github.com/scs/sgx-runtime?tag=v0.6.12-sub2.0.0"
 ```
-and save your changes. If you can not save the changes due to permission denied follow the steps described in the Cleanup section below. Since the directory substraTEE-node has not yet been cloned only change the permission of substraTEE-worker. Saving should now work.
+and save your changes. If you can not save the changes due to "permission denied", follow the steps described in the Cleanup section below. Since the directory substraTEE-node has not yet been cloned only change the permission of substraTEE-worker. Saving should now work.
 
 Re-enter the substraTEE-worker directory and try to make again:
 ```bash
@@ -62,6 +62,8 @@ cd substraTEE-worker
 make
 # this might take 10min+ on a fast machine
 ```
+
+The rest of the setup should now work without any further errors:
 
 # use your SPID and KEY from Intel
 echo "<YOUR SPID>" > bin/spid.txt
