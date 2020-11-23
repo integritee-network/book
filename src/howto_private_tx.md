@@ -50,20 +50,20 @@ dependencies = [
 *--snip
 ]
 ```
-and delete the last bit after (and with) the # tag of the source:
+Delete the last bit after (and with) the # tag of the source:
 ```rust
 source = "git+https://github.com/scs/sgx-runtime?tag=v0.6.12-sub2.0.0"
 ```
-and save your changes. If you can not save the changes due to "permission denied", follow the steps described in the Cleanup section below. Since the directory substraTEE-node has not yet been cloned only change the permission of substraTEE-worker. Saving should now work.
+Save your changes. If you can not save the changes due to "permission denied", follow the steps described in the Cleanup section below. Since the directory substraTEE-node has not yet been cloned only change the permission of substraTEE-worker. Saving should work after the cleanup.
 
-Re-enter the substraTEE-worker directory and try to make again:
+Re-enter the substraTEE-worker directory and try to run the make command again:
 ```bash
 cd substraTEE-worker
 make
 # this might take 10min+ on a fast machine
 ```
 
-The rest of the setup should now work without any further errors:
+The rest of the setup should now work without further errors:
 
 ```bash
 # use your SPID and KEY from Intel
