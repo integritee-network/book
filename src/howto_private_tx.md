@@ -65,6 +65,7 @@ make
 
 The rest of the setup should now work without any further errors:
 
+```bash
 # use your SPID and KEY from Intel
 echo "<YOUR SPID>" > bin/spid.txt
 echo "<YOUR KEY>" > bin/key.txt
