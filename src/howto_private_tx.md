@@ -117,10 +117,13 @@ Note: When launching the worker from within the docker environment, the followin
 ```bash
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: SGX_ERROR_NO_DEVICE', worker/src/main.rs:180:31
 ```
-To workaround this problem, enter:
+To workaround this problem enter:
 ```bash
 LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service & 
+./substratee-worker init-shard
 ```
+followed by the rest of the above mentioned commands.
+
 
 ## Play in terminal 3
 
