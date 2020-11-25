@@ -113,18 +113,6 @@ cd ~/work/substraTEE-worker/bin
 ./substratee-worker run
 ```
 
-Note: When launching the worker from within the docker environment, the following error is currently occurring:
-```bash
-thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: SGX_ERROR_NO_DEVICE', worker/src/main.rs:180:31
-```
-To workaround this problem enter:
-```bash
-LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service & 
-./substratee-worker init-shard
-```
-followed by the rest of the above mentioned commands.
-
-
 ## Play in terminal 3
 
 ```bash
@@ -154,4 +142,16 @@ ls -la
 
 # give all files back to the external user
 chown -R <NUMBER1>:<NUMBER2> substraTEE-worker substraTEE-node
+```
+
+## Troubleshooting
+
+When launching the worker from within the docker environment, the following error may occurr:
+```bash
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: SGX_ERROR_NO_DEVICE', worker/src/main.rs:180:31
+```
+To workaround this problem enter:
+```bash
+LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service & 
+./substratee-worker init-shard
 ```
