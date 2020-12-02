@@ -73,20 +73,21 @@ The tag has the following format: `<Ubuntu version>-<Intel SGX SDK version>-<Rus
 If you execute
 
 ```bash
-docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 ```
 
 you get a docker image with
 
 * Ubuntu 18.04
-* Intel SGX SDK 2.9.1
-* Rust SGX SDK 1.1.2 (which includes the correct Rust version)
+* Intel SGX SDK 2.12
+* Rust SGX SDK 1.1.3 (which includes the correct Rust version)
+* container version 001
 * IPFS 0.4.21
 
 The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.
 
 ```bash
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 ```
 
 Now you can build and run your worker inside docker.
@@ -100,7 +101,7 @@ If you are on a platform that supports SGX, you can enable HW support by:
 * Start the docker with SGX device support:
 
   ```bash
-  docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+  docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
   ```
 
 * Start the aesm service inside the docker:
@@ -125,6 +126,17 @@ If you run the Hardware Mode on a platform that does not support SGX, you get th
 ```
 
 ## Build Worker
+
+In order to compile *ring* into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for Ubuntu 18.04. Skip this if you're building in our docker.
+
+```bash
+wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 10
+export CC=/usr/bin/clang-10
+export AR=/usr/bin/llvm-ar-10
+# if you already built, make sure to run cargo clean
+```
 
 ```bash
 git clone https://github.com/scs/substraTEE-worker.git
