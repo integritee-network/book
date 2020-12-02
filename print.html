@@ -790,17 +790,18 @@ WantedBy=multi-user.target
 <p>We provide docker images with all the required tools installed. They can be found on <a href="https://hub.docker.com/repository/docker/scssubstratee/substratee_dev">dockerhub</a>.</p>
 <p>The tag has the following format: <code>&lt;Ubuntu version&gt;-&lt;Intel SGX SDK version&gt;-&lt;Rust SGX SDK version&gt;</code>. We don't provide any <em>latest</em> so you must specify the tag.</p>
 <p>If you execute</p>
-<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 </code></pre>
 <p>you get a docker image with</p>
 <ul>
 <li>Ubuntu 18.04</li>
-<li>Intel SGX SDK 2.9.1</li>
-<li>Rust SGX SDK 1.1.2 (which includes the correct Rust version)</li>
+<li>Intel SGX SDK 2.12</li>
+<li>Rust SGX SDK 1.1.3 (which includes the correct Rust version)</li>
+<li>container version 001</li>
 <li>IPFS 0.4.21</li>
 </ul>
 <p>The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.</p>
-<pre><code class="language-bash">docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 </code></pre>
 <p>Now you can build and run your worker inside docker.</p>
 <h4><a class="header" href="#enabling-sgx-hw-support-in-docker" id="enabling-sgx-hw-support-in-docker">Enabling SGX HW Support in Docker</a></h4>
@@ -814,7 +815,7 @@ WantedBy=multi-user.target
 </li>
 <li>
 <p>Start the docker with SGX device support:</p>
-<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 </code></pre>
 </li>
 <li>
@@ -836,6 +837,14 @@ WantedBy=multi-user.target
 [2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 </code></pre>
 <h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
+<p>In order to compile <em>ring</em> into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for Ubuntu 18.04. Skip this if you're building in our docker.</p>
+<pre><code class="language-bash">wget https://apt.llvm.org/llvm.sh
+chmod +x llvm.sh
+sudo ./llvm.sh 10
+export CC=/usr/bin/clang-10
+export AR=/usr/bin/llvm-ar-10
+# if you already built, make sure to run cargo clean
+</code></pre>
 <pre><code class="language-bash">git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 make
