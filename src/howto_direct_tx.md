@@ -33,9 +33,6 @@ git checkout 184/implement-json-rpc-interface
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
-# create empty INTEL key files
-touch spid.txt key.txt
-
 # clone and build the node
 # info: change the tag to the latest
 cd ..
@@ -72,6 +69,8 @@ use `Ctrl-B + cursors` to move between terminals
 
 ```bash
 cd ~/work/substraTEE-worker/bin
+# create empty INTEL key files
+touch spid.txt key.txt
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
