@@ -1,7 +1,7 @@
 
 # How to Perform Direct Transactions
 
-Direct transactions are, equal to [Private Transaction](./howto_private_tx.md), a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom. The difference lies in the way the transaction is transferred. In direction transactions the client call is directly sent to the TEE with, ideally, no intermediate steps of untrusted applications.
+Direct transactions are, equal to [Private Transaction](./howto_private_tx.md), a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom. The difference lies in the way the transaction is transferred. In direct transactions the client call is directly sent to the TEE with, ideally, no intermediate steps of untrusted applications.
 
 Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. substraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in substraTEE it is guaranteed by TEEs.
 
