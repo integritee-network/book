@@ -33,8 +33,8 @@ git checkout 184/implement-json-rpc-interface
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
-# use KEY from Intel
-echo "<YOUR KEY>" > bin/key.txt
+# create empty INTEL key files
+touch spid.txt key.txt
 
 # clone and build the node
 # info: change the tag to the latest
@@ -75,13 +75,15 @@ cd ~/work/substraTEE-worker/bin
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
-./substratee-worker -P 2094 -r 3448 -p 9994 run
+./substratee-worker mrenclave > ~/mrenclave.b58
+./substratee-worker -P 2094 -r 3448 -p 9994 --ws-external run --skip-ra
 ```
 
 ## Play in terminal 3
 
 ```bash
 cd ~/work/substraTEE-worker/client
+MRENCLAVE=$(cat ~/mrenclave.b58)
 ./demo_direct_call.sh
 ```
 
