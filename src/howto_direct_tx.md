@@ -11,7 +11,7 @@ In the following demo we show how Alice can send tokens to Bob privately with a 
 
 ## Setup
 
-You'll need SGX enabled hardware and to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own SPID and KEY.
+You'll need SGX enabled hardware and to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own KEY.
 
 Build worker, client and node in our docker:
 
@@ -22,10 +22,7 @@ docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 
 # create a dedicated demo directory and start the docker container (with sgx support)
 mkdir demo && cd demo
-docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
-# now you are inside the container and you can start the aesm service inside the docker
-LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service & 
-
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 
 # clone and build the worker and the client
 cd work
@@ -33,11 +30,10 @@ git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 # change to the branch enabling direct calls
 git checkout 184/implement-json-rpc-interface
-make
+SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
-# use your SPID and KEY from Intel
-echo "<YOUR SPID>" > bin/spid.txt
+# use KEY from Intel
 echo "<YOUR KEY>" > bin/key.txt
 
 # clone and build the node
