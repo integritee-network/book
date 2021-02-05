@@ -82,7 +82,6 @@ touch spid.txt key.txt
 
 ```bash
 cd ~/work/substraTEE-worker/client
-MRENCLAVE=$(cat ~/mrenclave.b58)
 ./demo_direct_call.sh
 ```
 
