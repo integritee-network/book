@@ -1,13 +1,15 @@
 
 # How to Perform Direct Transactions
 
-Direct transactions are, equal to [Private Transaction](./howto_private_tx.md), a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom. The difference lies in the way the transaction is transferred. In direct transactions the client call is directly sent to the TEE with, ideally, no intermediate steps of untrusted applications.
+This direct invocation demo is similar to [Private Transaction](./howto_private_tx.md): We demonstrate a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom. The difference lies in the way the transaction is transferred. With indirect invocation, calls are sent to the blockchain to get consensus over tx order. With direct invocation (this demo), the client call is directly sent to the TEE which takes care of tx ordering as a trusted entity.
+
+For direct invocation, our worker exposes a rpc interface for submitting and watching a `TrustedCall`. Our client uses direct invocation whenever the `--direct` flag is present.
 
 Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. substraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in substraTEE it is guaranteed by TEEs.
 
 The detailed design of the shielding and unshielding process is described in the chapter [Token Shielding](./token_shielding.md).
 
-In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making `/dev/isgx` and the aesm service available).
+In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need any special hardware. 
 
 ## Setup
 
@@ -29,24 +31,22 @@ cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
 # change to the branch enabling direct calls
-git checkout 184/implement-json-rpc-interface
+git checkout M8.1
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
 # clone and build the node
-# info: change the tag to the latest
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
+git checkout v0.7.0
 cargo build --release
 # another 10min
 ```
 
-For a nicer overview of the demo, let's install tmux and split our docker console into multiple terminals
+For a nicer overview of the demo, let's use tmux and split our docker console into multiple terminals
 
 ```bash
-apt update
-apt install -y tmux
 tmux
 tmux split-window -v
 tmux split-window -h
@@ -58,10 +58,10 @@ You should now see three terminals
 
 ```bash
 cd ~/work/substraTEE-node/
-./target/release/substratee-node --dev --ws-port 9994
+./target/release/substratee-node --tmp --dev
 ```
 
-blocks should be produced...
+wait until you see blocks being produced...
 
 ## Launch worker in terminal 2
 
@@ -75,10 +75,11 @@ touch spid.txt key.txt
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
 ./substratee-worker mrenclave > ~/mrenclave.b58
-./substratee-worker -P 2094 -r 3448 -p 9994 --ws-external run --skip-ra
+./substratee-worker run --skip-ra
 ```
+wait until you see blocks being synched
 
-## Play in terminal 3
+## Run client in terminal 3
 
 ```bash
 cd ~/work/substraTEE-worker/client
@@ -87,14 +88,12 @@ cd ~/work/substraTEE-worker/client
 
 Now you can watch the process of
 
-1. Alice creating a new *incognito* account. This account is never disclosed to the public.
-2. Alice shielding funds onto her *incognito* account
-3. Alice privately sending funds to Bobs *incognito* account
-4. Alice unshielding some funds back onto her public account
-the shielding and sending calls are encrypted and directly forwarded to the enclave. Hence the worker has no way of decoding the transmitted message. 
+1. Sudo prefunding Alice
+2. creating a new *incognito* account
+3. Alice privately sending funds to new *incognito* account
 
 ## Cleanup
-The files created in the docker container belong to `root`. This makes it hard to delete them on your normal system. We now give them back to your standard user.
+The files created in the docker container belong to `root`. This can make it impossible to delete them on your host system. We now give them back to your standard user. (Alternatively, you can just delete everything in `work`)
 
 Note: This step is optional.
 
