@@ -1,6 +1,8 @@
 
 # How to Perform Direct Transactions
 
+*this demo is intended to be an acceptance test for M8.1. The underlying features are not production-ready. M8.1 is just our first milestone towards direct invocation and sidechains according to our [scalability roadmap](https://polkadot.polkassembly.io/post/111)*
+
 This direct invocation demo is similar to [Private Transaction](./howto_private_tx.md): We demonstrate a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom. The difference lies in the way the transaction is transferred. With indirect invocation, calls are sent to the blockchain to get consensus over tx order. With direct invocation (this demo), the client call is directly sent to the TEE which takes care of tx ordering as a trusted entity.
 
 For direct invocation, our worker exposes a rpc interface for submitting and watching a `TrustedCall`. Our client uses direct invocation whenever the `--direct` flag is present.
