@@ -872,32 +872,24 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 <p>Build worker, client and node in our docker:</p>
 <pre><code class="language-bash"># get the docker image
 # check for updates on https://hub.docker.com/repository/docker/scssubstratee/substratee_dev
-docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 
 # create a dedicated demo directory and start the docker container
 mkdir demo &amp;&amp; cd demo
-docker run -it -v $(pwd):/root/work -v /var/run/aesm:/var/run/aesm --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 
 # now you are inside the container
 # clone and build the worker and the client
-# info: change the tag to the latest
 cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-git checkout v0.6.12-sub2.0.0
-make
+SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
-# use your SPID and KEY from Intel
-echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
-echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
-
 # clone and build the node
-# info: change the tag to the latest
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
-git checkout v0.6.12-sub2.0.0
 cargo build --release
 # another 10min
 </code></pre>
@@ -917,10 +909,13 @@ tmux split-window -h
 <h2><a class="header" href="#launch-worker-in-terminal-2" id="launch-worker-in-terminal-2">Launch worker in terminal 2</a></h2>
 <p>use <code>Ctrl-B + cursors</code> to move between terminals</p>
 <pre><code class="language-bash">cd ~/work/substraTEE-worker/bin
+# create empty INTEL key files
+touch spid.txt key.txt
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
-./substratee-worker run
+./substratee-worker mrenclave &gt; ~/mrenclave.b58
+./substratee-worker run --skip-ra
 </code></pre>
 <h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">Play in terminal 3</a></h2>
 <pre><code class="language-bash">cd ~/work/substraTEE-worker/client
@@ -947,7 +942,7 @@ ls -la
 chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker substraTEE-node
 </code></pre>
 <h1><a class="header" href="#how-to-perform-direct-transactions" id="how-to-perform-direct-transactions">How to Perform Direct Transactions</a></h1>
-<p><em>this demo is intended to be an acceptance test for M8.1. The underlying features are not production-ready. M8.1 is just our first milestone towards direct invocation and sidechains according to our <a href="https://polkadot.polkassembly.io/post/111">scalability roadmap</a></em></p>
+<p><em>this demo is intended to be an acceptance test for M8.1 and M8.2. The underlying features are not production-ready. M8.1 and M8.2 are just our first milestones towards direct invocation and sidechains according to our <a href="https://polkadot.polkassembly.io/post/111">scalability roadmap</a></em></p>
 <p>This direct invocation demo is similar to <a href="./howto_private_tx.html">Private Transaction</a>: We demonstrate a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom. The difference lies in the way the transaction is transferred. With indirect invocation, calls are sent to the blockchain to get consensus over tx order. With direct invocation (this demo), the client call is directly sent to the TEE which takes care of tx ordering as a trusted entity.</p>
 <p>For direct invocation, our worker exposes a rpc interface for submitting and watching a <code>TrustedCall</code>. Our client uses direct invocation whenever the <code>--direct</code> flag is present.</p>
 <p>Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. substraTEE offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in substraTEE it is guaranteed by TEEs.</p>
@@ -965,11 +960,8 @@ mkdir demo &amp;&amp; cd demo
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 
 # clone and build the worker and the client
-cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-# change to the branch enabling direct calls
-git checkout M8.1
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
@@ -977,7 +969,6 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
-git checkout v0.7.0
 cargo build --release
 # another 10min
 </code></pre>
