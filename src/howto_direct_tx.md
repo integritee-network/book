@@ -28,24 +28,9 @@ docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 mkdir demo && cd demo
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 
-# clone the sgx runtime
-cd work
-git clone https://github.com/scs/sgx-runtime.git
-cd sgx-runtime
-git checkout sidechain
-cd ..
-
-# clone the substratee pallet
-git clone https://github.com/scs/pallet-substratee-registry.git
-cd pallet-substratee-registry
-git checkout sidechain-v0-6-15
-cd ..
-
 # clone and build the worker and the client
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-# change to the branch enabling direct calls
-git checkout sidechain-M8.2
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
@@ -53,7 +38,6 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
-git checkout sidechain
 cargo build --release
 # another 10min
 ```
