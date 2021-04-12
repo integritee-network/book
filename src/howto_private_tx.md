@@ -17,32 +17,24 @@ Build worker, client and node in our docker:
 ```bash
 # get the docker image
 # check for updates on https://hub.docker.com/repository/docker/scssubstratee/substratee_dev
-docker pull scssubstratee/substratee_dev:18.04-2.9.1-1.1.2
+docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 
 # create a dedicated demo directory and start the docker container
 mkdir demo && cd demo
-docker run -it -v $(pwd):/root/work -v /var/run/aesm:/var/run/aesm --device /dev/isgx scssubstratee/substratee_dev:18.04-2.9.1-1.1.2 /bin/bash
+docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 
 # now you are inside the container
 # clone and build the worker and the client
-# info: change the tag to the latest
 cd work
 git clone https://github.com/scs/substraTEE-worker.git
 cd substraTEE-worker
-git checkout v0.6.12-sub2.0.0
-make
+SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
-# use your SPID and KEY from Intel
-echo "<YOUR SPID>" > bin/spid.txt
-echo "<YOUR KEY>" > bin/key.txt
-
 # clone and build the node
-# info: change the tag to the latest
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
-git checkout v0.6.12-sub2.0.0
 cargo build --release
 # another 10min
 ```
@@ -74,10 +66,13 @@ use `Ctrl-B + cursors` to move between terminals
 
 ```bash
 cd ~/work/substraTEE-worker/bin
+# create empty INTEL key files
+touch spid.txt key.txt
 ./substratee-worker init-shard
 ./substratee-worker shielding-key
 ./substratee-worker signing-key
-./substratee-worker run
+./substratee-worker mrenclave > ~/mrenclave.b58
+./substratee-worker run --skip-ra
 ```
 
 ## Play in terminal 3
