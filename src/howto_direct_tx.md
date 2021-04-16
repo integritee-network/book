@@ -85,7 +85,7 @@ wait until you see blocks being synched
 
 ```bash
 cd ~/work/substraTEE-worker/client
-./demo_direct_call.sh
+./demo_direct_call.sh -m file
 ```
 
 Now you can watch the process of
