@@ -176,6 +176,9 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
+# initialize wasm build environment
+./scripts/init.sh
+# build the node
 cargo build --release
 # another 10min
 </code></pre>
