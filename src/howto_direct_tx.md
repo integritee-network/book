@@ -27,6 +27,7 @@ docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 # create a dedicated demo directory and start the docker container (with sgx support)
 mkdir demo && cd demo
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
+cd work
 
 # clone and build the worker and the client
 git clone https://github.com/scs/substraTEE-worker.git
@@ -38,6 +39,9 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/scs/substraTEE-node.git
 cd substraTEE-node
+# initialize wasm build environment
+./scripts/init.sh
+# build the node
 cargo build --release
 # another 10min
 ```
@@ -81,7 +85,7 @@ wait until you see blocks being synched
 
 ```bash
 cd ~/work/substraTEE-worker/client
-./demo_direct_call.sh
+./demo_direct_call.sh -m file
 ```
 
 Now you can watch the process of
