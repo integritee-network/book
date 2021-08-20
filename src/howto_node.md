@@ -1,4 +1,4 @@
-# How to Build and Run a substraTEE-node
+# How to Build and Run a integritee-node
 
 You don't need SGX to run a node (only workers do).
 
@@ -48,24 +48,24 @@ cargo build --release
 Purge any existing developer chain state:
 
 ```bash
-./target/release/substratee-node purge-chain --dev
+./target/release/integritee-node purge-chain --dev
 ```
 
 Start a development chain with:
 
 ```bash
-./target/release/substratee-node --dev
+./target/release/integritee-node --dev
 ```
 
-If you want the substraTEE-node to expose a different websocket port, use the option `--ws-port xxx`. If external workers or clients need to access, add the option `--ws-external`.
+If you want the integritee-node to expose a different websocket port, use the option `--ws-port xxx`. If external workers or clients need to access, add the option `--ws-external`.
 
 Detailed logs may be shown by running the node with the following environment variables set: `RUST_LOG=debug RUST_BACKTRACE=1 cargo run -- --dev`.
 
 ### Node as a System Service
-If you want to run your node as a system service in Linux, create (as root or user with sudo permissions) a file in `/etc/systemd/system` called `substraTEE-node.service` with the following content:
+If you want to run your node as a system service in Linux, create (as root or user with sudo permissions) a file in `/etc/systemd/system` called `integritee-node.service` with the following content:
 ```bash
 [Unit]
-Description=SubstraTEE Node
+Description=Integritee Node
 After=network.target
 StartLimitIntervalSec=0
 
@@ -74,7 +74,7 @@ Type=simple
 Restart=always
 RestartSec=10
 User=<USER TO RUN THE NODE>
-ExecStart=<ABSOLUTE PATH TO>/substratee-node --chain <PATH TO CHAIN JSON> --name <NAME OF THE NODE>
+ExecStart=<ABSOLUTE PATH TO>/integritee-node --chain <PATH TO CHAIN JSON> --name <NAME OF THE NODE>
 
 [Install]
 WantedBy=multi-user.target
@@ -88,6 +88,6 @@ Where:
 Update the systemd daemon with `systemctrl daemon-reload`.
 
 Use the following commands:
-* `systemctrl start substraTEE-node.service` to start the node.
-* `systemctrl stop substraTEE-node.service` to stop the node.
-* `systemctrl status substraTEE-node.service` to check the status of the node/service.
+* `systemctrl start integritee-node.service` to start the node.
+* `systemctrl stop integritee-node.service` to stop the node.
+* `systemctrl status integritee-node.service` to check the status of the node/service.

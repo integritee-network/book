@@ -1,11 +1,11 @@
 # How To Build Your Own Trusted STF
 
-substraTEE is a framework that makes it easy for you to gain confidentiality for your decentralization endeavours.
+Integritee is a framework that makes it easy for you to gain confidentiality for your decentralization endeavours.
 
 The development process integrates well with substrate:
 
 1. develop and debug your use case on substrate, writing your own pallets
-2. Once the logic works, move your sensitive pallets to substraTEE without modification and you'll get confidential state (and state updates)
+2. Once the logic works, move your sensitive pallets to Integritee without modification and you'll get confidential state (and state updates)
 
 In the following we will assume that you know [how to build custom substrate blockchains](https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7) and we will skip boring explanations.
 
@@ -19,7 +19,7 @@ Encointer has been developed as a substrate chain with 4 custom pallets added to
 
 We will now show you how we can turn Testnet Gesell (all public) in to Testnet Cantillon, featuring confidentiality for sensitive pallets.
 
-In order to protect the privacy of users we will move the balances and ceremony pallets into the substraTEE-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:
+In order to protect the privacy of users we will move the balances and ceremony pallets into the integritee-enclave. These pallets will still need to interact with the on-chain state, as indicated in the diagram below:
 
 ![cantillon](./fig/Testnet-Cantillon-Component-Interactions.svg)
 
@@ -27,10 +27,10 @@ The final code can be inspected on [encointer github](https://github.com/encoint
 
 ## TEE Runtime
 
-Substrate chains wrap all their business logic into a runtime made up of pallets. substraTEE does so too, so let's create our TEE runtime:
+Substrate chains wrap all their business logic into a runtime made up of pallets. Integritee does so too, so let's create our TEE runtime:
 
 ```bash
-git clone https://github.com/scs/sgx-runtime.git
+git clone https://github.com/integritee-network/sgx-runtime.git
 ```
 
 this is actually a fork of node-template, stripped from everything we don't need for our case.
@@ -61,12 +61,12 @@ Looks familiar? If not, [learn from the best](https://www.substrate.io/tutorials
 
 We will skip the nitty gritty of including your pallets.
 
-## substraTEE-node
+## integritee-node
 
-The blockchain we'll be using is based on parity's node-template with one substraTEE-specific pallet that will take care of the worker registry and will proxy `TrustedCalls`
+The blockchain we'll be using is based on parity's node-template with one integritee-specific pallet that will take care of the worker registry and will proxy `TrustedCalls`
 
 ```bash
-git clone https://github.com/scs/substraTEE-node
+git clone https://github.com/integritee-network/integritee-node
 ```
 
 Encointer will add its public pallets to this node tempalte: *scheduler* and *currencies*. See [encointer-node](https://github.com/encointer/encointer-node/tree/sgx-master)
@@ -83,10 +83,10 @@ The worker itself will not need to be modified, it is the framework which runs y
 
 Now we need a way to call our custom pallet functions isolated in a TEE.
 
-substraTEE encapsulates all the application-specific stuff in its `substratee-stf` crate that you can customize.
+Integritee encapsulates all the application-specific stuff in its `substratee-stf` crate that you can customize.
 
 ```bash
-git clone https://github.com/scs/substraTEE-worker
+git clone https://github.com/integritee-network/worker
 ```
 
 Let's start by defining a new `TrustedCall`:
@@ -139,7 +139,7 @@ Now that we defined a new call we need to execute it:
 
 Now you see that `TrustedCall::ceremonies_register_participant()` calls `register_participant()` in our `ceremonies` pallet.
 
-This function call depends on the `scheduler` and `currencies` pallets which are not present in our TEE runtime. It is on-chain. So we need to tell substraTEE that it needs to fetch on-chain storage (and verify a read-proof) before executing our call:
+This function call depends on the `scheduler` and `currencies` pallets which are not present in our TEE runtime. It is on-chain. So we need to tell Integritee that it needs to fetch on-chain storage (and verify a read-proof) before executing our call:
 
 #### encointer-worker/stf/src/sgx.rs
 
@@ -212,7 +212,7 @@ The `--mrenclave` identifies the [TCB](./glossary.md) while `--shard` identifies
 
 ## Sharding
 
-As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the `currencies` pallet). The balances for each local currency are maintained confidentially within substraTEE. One shard for each currency. This means that a worker has to decide what shard it operates on.
+As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the `currencies` pallet). The balances for each local currency are maintained confidentially within Integritee. One shard for each currency. This means that a worker has to decide what shard it operates on.
 
 See [Sharding](./sharding-md) for more details.
 

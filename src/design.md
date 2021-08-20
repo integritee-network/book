@@ -1,19 +1,19 @@
 # Design
 
-In the following we explain how substraTEE works and how the different components play together.
+In the following we explain how Integritee works and how the different components play together.
 
 ## Direct Invocation (Vision)
 
 ![vision](./fig/substraTEE-vision.png)
-*substraTEE Target Architecture with Direct Invocation (future scenario)*
+*Integritee Target Architecture with Direct Invocation (future scenario)*
 
 * Shielding key: used by the substraTEE-client to encrypt the call in order to protect caller privacy. It is common to all enclaves.
 * State encryption key: used to encrypt and decrypt the state storage. It is common to all enclaves.
-* Signing key: used to sign transactions for the substraTEE-node. The corresponding account must be funded in order to pay for chain fees. It is unique for every enclave.
+* Signing key: used to sign transactions for the integritee-node. The corresponding account must be funded in order to pay for chain fees. It is unique for every enclave.
 
 ### How it works
 
-The *substraTEE-node* is a substrate blockchain node with an additional runtime module:
+The *integritee-node* is a substrate blockchain node with an additional runtime module:
 
 * substraTEE-registry module: proxies requests to workers, verifies IAS reports and keeps track of the registered enclaves. It provides the following API interfaces:
   * Register an enclave
@@ -34,8 +34,8 @@ The high level architecture of the current implementation can be seen in the fol
 
 The main building blocks can be found in the following repositories:
 
-* [substraTEE-node](https://github.com/scs/substraTEE-node): (custom substrate node) A substrate node with a custom runtime module
-* [substraTEE-worker](https://github.com/scs/substraTEE-worker): (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function
+* [integritee-node](https://github.com/integritee-network/integritee-node): (custom substrate node) A substrate node with a custom runtime module
+* [substraTEE-worker](https://github.com/integritee-network/worker): (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function
 
 ### Request Lifetime end-to-end
 

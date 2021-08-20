@@ -1,8 +1,8 @@
 # Use Case CDN Subscriptions
 
-substraTEE could be used to restrict (narrow- or broadband) content delivery to paying users. Examples could be blogs, articles, video streaming, video on-demand, music streaming or on-deman aso.
+Integritee could be used to restrict (narrow- or broadband) content delivery to paying users. Examples could be blogs, articles, video streaming, video on-demand, music streaming or on-deman aso.
 
-## Basic substraTEE application for CDN
+## Basic Integritee application for CDN
 
 * Subscriptions are managed on-chain, as are payments (can be flat subscription fees or pay-per-use)
 * substraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.

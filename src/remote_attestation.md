@@ -4,9 +4,9 @@ TODO
 
 The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.
 
-## convincing the substraTEE user
+## convincing the Integritee user
 
-A user that interacts with substraTEE wants to be sure that the shielding pubkey she uses to encrypt her call to the STF originates form an enclave that
+A user that interacts with Integritee wants to be sure that the shielding pubkey she uses to encrypt her call to the STF originates form an enclave that
 
    1. is running on genuine Intel SGX HW
    1. runs the official code
@@ -23,7 +23,7 @@ The issue here is that IAS only talks to registered clients. You need to registe
 
 It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the substraTEE-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.
 
-This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. substraTEE-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only substraTEE operators need to register with IAS.
+This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. substraTEE-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.
 
 ![Sequence Diagram](./attestation_registry_sequence.svg)
 
@@ -32,8 +32,8 @@ The attestation report which is written to an on-chain registry contains:
 * enclave quote
    * report body
       * MRENCLAVE (hash of enclave build)
-      * Product ID (hard-coded in substraTEE source)
-      * Security Version (hard-coded in substraTEE source)
+      * Product ID (hard-coded in Integritee source)
+      * Security Version (hard-coded in Integritee source)
       * user data is hash of context:
          * enclave-individual signing pubkey
          * latest block hash
@@ -47,7 +47,7 @@ The attestation report which is written to an on-chain registry contains:
    * IAS certificate 
    * IAS signature over above body
 
-Any user can now verify IAS signature and MRENCLAVE (given the substraTEE enclave can be built deterministically). See the [example](https://github.com/rodolfoams/sgx-retrieve-identity/blob/5be913b96b2a6e5a0e1158ad169b977507291faa/Makefile#L253) how you can extract MRENCLAVE after building the enclave
+Any user can now verify IAS signature and MRENCLAVE (given the Integritee enclave can be built deterministically). See the [example](https://github.com/rodolfoams/sgx-retrieve-identity/blob/5be913b96b2a6e5a0e1158ad169b977507291faa/Makefile#L253) how you can extract MRENCLAVE after building the enclave
 
 The worker can now publish his sealing pubkey, signed with its enclave-individual signing key stated in the quote.
 
@@ -55,9 +55,9 @@ workers will repeat remote attestation in reasonable regular intervals (i.e. onc
 
 ### Enclave Registry On-Chain
 
-In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of substraTEE.
+In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of Integritee.
 
-substraTEE developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:
+Integritee developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:
 
 ```bash
 sgx_sign dump -enclave enclave.signed.so -dumpfile out.log

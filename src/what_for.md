@@ -2,11 +2,11 @@
 
 TODO
 
-documentation for substraTEE, an extension of [parity substrate](https://github.com/paritytech/substrate) allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality
+documentation for Integritee, an extension of [parity substrate](https://github.com/paritytech/substrate) allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality
 
 ## Different ways to leverage TEEs
 
-| use case | substraTEE-signer <br>(off-chain stateless) | substraTEE-worker<br> (off-chain stateful) | substraTEE-node<br> (onchain-stateful) |
+| use case | substraTEE-signer <br>(off-chain stateless) | substraTEE-worker<br> (off-chain stateful) | integritee-node<br> (onchain-stateful) |
 |----------|-------------------|----------------|-----------------|
 |hardware wallet| :+1: local TEE per user | | :thumbsdown:|
 |atomic swaps<br>(cross-chain bridge)| :+1: light node in both chains | :+1: | :thumbsdown: |
@@ -26,7 +26,7 @@ documentation for substraTEE, an extension of [parity substrate](https://github.
 
 ![signer](./fig/substraTEE-signer.svg)
 
-One flavour of substraTEE is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).
+One flavour of Integritee is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).
 
 Main feature: trusted hardware custodian of your private keys
 
