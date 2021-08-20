@@ -24,7 +24,7 @@ documentation for Integritee, an extension of [parity substrate](https://github.
 
 *stateless*: no state needs to be preserved (onchain - data or hash) between uses
 
-![signer](./fig/substraTEE-signer.svg)
+![signer](fig/integritee-signer.svg)
 
 One flavour of Integritee is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).
 
@@ -36,7 +36,7 @@ Main feature: trusted hardware custodian of your private keys
 
 *stateful*: state needs to be preserved (onchain - data or hash) between uses
 
-![offchain-contract](./fig/substraTEE-offchain-contract.svg)
+![offchain-contract](fig/integritee-offchain-contract.svg)
 
 Similar to but still quite different than [sawtooth PDO](https://github.com/hyperledger-labs/private-data-objects) or [Ekiden/OasisLabs](https://www.oasislabs.com/)
 
@@ -54,4 +54,4 @@ a fork of substrate that has an Executor running in a TEE (Intel SGX)
 
 Main feature: many confidential transactions can be executed with every block
 
-![node](./fig/substraTEE-stealth-node.svg)
+![node](fig/integritee-stealth-node.svg)

@@ -30,7 +30,7 @@ If there is already an enclave (belonging to a different substraTEE-worker) regi
 
 The high level architecture of the current implementation can be seen in the following diagram:
 
-![Diagram](./fig/substraTEE-worker-overview.svg)
+![Diagram](fig/integritee-worker-overview.svg)
 
 The main building blocks can be found in the following repositories:
 
@@ -39,7 +39,7 @@ The main building blocks can be found in the following repositories:
 
 ### Request Lifetime end-to-end
 
-![request-end-to-end](./fig/substraTEE_request_format_end2end.svg)
+![request-end-to-end](fig/integritee_request_format_end2end.svg)
 
 ## Redundancy (M3 onwards)
 
@@ -47,6 +47,6 @@ The goal of redundancy is to allow multiple workers to operate on the same state
 
 The high level architecture for M3 and M4 can be seen in the following diagram:
 
-![Diagram](./fig/substraTEE-architecture-M4.svg)
+![Diagram](fig/integritee-architecture-M4.svg)
 
 where M3 includes only the *docker image 1* and the *Intel Attestation Service (IAS)* and M4 includes the three *docker images* and the *Intel Attestation Service (IAS)*.

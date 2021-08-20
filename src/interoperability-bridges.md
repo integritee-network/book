@@ -1,6 +1,6 @@
 # Bridges
 
-![PolkaETH](./fig/substraTEE-bridge-overview.svg)
+![PolkaETH](fig/integritee-bridge-overview.svg)
 
 ## Example Concept for PolkaETH Bridge
 

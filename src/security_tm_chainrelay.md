@@ -12,7 +12,7 @@ The following points will be analysed:
 * **E**levation of privileges
 
 ## System overview
-<img src="./fig/substraTEE-chainRelay-dataflow.svg"/>
+![Diagram](fig/integritee-chainRelay-dataflow.svg)
 
 ## Actors
 
