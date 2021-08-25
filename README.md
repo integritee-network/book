@@ -1,5 +1,5 @@
-# substraTEE-book
-central hub for mdbook documentation about substraTEE
+# integritee-book
+central hub for mdbook documentation about Integritee
 
 This is the source for the page published at [www.substratee.com](https://www.substratee.com)
 

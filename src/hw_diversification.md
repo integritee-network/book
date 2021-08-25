@@ -1,8 +1,8 @@
 # HW Diversification
 
-As of the time of writing, Intel SGX is the only TEE that allows remote attestation. This dependency on Intel is a single point of failure and as such undesirable for SubstraTEE.
+As of the time of writing, Intel SGX is the only TEE that allows remote attestation. This dependency on Intel is a single point of failure and as such undesirable for Integritee.
 
-The SubstraTEE team is investigating ways to provide remote attestation for ARM TrustZone and open source TEEs like Keystone.
+The Integritee team is investigating ways to provide remote attestation for ARM TrustZone and open source TEEs like Keystone.
 
 Diversification would have a positive effect on TEE *integrity* because a vulnerability in one type of TEE would only affect a fraction of all TEEs. A pretty simple consensus algorithm could ensure integrity even in presence of large-scale attackes exploiting that vulnerability.
 

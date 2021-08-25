@@ -1,6 +1,6 @@
 # Intel SGX Security
 
-The following is an overview of security aspects of substraTEE, mainly focusing on Intel SGX properties. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.
+The following is an overview of security aspects of integritee, mainly focusing on Intel SGX properties. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.
 
 ## exploitable properties of SGX
 

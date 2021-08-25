@@ -139,8 +139,8 @@ export AR=/usr/bin/llvm-ar-10
 ```
 
 ```bash
-git clone https://github.com/scs/substraTEE-worker.git
-cd substraTEE-worker
+git clone https://github.com/integritee-network/worker.git
+cd worker
 make
 ```
 

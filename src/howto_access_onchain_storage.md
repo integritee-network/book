@@ -1,12 +1,12 @@
 # How To Access On-Chain Storage From Within The Enclave Trustlessly
 
-substraTEE isolates *confidential state* (what the STF `TrustedCall` operates on inside the SGX enclave) from *on-chain state* (what is plaintext readable by the entire network of substraTEE-nodes). Some use cases, however, reqire read access to on-chain storage for their `TrustedCall`s. As the enclave can't trust it's worker service, it has to request and verify read proofs from the substraTEE-node.
+Integritee isolates *confidential state* (what the STF `TrustedCall` operates on inside the SGX enclave) from *on-chain state* (what is plaintext readable by the entire network of integritee-nodes). Some use cases, however, reqire read access to on-chain storage for their `TrustedCall`s. As the enclave can't trust its worker service, it has to request and verify read proofs from the integritee-node.
 
-Our goal is that you can use the same pallets that you use on-chain also inside substraTEE enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your `TrustedCall` has to specify what storage keys it requires and these will be mapped to the confidential state befor executing the call.
+Our goal is that you can use the same pallets that you use on-chain also inside Integritee enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your `TrustedCall` has to specify what storage keys it requires and these will be mapped to the confidential state before executing the call.
 
-For this to work, the [sgx-runtime](https://github.com/scs/sgx-runtime/tree/master/runtime) must be compatible with the [node-runtime](https://github.com/scs/substraTEE-node/tree/master/runtime). This means that the same substrate version must be used. However, it does not mean that the same pallets must be instantiated.
+For this to work, the [sgx-runtime](https://github.com/integritee-network/sgx-runtime/tree/master/runtime) must be compatible with the [node-runtime](https://github.com/integritee-network/integritee-node/tree/master/runtime). This means that the same substrate version must be used. However, it does not mean that the same pallets must be instantiated.
 
-Until [#113](https://github.com/scs/substraTEE-worker/issues/113) is resolved, we also have the restriction that `StorageMap` and `StorageDoubleMap` must use `StorageHasher::Blake2_128Concat`.
+Until [#113](https://github.com/integritee-network/worker/issues/113) is resolved, we also have the restriction that `StorageMap` and `StorageDoubleMap` must use `StorageHasher::Blake2_128Concat`.
 
 ## Trusted Time Example
 
