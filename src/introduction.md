@@ -1,4 +1,4 @@
-<p align="center"><img src="./fig/substraTEE-logo-scs.png" height="300"/></p>
+<p align="center"><img src="./fig/integritee-logo.svg" height="300"/></p>
 
 Integritee is a framework for [Parity Substrate](https://docs.substrate.dev/), allowing to call a custom state transition function (STF) inside a Trusted Execution Environment (TEE), namely an Intel SGX enclave thereby providing confidentiality and integrity. The enclaves operate on an encrypted state which can be read and written only by a set of provisioned and remote-attested enclaves.
 
@@ -16,7 +16,7 @@ What Integritee aims to enable:
 * trusted chain bridges
 * trusted oracles
 
-Integritee is developed by [Supercomputing Systems AG](https://www.scs.ch) and has been supported by grants from the [Web3 Foundation](https://web3.foundation/).
+Integritee is maintained by [Integritee AG](https://intgeritee.network) and was originally developed by [Supercomputing Systems AG](https://www.scs.ch) and has been supported by grants from the [Web3 Foundation](https://web3.foundation/).
 
 We also thank the teams at
 

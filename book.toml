@@ -1,6 +1,6 @@
 [book]
-authors = ["Supercomputing Systems AG"]
+authors = ["Integritee AG"]
 language = "en"
 multilingual = false
 src = "src"
-title = "The substraTEE Book"
+title = "The Integritee Book"
