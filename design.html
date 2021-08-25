@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Design - The substraTEE Book</title>
+        <title>Design - The Integritee Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -113,7 +113,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">The substraTEE Book</h1>
+                        <h1 class="menu-title">The Integritee Book</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -154,14 +154,14 @@
 <p><img src="./fig/substraTEE-vision.png" alt="vision" />
 <em>Integritee Target Architecture with Direct Invocation (future scenario)</em></p>
 <ul>
-<li>Shielding key: used by the substraTEE-client to encrypt the call in order to protect caller privacy. It is common to all enclaves.</li>
+<li>Shielding key: used by the integritee-client to encrypt the call in order to protect caller privacy. It is common to all enclaves.</li>
 <li>State encryption key: used to encrypt and decrypt the state storage. It is common to all enclaves.</li>
 <li>Signing key: used to sign transactions for the integritee-node. The corresponding account must be funded in order to pay for chain fees. It is unique for every enclave.</li>
 </ul>
 <h3><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h3>
 <p>The <em>integritee-node</em> is a substrate blockchain node with an additional runtime module:</p>
 <ul>
-<li>substraTEE-registry module: proxies requests to workers, verifies IAS reports and keeps track of the registered enclaves. It provides the following API interfaces:
+<li>integritee-registry module: proxies requests to workers, verifies IAS reports and keeps track of the registered enclaves. It provides the following API interfaces:
 <ul>
 <li>Register an enclave</li>
 <li>Remove an enclave</li>
@@ -171,15 +171,15 @@
 </ul>
 </li>
 </ul>
-<p>The <em>substraTEE-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>substraTEE-registry module</em> to register his enclave.</p>
-<p>If there is already an enclave (belonging to a different substraTEE-worker) registered on the chain, the substraTEE-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
+<p>The <em>integritee-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>teerex module</em> to register his enclave.</p>
+<p>If there is already an enclave (belonging to a different integritee-worker) registered on the chain, the integritee-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
 <h2><a class="header" href="#indirect-invocation-current-implementation" id="indirect-invocation-current-implementation">Indirect Invocation (current implementation)</a></h2>
 <p>The high level architecture of the current implementation can be seen in the following diagram:</p>
 <p><img src="fig/integritee-worker-overview.svg" alt="Diagram" /></p>
 <p>The main building blocks can be found in the following repositories:</p>
 <ul>
 <li><a href="https://github.com/integritee-network/integritee-node">integritee-node</a>: (custom substrate node) A substrate node with a custom runtime module</li>
-<li><a href="https://github.com/integritee-network/worker">substraTEE-worker</a>: (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function</li>
+<li><a href="https://github.com/integritee-network/worker">integritee-worker</a>: (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function</li>
 </ul>
 <h3><a class="header" href="#request-lifetime-end-to-end" id="request-lifetime-end-to-end">Request Lifetime end-to-end</a></h3>
 <p><img src="fig/integritee_request_format_end2end.svg" alt="request-end-to-end" /></p>

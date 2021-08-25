@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>The substraTEE Book</title>
+        <title>The Integritee Book</title>
         
         <meta name="robots" content="noindex" />
         
@@ -115,7 +115,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">The substraTEE Book</h1>
+                        <h1 class="menu-title">The Integritee Book</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -150,7 +150,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <p align="center"><img src="./fig/substraTEE-logo-scs.png" height="300"/></p>
+                        <p align="center"><img src="./fig/integritee-logo.svg" height="300"/></p>
 <p>Integritee is a framework for <a href="https://docs.substrate.dev/">Parity Substrate</a>, allowing to call a custom state transition function (STF) inside a Trusted Execution Environment (TEE), namely an Intel SGX enclave thereby providing confidentiality and integrity. The enclaves operate on an encrypted state which can be read and written only by a set of provisioned and remote-attested enclaves.</p>
 <p>What Integritee aims to enable:</p>
 <ul>
@@ -172,7 +172,7 @@
 <li>trusted chain bridges</li>
 <li>trusted oracles</li>
 </ul>
-<p>Integritee is developed by <a href="https://www.scs.ch">Supercomputing Systems AG</a> and has been supported by grants from the <a href="https://web3.foundation/">Web3 Foundation</a>.</p>
+<p>Integritee is maintained by <a href="https://intgeritee.network">Integritee AG</a> and was originally developed by <a href="https://www.scs.ch">Supercomputing Systems AG</a> and has been supported by grants from the <a href="https://web3.foundation/">Web3 Foundation</a>.</p>
 <p>We also thank the teams at</p>
 <ul>
 <li><a href="https://www.parity.io/">Parity Technologies</a> for building <a href="https://github.com/paritytech/substrate">substrate</a> and supporting us during development.</li>
@@ -294,10 +294,9 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <li><a href="https://davejingtian.org/2017/11/10/some-notes-on-the-monotonic-counter-in-intel-sgx-and-me/">review of SGX PSE for monotonic counters and trusted time</a></li>
 </ul>
 <h1><a class="header" href="#what-to-use-tees-for" id="what-to-use-tees-for">What to use TEEs for</a></h1>
-<p>TODO</p>
-<p>documentation for Integritee, an extension of <a href="https://github.com/paritytech/substrate">parity substrate</a> allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality</p>
+<p>We list some original ideas here. Not all of them have been implemented already</p>
 <h2><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h2>
-<table><thead><tr><th>use case</th><th>substraTEE-signer <br>(off-chain stateless)</th><th>substraTEE-worker<br> (off-chain stateful)</th><th>integritee-node<br> (onchain-stateful)</th></tr></thead><tbody>
+<table><thead><tr><th>use case</th><th>integritee-signer <br>(off-chain stateless)</th><th>integritee-worker<br> (off-chain stateful)</th><th>integritee-node<br> (onchain-stateful)</th></tr></thead><tbody>
 <tr><td>hardware wallet</td><td>:+1: local TEE per user</td><td></td><td>:thumbsdown:</td></tr>
 <tr><td>atomic swaps<br>(cross-chain bridge)</td><td>:+1: light node in both chains</td><td>:+1:</td><td>:thumbsdown:</td></tr>
 <tr><td>coinmixer</td><td>:+1:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
@@ -314,14 +313,14 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <p><img src="fig/integritee-signer.svg" alt="signer" /></p>
 <p>One flavour of Integritee is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).</p>
 <p>Main feature: trusted hardware custodian of your private keys</p>
-<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h2>
+<h2><a class="header" href="#integritee-worker" id="integritee-worker">integritee worker</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
 <p><img src="fig/integritee-offchain-contract.svg" alt="offchain-contract" /></p>
 <p>Similar to but still quite different than <a href="https://github.com/hyperledger-labs/private-data-objects">sawtooth PDO</a> or <a href="https://www.oasislabs.com/">Ekiden/OasisLabs</a></p>
-<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. substraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em></p>
+<p><em>Do not confuse integritee-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. integritee-worker is a standalone service interfacing substrate node using RPC or websockets</em></p>
 <p>Dapps can commit WASM contracts and run their own TEE's or hire an enclave service to run confidential WASM smart contracts on. delegates are remote attested on the blockchain (the TCB doesn't include the WASM contract). They have to be fed with the most recent state, call and opaque payload. They then update the state that is written back to the chain.</p>
-<h2><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h2>
+<h2><a class="header" href="#integritee-stealth-node" id="integritee-stealth-node">integritee-stealth-node</a></h2>
 <p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic.</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
 <p>a fork of substrate that has an Executor running in a TEE (Intel SGX)</p>
@@ -414,14 +413,14 @@ The subscription metadata can include restrictions to archive access.</p>
 <p><img src="./fig/substraTEE-vision.png" alt="vision" />
 <em>Integritee Target Architecture with Direct Invocation (future scenario)</em></p>
 <ul>
-<li>Shielding key: used by the substraTEE-client to encrypt the call in order to protect caller privacy. It is common to all enclaves.</li>
+<li>Shielding key: used by the integritee-client to encrypt the call in order to protect caller privacy. It is common to all enclaves.</li>
 <li>State encryption key: used to encrypt and decrypt the state storage. It is common to all enclaves.</li>
 <li>Signing key: used to sign transactions for the integritee-node. The corresponding account must be funded in order to pay for chain fees. It is unique for every enclave.</li>
 </ul>
 <h3><a class="header" href="#how-it-works" id="how-it-works">How it works</a></h3>
 <p>The <em>integritee-node</em> is a substrate blockchain node with an additional runtime module:</p>
 <ul>
-<li>substraTEE-registry module: proxies requests to workers, verifies IAS reports and keeps track of the registered enclaves. It provides the following API interfaces:
+<li>integritee-registry module: proxies requests to workers, verifies IAS reports and keeps track of the registered enclaves. It provides the following API interfaces:
 <ul>
 <li>Register an enclave</li>
 <li>Remove an enclave</li>
@@ -431,15 +430,15 @@ The subscription metadata can include restrictions to archive access.</p>
 </ul>
 </li>
 </ul>
-<p>The <em>substraTEE-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>substraTEE-registry module</em> to register his enclave.</p>
-<p>If there is already an enclave (belonging to a different substraTEE-worker) registered on the chain, the substraTEE-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
+<p>The <em>integritee-worker</em> checks on the first start-up if &quot;his&quot; enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the <em>teerex module</em> to register his enclave.</p>
+<p>If there is already an enclave (belonging to a different integritee-worker) registered on the chain, the integritee-worker requests provisioning of secrets (the <em>shielding and state encryption private key</em>) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.</p>
 <h2><a class="header" href="#indirect-invocation-current-implementation" id="indirect-invocation-current-implementation">Indirect Invocation (current implementation)</a></h2>
 <p>The high level architecture of the current implementation can be seen in the following diagram:</p>
 <p><img src="fig/integritee-worker-overview.svg" alt="Diagram" /></p>
 <p>The main building blocks can be found in the following repositories:</p>
 <ul>
 <li><a href="https://github.com/integritee-network/integritee-node">integritee-node</a>: (custom substrate node) A substrate node with a custom runtime module</li>
-<li><a href="https://github.com/integritee-network/worker">substraTEE-worker</a>: (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function</li>
+<li><a href="https://github.com/integritee-network/worker">integritee-worker</a>: (client, worker-app, worker-enclave): A SGX-enabled service that performs a confidential state-transition-function</li>
 </ul>
 <h3><a class="header" href="#request-lifetime-end-to-end" id="request-lifetime-end-to-end">Request Lifetime end-to-end</a></h3>
 <p><img src="fig/integritee_request_format_end2end.svg" alt="request-end-to-end" /></p>
@@ -1114,7 +1113,7 @@ chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
 <pre><code class="language-bash">git clone https://github.com/integritee-network/integritee-node
 </code></pre>
 <p>Encointer will add its public pallets to this node tempalte: <em>scheduler</em> and <em>currencies</em>. See <a href="https://github.com/encointer/encointer-node/tree/sgx-master">encointer-node</a></p>
-<h2><a class="header" href="#substratee-worker-1" id="substratee-worker-1">substraTEE-worker</a></h2>
+<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE-worker</a></h2>
 <p>The substraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.</p>
 <p>The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.</p>
 <p>The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface</p>

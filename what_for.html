@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>What is Integritee Good For? - The substraTEE Book</title>
+        <title>What is Integritee Good For? - The Integritee Book</title>
         
 
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
@@ -113,7 +113,7 @@
                             
                         </div>
 
-                        <h1 class="menu-title">The substraTEE Book</h1>
+                        <h1 class="menu-title">The Integritee Book</h1>
 
                         <div class="right-buttons">
                             <a href="print.html" title="Print this book" aria-label="Print this book">
@@ -149,10 +149,9 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#what-to-use-tees-for" id="what-to-use-tees-for">What to use TEEs for</a></h1>
-<p>TODO</p>
-<p>documentation for Integritee, an extension of <a href="https://github.com/paritytech/substrate">parity substrate</a> allowing to leverage Trusted Execution Environments (TEEs) to provide integrity and confidentiality</p>
+<p>We list some original ideas here. Not all of them have been implemented already</p>
 <h2><a class="header" href="#different-ways-to-leverage-tees" id="different-ways-to-leverage-tees">Different ways to leverage TEEs</a></h2>
-<table><thead><tr><th>use case</th><th>substraTEE-signer <br>(off-chain stateless)</th><th>substraTEE-worker<br> (off-chain stateful)</th><th>integritee-node<br> (onchain-stateful)</th></tr></thead><tbody>
+<table><thead><tr><th>use case</th><th>integritee-signer <br>(off-chain stateless)</th><th>integritee-worker<br> (off-chain stateful)</th><th>integritee-node<br> (onchain-stateful)</th></tr></thead><tbody>
 <tr><td>hardware wallet</td><td>:+1: local TEE per user</td><td></td><td>:thumbsdown:</td></tr>
 <tr><td>atomic swaps<br>(cross-chain bridge)</td><td>:+1: light node in both chains</td><td>:+1:</td><td>:thumbsdown:</td></tr>
 <tr><td>coinmixer</td><td>:+1:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
@@ -169,14 +168,14 @@
 <p><img src="fig/integritee-signer.svg" alt="signer" /></p>
 <p>One flavour of Integritee is a RPC client for substrate that runs a state transition function (STF) within a TEE (Intel SGX).</p>
 <p>Main feature: trusted hardware custodian of your private keys</p>
-<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE worker</a></h2>
+<h2><a class="header" href="#integritee-worker" id="integritee-worker">integritee worker</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
 <p><img src="fig/integritee-offchain-contract.svg" alt="offchain-contract" /></p>
 <p>Similar to but still quite different than <a href="https://github.com/hyperledger-labs/private-data-objects">sawtooth PDO</a> or <a href="https://www.oasislabs.com/">Ekiden/OasisLabs</a></p>
-<p><em>Do not confuse substraTEE-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. substraTEE worker is a standalone service interfacing substrate node using RPC or websockets</em></p>
+<p><em>Do not confuse integritee-worker with substrate's <a href="https://github.com/paritytech/substrate/pull/1942">off-chain workers</a>. The latter are a part of the node's codebase. integritee-worker is a standalone service interfacing substrate node using RPC or websockets</em></p>
 <p>Dapps can commit WASM contracts and run their own TEE's or hire an enclave service to run confidential WASM smart contracts on. delegates are remote attested on the blockchain (the TCB doesn't include the WASM contract). They have to be fed with the most recent state, call and opaque payload. They then update the state that is written back to the chain.</p>
-<h2><a class="header" href="#substratee-stealth-node" id="substratee-stealth-node">substraTEE-stealth-node</a></h2>
+<h2><a class="header" href="#integritee-stealth-node" id="integritee-stealth-node">integritee-stealth-node</a></h2>
 <p><em>on-chain</em>: blockchain validators run confidential state transition function with every extrinsic.</p>
 <p><em>stateful</em>: state needs to be preserved (onchain - data or hash) between uses</p>
 <p>a fork of substrate that has an Executor running in a TEE (Intel SGX)</p>
