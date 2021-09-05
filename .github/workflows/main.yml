@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - broken_link
 
 jobs:
   deploy:
