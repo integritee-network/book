@@ -172,7 +172,7 @@
 <li>trusted chain bridges</li>
 <li>trusted oracles</li>
 </ul>
-<p>Integritee is maintained by <a href="https://intgeritee.network">Integritee AG</a> and was originally developed by <a href="https://www.scs.ch">Supercomputing Systems AG</a> and has been supported by grants from the <a href="https://web3.foundation/">Web3 Foundation</a>.</p>
+<p>Integritee is maintained by <a href="https://integritee.network">Integritee AG</a> and was originally developed by <a href="https://www.scs.ch">Supercomputing Systems AG</a> and has been supported by grants from the <a href="https://web3.foundation/">Web3 Foundation</a>.</p>
 <p>We also thank the teams at</p>
 <ul>
 <li><a href="https://www.parity.io/">Parity Technologies</a> for building <a href="https://github.com/paritytech/substrate">substrate</a> and supporting us during development.</li>
@@ -351,7 +351,7 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <li>transfer any token on Polkadot to an Ethereum ERC20 token.</li>
 </ul>
 <p>integritee-bridge will build light clients of both chains. Block headers are stored in SGX sealed storage and transaction inclusion proofs are verified in Intel SGX enclaves. Backed value will be in custody of a set of TEEs. Correct execution is guaranteed by TEEs (Intel SGX).</p>
-<p>In contrast to an approach like <a href="https://https//www.xclaim.io/">XClaim</a>, integritee-bridge provides the following advantages:</p>
+<p>In contrast to an approach like <a href="https://www.xclaim.io/">XClaim</a>, integritee-bridge provides the following advantages:</p>
 <ul>
 <li>No full collateral needed. XClaim needs vaults (or <em>banks</em>) to lock collateral to the amount of backed value transferred through the bridge in order to punish misbehaving vaults. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In integritee-bridge, SGX guarantees integrity of computation. Therefore there is no need for full collateralization.</li>
 <li>No relay-contract with on-chain registry of block headers needed. Block headers are stored in the enclave's sealed storage. Less onchain storage is needed on the issuing chain.</li>
@@ -363,7 +363,7 @@ Moreover, remote attestation in production mode can only be taken out with such 
 (<a href="https://github.com/ethereum/wiki/wiki/Light-client-protocol">source</a>)</p>
 </blockquote>
 <h3><a class="header" href="#technical-concept" id="technical-concept">Technical Concept</a></h3>
-<p>With regard to the document <a href="https://hackmd.io/UVzp6Z-bRAOo9Ny531yhmA">Polkadot Bridges: Design Considerations for bridging to PoW chains</a> as well as the <a href="https://https//www.xclaim.io/">XClaim Paper</a>, we intend to implement the <em>CentralClaim</em> Protocol with a single SGX instance as a first step (Protocols: <em>Issue</em> and <em>Redeem</em>. <em>Transfer</em> and <em>Swap</em> are off-topic). Because we leverage SGX, our CentralClaim already achieves <em>Consistency</em>, as there is no way to fraudulently issue PolkaETH without breaking SGX guarantees.</p>
+<p>With regard to the document <a href="https://hackmd.io/UVzp6Z-bRAOo9Ny531yhmA">Polkadot Bridges: Design Considerations for bridging to PoW chains</a> as well as the <a href="https://www.xclaim.io/">XClaim Paper</a>, we intend to implement the <em>CentralClaim</em> Protocol with a single SGX instance as a first step (Protocols: <em>Issue</em> and <em>Redeem</em>. <em>Transfer</em> and <em>Swap</em> are off-topic). Because we leverage SGX, our CentralClaim already achieves <em>Consistency</em>, as there is no way to fraudulently issue PolkaETH without breaking SGX guarantees.</p>
 <p>As pointed out in XClaim, the CentralClaim protocol doesn't achieve <em>Redeemability</em> nor <em>Liveness</em>. In contrast to Xclaim we don't suggest a punishment scheme for fraudulent vaults as they have no economic incentive to misbehave in our scheme. Instead, we implement a shared custody of locked backing chain tokens (ETH) among a set of integritee-bridge enclaves. The set of integritee-bridge instances is unpermissioned, so anyone with suitable HW can register as a integritee-bridge along the design of <a href="https://github.com/integritee-network/substraTEE">substraTEE</a>. A threshold signature scheme is applied in order to supply <em>Redeemability</em> and <em>Liveness</em>.</p>
 <p>The set of active integritee-bridge instances changes over time. Some instances will go offline, others will join. The multisig wallets will have to be updated with every mutation. One approach with improved forward security would be to generate new multisig wallets with every mutation (instead of updating members). This way TEE's that do not update their SGX platform with the most recent patches will lose access to funds as they will be rejected by the remote attestation process and therefore not be included in the new multisig set.</p>
 <p>We also need to guarantee <em>all-or-nothing fairness</em> (tx1 on the backing chain and tx2 on the issuing chain are either both included or both rejected). By using a TEE, we can make sure that bridges will correctly generate tx2 upon being shown a proof of inclusion for tx1. However, we can't guarantee that tx2 is included in the other chain by relying on a single TEE as the operator could prevent tx2 from being sent to the network among other attacks.
@@ -379,7 +379,7 @@ If users have many integritee-bridge operators to chose from, we rely on the fac
 <p><a href="https://github.com/paritytech/parity-bridge">Parity bridge</a> allows an Ethereum PoA chain to bridge to the Ethereum Mainnet using <a href="https://github.com/parity-contracts/bridge/blob/master/contracts/bridge.sol">contracts</a> on both chains. The bridge is generic (arbitrary information can be passed) and bidirectional. Trust in the PoA chain validators is required.</p>
 <p>integritee-bridge would replace this trust in PoA validators by trust in a single TEE or a set of TEE's (Intel SGX).</p>
 <h4><a class="header" href="#xclaim" id="xclaim">XClaim</a></h4>
-<p><a href="https://https//www.xclaim.io/">XClaim</a> solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than integritee-bridge.</p>
+<p><a href="https://www.xclaim.io/">XClaim</a> solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than integritee-bridge.</p>
 <h4><a class="header" href="#tesseract" id="tesseract">Tesseract</a></h4>
 <p>The <a href="https://eprint.iacr.org/2017/1153.pdf">Tesseract Paper</a> describes a trusted cryptocurrency exchange design using Intel SGX. In section 7 they describe a bridge protocol.</p>
 <h1><a class="header" href="#use-case-cdn-subscriptions" id="use-case-cdn-subscriptions">Use Case CDN Subscriptions</a></h1>
@@ -406,7 +406,7 @@ No consumers or publishers nor operators have access</li>
 It doesn't matter at what time a consumer subscribes. The worker can deliver all prior content to the subscriber.
 The subscription metadata can include restrictions to archive access.</p>
 <h2><a class="header" href="#pay-per-use" id="pay-per-use">Pay per use</a></h2>
-<p>Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our <a href="./M5_DEMO.html">private-tx example</a> for how this could work.</p>
+<p>Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our <a href="./howto_private_tx.html">private-tx example</a> for how this could work.</p>
 <h1><a class="header" href="#design" id="design">Design</a></h1>
 <p>In the following we explain how Integritee works and how the different components play together.</p>
 <h2><a class="header" href="#direct-invocation-vision" id="direct-invocation-vision">Direct Invocation (Vision)</a></h2>
@@ -461,7 +461,7 @@ The subscription metadata can include restrictions to archive access.</p>
 <p>The following is an overview of security aspects of Integritee. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.</p>
 <ul>
 <li><a href="security_intel_sgx.html">Intel SGX security</a></li>
-<li><a href="security_chain_relay.html">Threat model of the ChainRelay</a></li>
+<li><a href="security_tm_chainrelay.html">Threat model of the ChainRelay</a></li>
 </ul>
 <h1><a class="header" href="#intel-sgx-security" id="intel-sgx-security">Intel SGX Security</a></h1>
 <p>The following is an overview of security aspects of integritee, mainly focusing on Intel SGX properties. It is neither complete nor guaranteed to be accurate. It just reflects the best of our knowledge ATM.</p>
@@ -1070,7 +1070,7 @@ chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
 <li>develop and debug your use case on substrate, writing your own pallets</li>
 <li>Once the logic works, move your sensitive pallets to Integritee without modification and you'll get confidential state (and state updates)</li>
 </ol>
-<p>In the following we will assume that you know <a href="https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7">how to build custom substrate blockchains</a> and we will skip boring explanations.</p>
+<p>In the following we will assume that you know <a href="https://substrate.dev/docs/en/tutorials/add-a-pallet/import-a-pallet">how to build custom substrate blockchains</a> and we will skip boring explanations.</p>
 <h2><a class="header" href="#example-use-case-encointer" id="example-use-case-encointer">Example Use Case Encointer</a></h2>
 <p>We will walk you through this process with a real-world example: <a href="https://encointer.org">Encointer</a></p>
 <p>Encointer has been developed as a substrate chain with 4 custom pallets added to the node-template:</p>
@@ -1106,7 +1106,7 @@ chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
 );
 <span class="boring">}
 </span></code></pre></pre>
-<p>Looks familiar? If not, <a href="https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7">learn from the best</a></p>
+<p>Looks familiar? If not, <a href="https://substrate.dev/docs/en/tutorials/add-a-pallet/import-a-pallet">learn from the best</a></p>
 <p>We will skip the nitty gritty of including your pallets.</p>
 <h2><a class="header" href="#integritee-node" id="integritee-node">integritee-node</a></h2>
 <p>The blockchain we'll be using is based on parity's node-template with one integritee-specific pallet that will take care of the worker registry and will proxy <code>TrustedCalls</code></p>
@@ -1237,7 +1237,7 @@ impl TrustedCall {
 <p>The <code>--mrenclave</code> identifies the <a href="./glossary.html">TCB</a> while <code>--shard</code> identifies the local currency we're registering for.</p>
 <h2><a class="header" href="#sharding-1" id="sharding-1">Sharding</a></h2>
 <p>As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the <code>currencies</code> pallet). The balances for each local currency are maintained confidentially within Integritee. One shard for each currency. This means that a worker has to decide what shard it operates on.</p>
-<p>See <a href="./sharding-md">Sharding</a> for more details.</p>
+<p>See <a href="./sharding.html">Sharding</a> for more details.</p>
 <h2><a class="header" href="#trustedgetter" id="trustedgetter">TrustedGetter</a></h2>
 <p>Now that everything is super-isolated and confidential, how should we know if our call actually worked?</p>
 <p>That's why substraTEE-worker exposes a websocket interface for encrypted and authenticated queries.</p>

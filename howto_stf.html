@@ -155,7 +155,7 @@
 <li>develop and debug your use case on substrate, writing your own pallets</li>
 <li>Once the logic works, move your sensitive pallets to Integritee without modification and you'll get confidential state (and state updates)</li>
 </ol>
-<p>In the following we will assume that you know <a href="https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7">how to build custom substrate blockchains</a> and we will skip boring explanations.</p>
+<p>In the following we will assume that you know <a href="https://substrate.dev/docs/en/tutorials/add-a-pallet/import-a-pallet">how to build custom substrate blockchains</a> and we will skip boring explanations.</p>
 <h2><a class="header" href="#example-use-case-encointer" id="example-use-case-encointer">Example Use Case Encointer</a></h2>
 <p>We will walk you through this process with a real-world example: <a href="https://encointer.org">Encointer</a></p>
 <p>Encointer has been developed as a substrate chain with 4 custom pallets added to the node-template:</p>
@@ -191,7 +191,7 @@
 );
 <span class="boring">}
 </span></code></pre></pre>
-<p>Looks familiar? If not, <a href="https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7">learn from the best</a></p>
+<p>Looks familiar? If not, <a href="https://substrate.dev/docs/en/tutorials/add-a-pallet/import-a-pallet">learn from the best</a></p>
 <p>We will skip the nitty gritty of including your pallets.</p>
 <h2><a class="header" href="#integritee-node" id="integritee-node">integritee-node</a></h2>
 <p>The blockchain we'll be using is based on parity's node-template with one integritee-specific pallet that will take care of the worker registry and will proxy <code>TrustedCalls</code></p>
@@ -322,7 +322,7 @@ impl TrustedCall {
 <p>The <code>--mrenclave</code> identifies the <a href="./glossary.html">TCB</a> while <code>--shard</code> identifies the local currency we're registering for.</p>
 <h2><a class="header" href="#sharding" id="sharding">Sharding</a></h2>
 <p>As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the <code>currencies</code> pallet). The balances for each local currency are maintained confidentially within Integritee. One shard for each currency. This means that a worker has to decide what shard it operates on.</p>
-<p>See <a href="./sharding-md">Sharding</a> for more details.</p>
+<p>See <a href="./sharding.html">Sharding</a> for more details.</p>
 <h2><a class="header" href="#trustedgetter" id="trustedgetter">TrustedGetter</a></h2>
 <p>Now that everything is super-isolated and confidential, how should we know if our call actually worked?</p>
 <p>That's why substraTEE-worker exposes a websocket interface for encrypted and authenticated queries.</p>
