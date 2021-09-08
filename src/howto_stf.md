@@ -7,7 +7,7 @@ The development process integrates well with substrate:
 1. develop and debug your use case on substrate, writing your own pallets
 2. Once the logic works, move your sensitive pallets to Integritee without modification and you'll get confidential state (and state updates)
 
-In the following we will assume that you know [how to build custom substrate blockchains](https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7) and we will skip boring explanations.
+In the following we will assume that you know [how to build custom substrate blockchains](https://substrate.dev/docs/en/tutorials/add-a-pallet/import-a-pallet) and we will skip boring explanations.
 
 ## Example Use Case Encointer
 
@@ -57,7 +57,7 @@ construct_runtime!(
 );
 ```
 
-Looks familiar? If not, [learn from the best](https://www.substrate.io/tutorials/add-a-pallet/v2.0.0-alpha.7)
+Looks familiar? If not, [learn from the best](https://substrate.dev/docs/en/tutorials/add-a-pallet/import-a-pallet)
 
 We will skip the nitty gritty of including your pallets.
 
@@ -214,7 +214,7 @@ The `--mrenclave` identifies the [TCB](./glossary.md) while `--shard` identifies
 
 As you may have guessed by now, Encointer uses sharding. Encointer maintains a global registry of local currencies on-chain (with the `currencies` pallet). The balances for each local currency are maintained confidentially within Integritee. One shard for each currency. This means that a worker has to decide what shard it operates on.
 
-See [Sharding](./sharding-md) for more details.
+See [Sharding](./sharding.md) for more details.
 
 ## TrustedGetter
 
