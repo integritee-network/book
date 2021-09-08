@@ -26,4 +26,4 @@ The subscription metadata can include restrictions to archive access.
 
 ## Pay per use
 
-Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our [private-tx example](./M5_DEMO.md) for how this could work.
+Pay per use bears the risks of leaking private information. We'd suggest to maintain subscription balances within the worker enclave, not onchain. This way, the public doesn't learn detailed usage patterns. See our [private-tx example](./howto_private_tx.md) for how this could work.

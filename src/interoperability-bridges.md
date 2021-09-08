@@ -13,7 +13,7 @@ integritee-bridge will allow to:
 
 integritee-bridge will build light clients of both chains. Block headers are stored in SGX sealed storage and transaction inclusion proofs are verified in Intel SGX enclaves. Backed value will be in custody of a set of TEEs. Correct execution is guaranteed by TEEs (Intel SGX).
 
-In contrast to an approach like [XClaim](https://https//www.xclaim.io/), integritee-bridge provides the following advantages:
+In contrast to an approach like [XClaim](https://www.xclaim.io/), integritee-bridge provides the following advantages:
 
 * No full collateral needed. XClaim needs vaults (or *banks*) to lock collateral to the amount of backed value transferred through the bridge in order to punish misbehaving vaults. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In integritee-bridge, SGX guarantees integrity of computation. Therefore there is no need for full collateralization.
 * No relay-contract with on-chain registry of block headers needed. Block headers are stored in the enclave's sealed storage. Less onchain storage is needed on the issuing chain.
@@ -26,7 +26,7 @@ The term ***light client*** is used abiguously in the scene. We use the followin
 
 ### Technical Concept
 
-With regard to the document [Polkadot Bridges: Design Considerations for bridging to PoW chains](https://hackmd.io/UVzp6Z-bRAOo9Ny531yhmA) as well as the [XClaim Paper](https://https//www.xclaim.io/), we intend to implement the *CentralClaim* Protocol with a single SGX instance as a first step (Protocols: *Issue* and *Redeem*. *Transfer* and *Swap* are off-topic). Because we leverage SGX, our CentralClaim already achieves *Consistency*, as there is no way to fraudulently issue PolkaETH without breaking SGX guarantees.
+With regard to the document [Polkadot Bridges: Design Considerations for bridging to PoW chains](https://hackmd.io/UVzp6Z-bRAOo9Ny531yhmA) as well as the [XClaim Paper](https://www.xclaim.io/), we intend to implement the *CentralClaim* Protocol with a single SGX instance as a first step (Protocols: *Issue* and *Redeem*. *Transfer* and *Swap* are off-topic). Because we leverage SGX, our CentralClaim already achieves *Consistency*, as there is no way to fraudulently issue PolkaETH without breaking SGX guarantees.
 
 As pointed out in XClaim, the CentralClaim protocol doesn't achieve *Redeemability* nor *Liveness*. In contrast to Xclaim we don't suggest a punishment scheme for fraudulent vaults as they have no economic incentive to misbehave in our scheme. Instead, we implement a shared custody of locked backing chain tokens (ETH) among a set of integritee-bridge enclaves. The set of integritee-bridge instances is unpermissioned, so anyone with suitable HW can register as a integritee-bridge along the design of [substraTEE](https://github.com/integritee-network/substraTEE). A threshold signature scheme is applied in order to supply *Redeemability* and *Liveness*.
 
@@ -57,7 +57,7 @@ integritee-bridge would replace this trust in PoA validators by trust in a singl
 
 #### XClaim
 
-[XClaim](https://https//www.xclaim.io/) solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than integritee-bridge.
+[XClaim](https://www.xclaim.io/) solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than integritee-bridge.
 
 #### Tesseract
 

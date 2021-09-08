@@ -16,7 +16,7 @@ What Integritee aims to enable:
 * trusted chain bridges
 * trusted oracles
 
-Integritee is maintained by [Integritee AG](https://intgeritee.network) and was originally developed by [Supercomputing Systems AG](https://www.scs.ch) and has been supported by grants from the [Web3 Foundation](https://web3.foundation/).
+Integritee is maintained by [Integritee AG](https://integritee.network) and was originally developed by [Supercomputing Systems AG](https://www.scs.ch) and has been supported by grants from the [Web3 Foundation](https://web3.foundation/).
 
 We also thank the teams at
 

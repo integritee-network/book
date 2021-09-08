@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - broken_link
 
 jobs:
   deploy:
@@ -21,24 +20,11 @@ jobs:
           mdbook build
           cp ./config/CNAME ./book/CNAME
 
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.GITHUB_TOKEN }}
-      #     publish_branch: gh-pages
-      #     publish_dir: ./book
-
-      # Broken link checker 
-      - name: Check for broken links
-        id: link-report
-        uses: celinekurpershoek/link-checker@v1.0.1
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          # Required:
-          url: 'https://book.integritee.network/'
-          # optional:
-          honorRobotExclusions: false
-          ignorePatterns: 'github,google'
-          recursiveLinks: true # Check all URLs on all reachable pages (could take a while)
-          
-      - name: Get the result
-        run: echo "${{steps.link-report.outputs.result}}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./book
+
+
