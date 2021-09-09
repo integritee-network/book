@@ -165,7 +165,7 @@ The SP therefore requests a quote from the application and sends that quote to I
 <h3><a class="header" href="#attestation-registry-on-chain" id="attestation-registry-on-chain">Attestation Registry On-Chain</a></h3>
 <p>It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the substraTEE-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.</p>
 <p>This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. substraTEE-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.</p>
-<p><img src="./attestation_registry_sequence.svg" alt="Sequence Diagram" /></p>
+<p><img src="./fig/attestation_registry_sequence.svg" alt="Sequence Diagram" /></p>
 <p>The attestation report which is written to an on-chain registry contains:</p>
 <ul>
 <li>enclave quote
