@@ -213,7 +213,7 @@ The SP therefore requests a quote from the application and sends that quote to I
 <h2><a class="header" href="#secret-provisioning" id="secret-provisioning">secret provisioning</a></h2>
 <p>In order to establish shared secrets among workers, they need to convince themselves mutually that they are genuine before entering some <em>Distributed Key Generation</em> (DKG) protocol.</p>
 <h2><a class="header" href="#sealing" id="sealing">Sealing</a></h2>
-<p>provisioned secrets are sealed with Intel's <a href="https://software.intel.com/en-us/blogs/2016/05/04/introduction-to-intel-sgx-sealing">SGX Sealing</a>. Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of a SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.</p>
+<p>provisioned secrets are sealed with Intel's <a href="https://software.intel.com/content/www/us/en/develop/blogs/introduction-to-intel-sgx-sealing.html">SGX Sealing</a>. Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of a SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.</p>
 <p>However, for decentralized open source projects, MRSIGNER cannot apply as there is no authority that could sign builds.</p>
 <p>Therefore, <em>enclave identity</em> MRSIGNER must be applied.</p>
 <h3><a class="header" href="#sw-updates" id="sw-updates">SW updates</a></h3>
@@ -225,15 +225,15 @@ The SP therefore requests a quote from the application and sends that quote to I
 <li>new version registers its attestation on-chain</li>
 <li>old version shares provisioned secret with new version running on same machine by means of local (intra-platform) attestation if new version's tcb corresponds to onchain registry</li>
 </ol>
-<p>See <a href="https://software.intel.com/en-us/articles/innovative-technology-for-cpu-based-attestation-and-sealing">Intel's sealing paper</a></p>
+<p>See <a href="https://software.intel.com/content/www/us/en/develop/articles/innovative-technology-for-cpu-based-attestation-and-sealing.html">Intel's sealing paper</a></p>
 <h2><a class="header" href="#ias" id="ias">IAS</a></h2>
-<p>Intel <a href="https://software.intel.com/en-us/blogs/2016/01/07/intel-sgx-debug-production-prelease-whats-the-difference">defines different modes</a> for running enclaves.</p>
+<p>Intel <a href="https://software.intel.com/content/www/us/en/develop/blogs/intel-sgx-debug-production-prelease-whats-the-difference.html">defines different modes</a> for running enclaves.</p>
 <p>compilation modes: <em>Debug</em>, <em>Release</em>, <em>Pre-Release</em>, <em>Simulation</em>
 lanching modes: <em>Debug</em>, <em>Production</em></p>
 <h3><a class="header" href="#epid" id="epid">EPID</a></h3>
 <p>Enhanced Privacy ID (EPID). A group signature key known only to the quoting enclave. Only used for remote attestation.</p>
 <h3><a class="header" href="#spid" id="spid">SPID</a></h3>
-<p>A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by <a href="https://software.intel.com/en-us/form/sgx-onboarding">registering with Intel</a> (only allows to attest DEBUG encalves!)</p>
+<p>A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by <a href="https://api.portal.trustedservices.intel.com/EPID-attestation">registering with Intel</a> (only allows to attest DEBUG encalves!)</p>
 <p>You can request either <em>linkable</em> or <em>unlinkable</em> quote. </p>
 <p><strong>tl;dr</strong>: selecting UNLINKABLE is a safe choice. But don't expect to be anonymous.</p>
 <p>In both cases, the quoting enclave uses a group signature for a quote. You can just decide if you wish two subsequent signatures to be linkable (an observer learns &quot;quote was signed by same platform&quot;) or not.</p>
