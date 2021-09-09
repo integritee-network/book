@@ -6,7 +6,7 @@ These administrators can read and modify all the data processed on any machine t
 
 Enter TEEs.
 
-You may envision a TEE as a co-processor that manages its own cryptographic keys and only executes programs whose hash, or fingerprint, corresponds to the original code. The manufacturer of the processor guarantees, by the design of their hardware, that nobody has access to the internal keys of the TEE or can read its memory. Moreover, the manufacturer can authenticate each TEE and provide remote attestation to a user to confirm that her untampered program is actually running on a genuine TEE, even if the machine is physically located in an off-site data center.
+You may envision a TEE as a co-processor that manages its own cryptographic keys. The manufacturer of the processor guarantees, by the design of their hardware, that nobody has access to the internal keys of the TEE or can read its memory. Moreover, the manufacturer can authenticate each TEE and provide remote attestation to a user to confirm that her untampered program is actually running on a genuine TEE, even if the machine is physically located in an off-site data center.
 
 TEEs promise, in short, integrity and confidentiality of (remote) computation. You should be aware, however, of possible [security threats](./security.md).
 
