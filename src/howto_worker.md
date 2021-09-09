@@ -16,7 +16,7 @@ To enable SGX support in the Dell BIOS, enter the BIOS, go to `System Security` 
 
 ## Intel SGX development and production (commercial) license
 
-In order to perform a remote attestation of the enclave, an [Intel SGX Attestation Enhanced Service Privacy ID (EPID)](https://api.portal.trustedservices.intel.com/EPID-attestation) is needed. We use unlinkable quotes in our code. Developers need to [register an account with Intel](https://software.intel.com/en-us/form/sgx-onboarding)
+In order to perform a remote attestation of the enclave, an [Intel SGX Attestation Enhanced Service Privacy ID (EPID)](https://api.portal.trustedservices.intel.com/EPID-attestation) is needed. We use unlinkable quotes in our code. Developers need to [register an account with Intel](https://api.portal.trustedservices.intel.com/EPID-attestation)
 
 ### Development Access
 
