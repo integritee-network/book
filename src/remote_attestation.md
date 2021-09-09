@@ -71,7 +71,7 @@ In order to establish shared secrets among workers, they need to convince themse
 
 ## Sealing
 
-provisioned secrets are sealed with Intel's [SGX Sealing](https://software.intel.com/en-us/blogs/2016/05/04/introduction-to-intel-sgx-sealing). Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of a SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.
+provisioned secrets are sealed with Intel's [SGX Sealing](https://software.intel.com/content/www/us/en/develop/blogs/introduction-to-intel-sgx-sealing.html). Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of a SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.
 
 However, for decentralized open source projects, MRSIGNER cannot apply as there is no authority that could sign builds.
 
@@ -89,11 +89,11 @@ Simplified Protocol
 1. new version registers its attestation on-chain
 1. old version shares provisioned secret with new version running on same machine by means of local (intra-platform) attestation if new version's tcb corresponds to onchain registry
 
-See [Intel's sealing paper](https://software.intel.com/en-us/articles/innovative-technology-for-cpu-based-attestation-and-sealing)
+See [Intel's sealing paper](https://software.intel.com/content/www/us/en/develop/articles/innovative-technology-for-cpu-based-attestation-and-sealing.html)
 
 ## IAS
 
-Intel [defines different modes](https://software.intel.com/en-us/blogs/2016/01/07/intel-sgx-debug-production-prelease-whats-the-difference) for running enclaves.
+Intel [defines different modes](https://software.intel.com/content/www/us/en/develop/blogs/intel-sgx-debug-production-prelease-whats-the-difference.html) for running enclaves.
 
 compilation modes: *Debug*, *Release*, *Pre-Release*, *Simulation*
 lanching modes: *Debug*, *Production*
@@ -104,7 +104,7 @@ Enhanced Privacy ID (EPID). A group signature key known only to the quoting encl
 
 ### SPID
 
-A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by [registering with Intel](https://software.intel.com/en-us/form/sgx-onboarding) (only allows to attest DEBUG encalves!)
+A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by [registering with Intel](https://api.portal.trustedservices.intel.com/EPID-attestation) (only allows to attest DEBUG encalves!)
 
 You can request either *linkable* or *unlinkable* quote. 
 
