@@ -231,7 +231,7 @@
 </code></pre>
 </li>
 <li>
-<p>Compile the substraTEE-worker:</p>
+<p>Compile the integritee-worker:</p>
 <pre><code class="language-bash">make
 </code></pre>
 </li>
@@ -239,9 +239,9 @@
 <p>run worker like described below</p>
 </li>
 </ul>
-<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker</p>
+<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the integritee-worker</p>
 <pre><code class="language-bash">*** Start the enclave
-[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
+[2019-05-15T05:15:03Z ERROR integritee::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 </code></pre>
 <h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
 <p>In order to compile <em>ring</em> into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for Ubuntu 18.04. Skip this if you're building in our docker.</p>
@@ -263,10 +263,10 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 </code></pre>
 <h2><a class="header" href="#run-worker" id="run-worker">Run Worker</a></h2>
 <pre><code class="language-bash">cd bin
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker run --ns &lt;yournodeip&gt;
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service run --ns &lt;yournodeip&gt;
 </code></pre>
 
                     </main>

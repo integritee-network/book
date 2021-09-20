@@ -198,13 +198,13 @@
 <pre><code class="language-bash">git clone https://github.com/integritee-network/integritee-node
 </code></pre>
 <p>Encointer will add its public pallets to this node tempalte: <em>scheduler</em> and <em>currencies</em>. See <a href="https://github.com/encointer/encointer-node/tree/sgx-master">encointer-node</a></p>
-<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE-worker</a></h2>
-<p>The substraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.</p>
+<h2><a class="header" href="#integritee-worker" id="integritee-worker">integritee-worker</a></h2>
+<p>The integritee-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.</p>
 <p>The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.</p>
 <p>The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface</p>
 <h2><a class="header" href="#trustedcall" id="trustedcall">TrustedCall</a></h2>
 <p>Now we need a way to call our custom pallet functions isolated in a TEE.</p>
-<p>Integritee encapsulates all the application-specific stuff in its <code>substratee-stf</code> crate that you can customize.</p>
+<p>Integritee encapsulates all the application-specific stuff in its <code>integritee-stf</code> crate that you can customize.</p>
 <pre><code class="language-bash">git clone https://github.com/integritee-network/worker
 </code></pre>
 <p>Let's start by defining a new <code>TrustedCall</code>:</p>
@@ -325,8 +325,8 @@ impl TrustedCall {
 <p>See <a href="./sharding.html">Sharding</a> for more details.</p>
 <h2><a class="header" href="#trustedgetter" id="trustedgetter">TrustedGetter</a></h2>
 <p>Now that everything is super-isolated and confidential, how should we know if our call actually worked?</p>
-<p>That's why substraTEE-worker exposes a websocket interface for encrypted and authenticated queries.</p>
-<p>We will now implemet a getter that can only be called by the <code>AccountId</code> it refers to.</p>
+<p>That's why integritee-worker exposes a websocket interface for encrypted and authenticated queries.</p>
+<p>We will now implement a getter that can only be called by the <code>AccountId</code> it refers to.</p>
 <h4><a class="header" href="#encointer-workerstfsrclibrs-1" id="encointer-workerstfsrclibrs-1">encointer-worker/stf/src/lib.rs</a></h4>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]

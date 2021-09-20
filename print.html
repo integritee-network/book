@@ -201,8 +201,8 @@
 The SP therefore requests a quote from the application and sends that quote to Intel Attestation Services (IAS) who sign off the quote if it is genuine.</p>
 <p>The issue here is that IAS only talks to registered clients. You need to register in order to get a SPID which needs to be supplied along with requests.</p>
 <h3><a class="header" href="#attestation-registry-on-chain" id="attestation-registry-on-chain">Attestation Registry On-Chain</a></h3>
-<p>It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the substraTEE-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.</p>
-<p>This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. substraTEE-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.</p>
+<p>It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the integritee-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.</p>
+<p>This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. integritee-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.</p>
 <p><img src="./fig/attestation_registry_sequence.svg" alt="Sequence Diagram" /></p>
 <p>The attestation report which is written to an on-chain registry contains:</p>
 <ul>
@@ -244,7 +244,7 @@ The SP therefore requests a quote from the application and sends that quote to I
 <p>workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)</p>
 <h3><a class="header" href="#enclave-registry-on-chain" id="enclave-registry-on-chain">Enclave Registry On-Chain</a></h3>
 <p>In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of Integritee.</p>
-<p>Integritee developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:</p>
+<p>Integritee developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the integritee-worker repo, building it and then:</p>
 <pre><code class="language-bash">sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
 </code></pre>
 <p>TODO: we might need to provide a docker environment the achieve deterministic builds.</p>
@@ -284,7 +284,7 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <p><strong>solution candidate</strong></p>
 <ol>
 <li>A set of <em>companies</em> (i.e. SCS, web3 foundation) register a production license with Intel</li>
-<li>substraTEE-workers send their RA quotes to the chain.</li>
+<li>integritee-workers send their RA quotes to the chain.</li>
 <li>the <em>company</em> listens to new RA quotes and sends them to IAS with the <em>company's</em> SPID.</li>
 <li>the <em>company</em> sends the IAS report to the chain.</li>
 </ol>
@@ -307,7 +307,7 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <tr><td>confidential smart contracts</td><td>:thumbsdown:</td><td>:+1: (Ekiden, PDO, <a href="https://encointer.org">encointer</a>)</td><td>computation time and storage expensive</td></tr>
 <tr><td><a href="https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/poet.html">POET</a> consensus</td><td>:thumbsdown:</td><td>:thumbsdown:</td><td>:thumbsdown:</td></tr>
 </tbody></table>
-<h2><a class="header" href="#substratee-signer" id="substratee-signer">substraTEE-signer</a></h2>
+<h2><a class="header" href="#integritee-signer" id="integritee-signer">integritee-signer</a></h2>
 <p><em>off-chain</em>: nothing special needs to be run by blockchain validators. normal transactions</p>
 <p><em>stateless</em>: no state needs to be preserved (onchain - data or hash) between uses</p>
 <p><img src="fig/integritee-signer.svg" alt="signer" /></p>
@@ -328,7 +328,7 @@ Moreover, remote attestation in production mode can only be taken out with such 
 <p><img src="fig/integritee-stealth-node.svg" alt="node" /></p>
 <h1><a class="header" href="#privacy" id="privacy">Privacy</a></h1>
 <p>Integritee leverages the confidentiality guarantees of TEEs, namely Intel SGX.</p>
-<p>Whatever is computed inside substraTEE worker enclaves can't be observed by the network nor by the operator of the worker service nor by the root user nor a cloud provider admin.</p>
+<p>Whatever is computed inside Integritee worker enclaves can't be observed by the network nor by the operator of the worker service nor by the root user nor a cloud provider admin.</p>
 <p>What Integritee can't provide is network layer privacy. That's what <a href="https://www.torproject.org/">Tor</a> or <a href="https://nymtech.net">Nym</a> are for.</p>
 <h1><a class="header" href="#scalability" id="scalability">Scalability</a></h1>
 <p>Integritee with <a href="./design.html#direct-invocation-vision">direct invocation</a> is a 2nd layer technology: It allows to do state transitions without the individual transactions hitting the blockchain.</p>
@@ -387,10 +387,10 @@ If users have many integritee-bridge operators to chose from, we rely on the fac
 <h2><a class="header" href="#basic-integritee-application-for-cdn" id="basic-integritee-application-for-cdn">Basic Integritee application for CDN</a></h2>
 <ul>
 <li>Subscriptions are managed on-chain, as are payments (can be flat subscription fees or pay-per-use)</li>
-<li>substraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.
+<li>integrite-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.
 No consumers or publishers nor operators have access</li>
 <li>publishers commit their content (encrypted with the CEK (RSA+AES)) to IPFS and register the content on-chain, providing the IPFS url</li>
-<li>consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which
+<li>consumers request content from the integritee-worker over a TLS channel (can be https, wss, json-rpc, REST), which
 <ul>
 <li>authenticates the consumer and looks up subscription status on-chain</li>
 <li>fetches the requested content from IPFS</li>
@@ -449,7 +449,7 @@ The subscription metadata can include restrictions to archive access.</p>
 <p>where M3 includes only the <em>docker image 1</em> and the <em>Intel Attestation Service (IAS)</em> and M4 includes the three <em>docker images</em> and the <em>Intel Attestation Service (IAS)</em>.</p>
 <h1><a class="header" href="#sharding" id="sharding">Sharding</a></h1>
 <p>Integritee isolates confidential state from the blockchain by maintaining it off-chain and processing it in TEEs. This strategy allows application-specific sharding. Every use case can work on its own shard and even one use case could split into several shards.</p>
-<p>By default, SubstratTEE uses the MRENCLAVE of the worker enclave as shard identifier, so in most cases, your shard is directly linked to your specific TCB and there's nothing you have to worry about.</p>
+<p>By default, Integritee uses the MRENCLAVE of the worker enclave as shard identifier, so in most cases, your shard is directly linked to your specific TCB and there's nothing you have to worry about.</p>
 <p>If you want to use your TCB for more than one use case, you might want to split into shards.</p>
 <p><img src="./fig/SGX-TCB-shard-overview.svg" alt="Sharding UML" /></p>
 <p>A single SGX HW can run many worker instances, all operating on different shards (and possibly even different TCBs).</p>
@@ -513,7 +513,7 @@ Similar to smart contracts reentrancy.</p>
 <h4><a class="header" href="#countermeasures-3" id="countermeasures-3">Countermeasures</a></h4>
 <ul>
 <li>update your SGX HW</li>
-<li>verify SGX is up-to-date for all substraTEE-workers (IAS tells us with their remote attestation report)</li>
+<li>verify SGX is up-to-date for all integritee-workers (IAS tells us with their remote attestation report)</li>
 </ul>
 <h1><a class="header" href="#threat-model-of-chainrelay" id="threat-model-of-chainrelay">Threat model of ChainRelay</a></h1>
 <h2><a class="header" href="#introduction" id="introduction">Introduction</a></h2>
@@ -533,7 +533,7 @@ Similar to smart contracts reentrancy.</p>
 <h3><a class="header" href="#user" id="user">User</a></h3>
 <p>User of the system that holds tokens either on-chain or in an incognito account.</p>
 <ul>
-<li>He uses the substraTEE-client</li>
+<li>He uses the integritee-cli</li>
 <li>He can send extrinsics/transactions to the node that will then be processed by the enclave</li>
 <li>He can query his own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket</li>
 <li>He holds his keypairs (for on-chain and incognito accounts)</li>
@@ -541,7 +541,7 @@ Similar to smart contracts reentrancy.</p>
 <h3><a class="header" href="#worker-operator" id="worker-operator">Worker operator</a></h3>
 <p>Operates the worker and the enclave.</p>
 <ul>
-<li>He uses the substraTEE-worker</li>
+<li>He uses the integritee-service</li>
 <li>He has full access to the system (HW, OS and services)</li>
 </ul>
 <h3><a class="header" href="#vendor" id="vendor">Vendor</a></h3>
@@ -824,7 +824,7 @@ WantedBy=multi-user.target
 </code></pre>
 </li>
 <li>
-<p>Compile the substraTEE-worker:</p>
+<p>Compile the integritee-worker:</p>
 <pre><code class="language-bash">make
 </code></pre>
 </li>
@@ -832,9 +832,9 @@ WantedBy=multi-user.target
 <p>run worker like described below</p>
 </li>
 </ul>
-<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker</p>
+<p>If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the integritee-worker</p>
 <pre><code class="language-bash">*** Start the enclave
-[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
+[2019-05-15T05:15:03Z ERROR integritee::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 </code></pre>
 <h2><a class="header" href="#build-worker" id="build-worker">Build Worker</a></h2>
 <p>In order to compile <em>ring</em> into wasm, you'll need LLVM-9 or above or you'll get linker errors. Here the instructions for Ubuntu 18.04. Skip this if you're building in our docker.</p>
@@ -856,10 +856,10 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 </code></pre>
 <h2><a class="header" href="#run-worker" id="run-worker">Run Worker</a></h2>
 <pre><code class="language-bash">cd bin
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker run --ns &lt;yournodeip&gt;
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service run --ns &lt;yournodeip&gt;
 </code></pre>
 <h1><a class="header" href="#how-to-perform-private-transactions" id="how-to-perform-private-transactions">How to Perform Private Transactions</a></h1>
 <p>Private transactions are a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom.</p>
@@ -913,14 +913,14 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker mrenclave &gt; ~/mrenclave.b58
-./substratee-worker run --skip-ra
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service mrenclave &gt; ~/mrenclave.b58
+./integritee-service run --skip-ra
 </code></pre>
 <h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">Play in terminal 3</a></h2>
-<pre><code class="language-bash">cd ~/work/substraTEE-worker/client
+<pre><code class="language-bash">cd ~/work/worker/cli
 ./demo_shielding_unshielding.sh
 </code></pre>
 <p>Now you can watch the process of</p>
@@ -941,7 +941,7 @@ ls -la
 #  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
 
 # give all files back to the external user
-chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
+chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; integritee-service integritee-node
 </code></pre>
 <h1><a class="header" href="#how-to-perform-direct-transactions" id="how-to-perform-direct-transactions">How to Perform Direct Transactions</a></h1>
 <p><em>this demo is intended to be an acceptance test for M8.1 and M8.2. The underlying features are not production-ready. M8.1 and M8.2 are just our first milestones towards direct invocation and sidechains according to our <a href="https://polkadot.polkassembly.io/post/111">scalability roadmap</a></em></p>
@@ -994,15 +994,15 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker mrenclave &gt; ~/mrenclave.b58
-./substratee-worker run --skip-ra
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service mrenclave &gt; ~/mrenclave.b58
+./integritee-service run --skip-ra
 </code></pre>
 <p>wait until you see blocks being synched</p>
 <h2><a class="header" href="#run-client-in-terminal-3" id="run-client-in-terminal-3">Run client in terminal 3</a></h2>
-<pre><code class="language-bash">cd ~/work/worker/client
+<pre><code class="language-bash">cd ~/work/worker/cli
 ./demo_direct_call.sh -m file
 </code></pre>
 <p>Now you can watch the process of</p>
@@ -1022,7 +1022,7 @@ ls -la
 #  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
 
 # give all files back to the external user
-chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
+chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; integritee-service integritee-node
 </code></pre>
 <h1><a class="header" href="#how-to-access-on-chain-storage-from-within-the-enclave-trustlessly" id="how-to-access-on-chain-storage-from-within-the-enclave-trustlessly">How To Access On-Chain Storage From Within The Enclave Trustlessly</a></h1>
 <p>Integritee isolates <em>confidential state</em> (what the STF <code>TrustedCall</code> operates on inside the SGX enclave) from <em>on-chain state</em> (what is plaintext readable by the entire network of integritee-nodes). Some use cases, however, reqire read access to on-chain storage for their <code>TrustedCall</code>s. As the enclave can't trust its worker service, it has to request and verify read proofs from the integritee-node.</p>
@@ -1113,13 +1113,13 @@ chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
 <pre><code class="language-bash">git clone https://github.com/integritee-network/integritee-node
 </code></pre>
 <p>Encointer will add its public pallets to this node tempalte: <em>scheduler</em> and <em>currencies</em>. See <a href="https://github.com/encointer/encointer-node/tree/sgx-master">encointer-node</a></p>
-<h2><a class="header" href="#substratee-worker" id="substratee-worker">substraTEE-worker</a></h2>
-<p>The substraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.</p>
+<h2><a class="header" href="#integritee-worker-1" id="integritee-worker-1">integritee-worker</a></h2>
+<p>The integritee-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.</p>
 <p>The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.</p>
 <p>The worker itself will not need to be modified, it is the framework which runs your custom STF logic. It also offers you a customizable CLI interface</p>
 <h2><a class="header" href="#trustedcall" id="trustedcall">TrustedCall</a></h2>
 <p>Now we need a way to call our custom pallet functions isolated in a TEE.</p>
-<p>Integritee encapsulates all the application-specific stuff in its <code>substratee-stf</code> crate that you can customize.</p>
+<p>Integritee encapsulates all the application-specific stuff in its <code>integritee-stf</code> crate that you can customize.</p>
 <pre><code class="language-bash">git clone https://github.com/integritee-network/worker
 </code></pre>
 <p>Let's start by defining a new <code>TrustedCall</code>:</p>
@@ -1240,8 +1240,8 @@ impl TrustedCall {
 <p>See <a href="./sharding.html">Sharding</a> for more details.</p>
 <h2><a class="header" href="#trustedgetter" id="trustedgetter">TrustedGetter</a></h2>
 <p>Now that everything is super-isolated and confidential, how should we know if our call actually worked?</p>
-<p>That's why substraTEE-worker exposes a websocket interface for encrypted and authenticated queries.</p>
-<p>We will now implemet a getter that can only be called by the <code>AccountId</code> it refers to.</p>
+<p>That's why integritee-worker exposes a websocket interface for encrypted and authenticated queries.</p>
+<p>We will now implement a getter that can only be called by the <code>AccountId</code> it refers to.</p>
 <h4><a class="header" href="#encointer-workerstfsrclibrs-1" id="encointer-workerstfsrclibrs-1">encointer-worker/stf/src/lib.rs</a></h4>
 <pre><pre class="playpen"><code class="language-rust">
 <span class="boring">#![allow(unused_variables)]

@@ -199,15 +199,15 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker mrenclave &gt; ~/mrenclave.b58
-./substratee-worker run --skip-ra
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service mrenclave &gt; ~/mrenclave.b58
+./integritee-service run --skip-ra
 </code></pre>
 <p>wait until you see blocks being synched</p>
 <h2><a class="header" href="#run-client-in-terminal-3" id="run-client-in-terminal-3">Run client in terminal 3</a></h2>
-<pre><code class="language-bash">cd ~/work/worker/client
+<pre><code class="language-bash">cd ~/work/worker/cli
 ./demo_direct_call.sh -m file
 </code></pre>
 <p>Now you can watch the process of</p>
@@ -227,7 +227,7 @@ ls -la
 #  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
 
 # give all files back to the external user
-chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; substraTEE-worker integritee-node
+chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; integritee-service integritee-node
 </code></pre>
 
                     </main>
