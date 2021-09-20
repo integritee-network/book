@@ -73,18 +73,18 @@ use `Ctrl-B + cursors` to move between terminals
 cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker mrenclave > ~/mrenclave.b58
-./substratee-worker run --skip-ra
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service mrenclave > ~/mrenclave.b58
+./integritee-service run --skip-ra
 ```
 wait until you see blocks being synched
 
 ## Run client in terminal 3
 
 ```bash
-cd ~/work/worker/client
+cd ~/work/worker/cli
 ./demo_direct_call.sh -m file
 ```
 
@@ -108,5 +108,5 @@ ls -la
 #  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
 
 # give all files back to the external user
-chown -R <NUMBER1>:<NUMBER2> substraTEE-worker integritee-node
+chown -R <NUMBER1>:<NUMBER2> integritee-service integritee-node
 ```

@@ -69,4 +69,4 @@ This side-channel attack compromised both integrity and confidentiality (and the
 #### Countermeasures
 
 * update your SGX HW
-* verify SGX is up-to-date for all substraTEE-workers (IAS tells us with their remote attestation report)
+* verify SGX is up-to-date for all integritee-workers (IAS tells us with their remote attestation report)

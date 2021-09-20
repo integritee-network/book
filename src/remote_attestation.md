@@ -21,9 +21,9 @@ The issue here is that IAS only talks to registered clients. You need to registe
 
 ### Attestation Registry On-Chain
 
-It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the substraTEE-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.
+It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the integritee-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.
 
-This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. substraTEE-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.
+This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. integritee-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.
 
 ![Sequence Diagram](./fig/attestation_registry_sequence.svg)
 
@@ -57,7 +57,7 @@ workers will repeat remote attestation in reasonable regular intervals (i.e. onc
 
 In order for the chain validator to be able to verify MRENCLAVE, there must be a consensus about MRENCLAVE of the valid version of Integritee.
 
-Integritee developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the substraTEE-worker repo, building it and then:
+Integritee developers will propose code updates to be voted on. Validators check the code and vote on behalf or against each proposal. MRENCLAVE can be reproduced by cloning the integritee-worker repo, building it and then:
 
 ```bash
 sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
@@ -126,7 +126,7 @@ Moreover, remote attestation in production mode can only be taken out with such 
 **solution candidate**
 
 1. A set of *companies* (i.e. SCS, web3 foundation) register a production license with Intel
-1. substraTEE-workers send their RA quotes to the chain.
+1. integritee-workers send their RA quotes to the chain.
 1. the *company* listens to new RA quotes and sends them to IAS with the *company's* SPID.
 1. the *company* sends the IAS report to the chain.
 

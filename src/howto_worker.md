@@ -110,7 +110,7 @@ If you are on a platform that supports SGX, you can enable HW support by:
   LD_LIBRARY_PATH=/opt/intel/sgx-aesm-service/aesm/ /opt/intel/sgx-aesm-service/aesm/aesm_service &
   ```
 
-* Compile the substraTEE-worker:
+* Compile the integritee-worker:
 
   ```bash
   make
@@ -118,11 +118,11 @@ If you are on a platform that supports SGX, you can enable HW support by:
 
 * run worker like described below
 
-If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the substraTEE-worker
+If you run the Hardware Mode on a platform that does not support SGX, you get the following error from the integritee-worker
 
 ```bash
 *** Start the enclave
-[2019-05-15T05:15:03Z ERROR substratee_worker::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
+[2019-05-15T05:15:03Z ERROR integritee::enclave_wrappers] [-] Init Enclave Failed SGX_ERROR_NO_DEVICE!
 ```
 
 ## Build Worker
@@ -157,10 +157,10 @@ echo "<YOUR KEY>" > bin/key.txt
 
 ```bash
 cd bin
-./substratee-worker init-shard
-./substratee-worker shielding-key
-./substratee-worker signing-key
-./substratee-worker run --ns <yournodeip>
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service run --ns <yournodeip>
 ```
 
 

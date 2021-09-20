@@ -19,7 +19,7 @@ The following points will be analysed:
 ### User
 User of the system that holds tokens either on-chain or in an incognito account.
 
-* He uses the substraTEE-client
+* He uses the integritee-cli
 * He can send extrinsics/transactions to the node that will then be processed by the enclave
 * He can query his own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket
 * He holds his keypairs (for on-chain and incognito accounts)
@@ -27,7 +27,7 @@ User of the system that holds tokens either on-chain or in an incognito account.
 ### Worker operator
 Operates the worker and the enclave.
 
-* He uses the substraTEE-worker
+* He uses the integritee-service
 * He has full access to the system (HW, OS and services)
 
 ### Vendor

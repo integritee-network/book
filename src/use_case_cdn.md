@@ -5,10 +5,10 @@ Integritee could be used to restrict (narrow- or broadband) content delivery to 
 ## Basic Integritee application for CDN
 
 * Subscriptions are managed on-chain, as are payments (can be flat subscription fees or pay-per-use)
-* substraTEE-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.
+* integrite-worker holds the content-encryption key pair (CEK). Only the worker enclave(s) can read this RSA private key.
 No consumers or publishers nor operators have access
 * publishers commit their content (encrypted with the CEK (RSA+AES)) to IPFS and register the content on-chain, providing the IPFS url
-* consumers request content from the substraTEE-worker over a TLS channel (can be https, wss, json-rpc, REST), which
+* consumers request content from the integritee-worker over a TLS channel (can be https, wss, json-rpc, REST), which
   * authenticates the consumer and looks up subscription status on-chain
   * fetches the requested content from IPFS
   * decrypts the content
