@@ -71,9 +71,9 @@ git clone https://github.com/integritee-network/integritee-node
 
 Encointer will add its public pallets to this node tempalte: *scheduler* and *currencies*. See [encointer-node](https://github.com/encointer/encointer-node/tree/sgx-master)
 
-## substraTEE-worker
+## integritee-worker
 
-The substraTEE-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.
+The integritee-worker is the service running on a Intel SGX enabled machine. It will run our TEE-runtime inside an SGX enclave, operating on encrypted state.
 
 The worker will also be our ChainRelay, a trustless bridge from the blockchain into the SGX enclave.
 
@@ -83,7 +83,7 @@ The worker itself will not need to be modified, it is the framework which runs y
 
 Now we need a way to call our custom pallet functions isolated in a TEE.
 
-Integritee encapsulates all the application-specific stuff in its `substratee-stf` crate that you can customize.
+Integritee encapsulates all the application-specific stuff in its `integritee-stf` crate that you can customize.
 
 ```bash
 git clone https://github.com/integritee-network/worker
@@ -220,9 +220,9 @@ See [Sharding](./sharding.md) for more details.
 
 Now that everything is super-isolated and confidential, how should we know if our call actually worked?
 
-That's why substraTEE-worker exposes a websocket interface for encrypted and authenticated queries.
+That's why integritee-worker exposes a websocket interface for encrypted and authenticated queries.
 
-We will now implemet a getter that can only be called by the `AccountId` it refers to.
+We will now implement a getter that can only be called by the `AccountId` it refers to.
 
 #### encointer-worker/stf/src/lib.rs
 

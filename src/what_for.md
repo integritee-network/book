@@ -16,7 +16,7 @@ We list some original ideas here. Not all of them have been implemented already
 |confidential smart contracts |:thumbsdown: | :+1: (Ekiden, PDO, [encointer](https://encointer.org)) | computation time and storage expensive|
 | [POET](https://sawtooth.hyperledger.org/docs/core/releases/1.0/architecture/poet.html) consensus | :thumbsdown: | :thumbsdown: | :thumbsdown: |
 
-## substraTEE-signer
+## integritee-signer
 
 *off-chain*: nothing special needs to be run by blockchain validators. normal transactions
 
