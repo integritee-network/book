@@ -14,6 +14,18 @@ docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
 
 # create a dedicated demo directory and start the docker container (with sgx support)
 mkdir demo && cd demo
+
+# clone and build the node
+git clone https://github.com/integritee-network/integritee-node.git
+cd integritee-node
+# initialize wasm build environment
+./scripts/init.sh
+# build the node
+cargo build --release --features skip-ias-check
+# this might take 10min+ on a fast machine
+cd ..
+
+# run docker for sgx
 docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
 cd work
 
@@ -22,17 +34,8 @@ git clone https://github.com/integritee-network/worker.git
 cd worker
 git fetch origin rps-demo
 git checkout rps-demo
+./ci/install_rust.sh
 SGX_MODE=SW make
-# this might take 10min+ on a fast machine
-
-# clone and build the node
-cd ..
-git clone https://github.com/integritee-network/integritee-node.git
-cd integritee-node
-# initialize wasm build environment
-./scripts/init.sh
-# build the node
-cargo build --release --features skip-ias-check
 # another 10min
 ```
 
