@@ -1,5 +1,5 @@
 
-# How to Perform Direct Transactions
+# How to Play Rock Paper Scissor on the integriTEE sidechain
 
 *this demo is intended to show a rock paper scissor game on the integriTEE sidechain*
 
