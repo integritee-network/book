@@ -1,7 +1,7 @@
 
-# How to Play Rock Paper Scissor on the integriTEE sidechain
+# How to Play Rock Paper Scissors onchain
 
-*this demo is intended to show a rock paper scissor game on the integriTEE sidechain*
+*this demo is intended to show a rock paper scissors game on the integriTEE sidechain*
 
 ## Setup
 
