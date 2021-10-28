@@ -96,5 +96,5 @@ ls -la
 #  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
 
 # give all files back to the external user
-chown -R <NUMBER1>:<NUMBER2> integritee-service integritee-node
+chown -R <NUMBER1>:<NUMBER2> worker integritee-node
 ```
