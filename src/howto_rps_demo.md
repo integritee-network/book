@@ -18,8 +18,6 @@ mkdir demo && cd demo
 # clone and build the node
 git clone https://github.com/integritee-network/integritee-node.git
 cd integritee-node
-# initialize wasm build environment
-./scripts/init.sh
 # build the node
 cargo build --release --features skip-ias-check
 # this might take 10min+ on a fast machine
