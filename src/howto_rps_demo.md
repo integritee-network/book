@@ -81,8 +81,7 @@ cd ~/work/worker/cli
 ./demo_rps.sh -m file
 ```
 
-And now you should see Alice and Bob playing rock paper scissor quite rapidely (faster than the blocks are finalized on the substrate node)
-
+And now you should see Alice and Bob playing rock paper scissor quite rapidly.
 ## Cleanup
 The files created in the docker container belong to `root`. This can make it impossible to delete them on your host system. We now give them back to your standard user. (Alternatively, you can just delete everything in `work`)
 
