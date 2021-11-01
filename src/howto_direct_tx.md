@@ -21,12 +21,12 @@ Build worker, client and node in our docker:
 
 ```bash
 # get the docker image
-# check for updates on https://hub.docker.com/repository/docker/scssubstratee/substratee_dev
-docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
+# check for updates on https://hub.docker.com/r/integritee/integritee-dev/tags
+docker pull integritee/integritee-dev:0.1.7
 
 # create a dedicated demo directory and start the docker container (with sgx support)
 mkdir demo && cd demo
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
 cd work
 
 # clone and build the worker and the client

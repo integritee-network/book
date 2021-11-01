@@ -35,8 +35,8 @@ cargo build --release
 If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):
 
 ```bash
-docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
+docker pull integritee/integritee-dev:0.1.7
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
 ./scripts/init.sh
 cargo build --release
 ```
