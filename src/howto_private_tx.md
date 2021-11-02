@@ -28,6 +28,7 @@ docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
 cd work
 git clone https://github.com/integritee-network/worker.git
 cd worker
+# Install the correct rust-toolchain 
 rustup show
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
