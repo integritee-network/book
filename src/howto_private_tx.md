@@ -37,8 +37,6 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/integritee-network/integritee-node.git
 cd integritee-node
-# initialize wasm build environment
-./scripts/init.sh
 # build the node
 cargo build --release
 # another 10min

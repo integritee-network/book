@@ -22,7 +22,7 @@ export AR=/usr/bin/llvm-ar-10
 
 Initialize your Wasm Build environment:
 ```bash
-./scripts/init.sh
+rustup show
 ```
 
 Build Wasm and native code:
@@ -37,7 +37,7 @@ If you prefer to skip the setup, you can just use our docker and build the node 
 ```bash
 docker pull integritee/integritee-dev:0.1.7
 docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
-./scripts/init.sh
+rustup show
 cargo build --release
 ```
 

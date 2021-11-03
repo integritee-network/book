@@ -32,6 +32,8 @@ cd work
 # clone and build the worker and the client
 git clone https://github.com/integritee-network/worker.git
 cd worker
+# Install the correct rust-toolchain 
+rustup show
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
 
@@ -39,8 +41,8 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/integritee-network/integritee-node.git
 cd integritee-node
-# initialize wasm build environment
-./scripts/init.sh
+# Install the correct rust-toolchain 
+rustup show
 # build the node
 cargo build --release
 # another 10min
