@@ -66,14 +66,14 @@ ansible-playbook site.yml -k
 ```
 
 ### Using Docker
-We provide docker images with all the required tools installed. They can be found on [dockerhub](https://hub.docker.com/repository/docker/scssubstratee/substratee_dev).
+We provide docker images with all the required tools installed. They can be found on [dockerhub](https://hub.docker.com/r/integritee/integritee-dev/tags).
 
 The tag has the following format: `<Ubuntu version>-<Intel SGX SDK version>-<Rust SGX SDK version>`. We don't provide any *latest* so you must specify the tag.
 
 If you execute
 
 ```bash
-docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
+docker pull integritee/integritee-dev:0.1.7
 ```
 
 you get a docker image with
@@ -87,7 +87,7 @@ you get a docker image with
 The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.
 
 ```bash
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
 ```
 
 Now you can build and run your worker inside docker.
@@ -101,7 +101,7 @@ If you are on a platform that supports SGX, you can enable HW support by:
 * Start the docker with SGX device support:
 
   ```bash
-  docker run -it -v $(pwd):/root/work --device /dev/isgx scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
+  docker run -it -v $(pwd):/root/work --device /dev/isgx integritee/integritee-dev:0.1.7 /bin/bash
   ```
 
 * Start the aesm service inside the docker:
