@@ -163,16 +163,16 @@ export AR=/usr/bin/llvm-ar-10
 # if you already built, make sure to run cargo clean
 </code></pre>
 <p>Initialize your Wasm Build environment:</p>
-<pre><code class="language-bash">./scripts/init.sh
+<pre><code class="language-bash">rustup show
 </code></pre>
 <p>Build Wasm and native code:</p>
 <pre><code class="language-bash">cargo build --release
 </code></pre>
 <h3><a class="header" href="#with-docker" id="with-docker">with docker</a></h3>
 <p>If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):</p>
-<pre><code class="language-bash">docker pull scssubstratee/substratee_dev:1804-2.12-1.1.3-001
-docker run -it -v $(pwd):/root/work scssubstratee/substratee_dev:1804-2.12-1.1.3-001 /bin/bash
-./scripts/init.sh
+<pre><code class="language-bash">docker pull integritee/integritee-dev:0.1.7
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+rustup show
 cargo build --release
 </code></pre>
 <h2><a class="header" href="#run" id="run">Run</a></h2>
