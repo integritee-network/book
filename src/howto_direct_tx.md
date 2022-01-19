@@ -14,7 +14,7 @@ The detailed design of the shielding and unshielding process is described in the
 In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need any special hardware.
 
 ## Setup
-Build worker, client and node in our docker, so you don't need any intel sgx hardware:
+Build worker, client and node in our docker, so you don't need any Intel SGX hardware:
 
 ```bash
 # get the docker image
