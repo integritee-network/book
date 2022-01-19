@@ -11,13 +11,10 @@ Substrate blockchains are usually account-based and pseudonymous by nature: The 
 
 The detailed design of the shielding and unshielding process is described in the chapter [Token Shielding](./token_shielding.md).
 
-In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need any special hardware. 
+In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need any special hardware.
 
 ## Setup
-
-You'll need SGX enabled hardware and to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own KEY.
-
-Build worker, client and node in our docker:
+Build worker, client and node in our docker, so you don't need any Intel SGX hardware:
 
 ```bash
 # get the docker image
@@ -32,7 +29,7 @@ cd work
 # clone and build the worker and the client
 git clone https://github.com/integritee-network/worker.git
 cd worker
-# Install the correct rust-toolchain 
+# Install the correct rust-toolchain
 rustup show
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
@@ -41,10 +38,10 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/integritee-network/integritee-node.git
 cd integritee-node
-# Install the correct rust-toolchain 
+# Install the correct rust-toolchain
 rustup show
 # build the node
-cargo build --release
+cargo build --release --features skip-ias-check,skip-extrinsic-filtering
 # another 10min
 ```
 
@@ -79,7 +76,7 @@ touch spid.txt key.txt
 ./integritee-service shielding-key
 ./integritee-service signing-key
 ./integritee-service mrenclave > ~/mrenclave.b58
-./integritee-service run --skip-ra
+./integritee-service run --skip-ra --dev
 ```
 wait until you see blocks being synched
 
