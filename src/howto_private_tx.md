@@ -9,10 +9,7 @@ The detailed design of the shielding and unshielding process is described in the
 In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making `/dev/isgx` and the aesm service available).
 
 ## Setup
-
-You'll need SGX enabled hardware and to [register with Intel](./howto_worker.md#intel-sgx-development-and-production-commercial-license) and obtain your own SPID and KEY.
-
-Build worker, client and node in our docker:
+Build worker, client and node in our docker, so you don't need any intel sgx hardware:
 
 ```bash
 # get the docker image
@@ -28,7 +25,7 @@ docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
 cd work
 git clone https://github.com/integritee-network/worker.git
 cd worker
-# Install the correct rust-toolchain 
+# Install the correct rust-toolchain
 rustup show
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
@@ -38,7 +35,7 @@ cd ..
 git clone https://github.com/integritee-network/integritee-node.git
 cd integritee-node
 # build the node
-cargo build --release
+cargo build --release --features skip-ias-check,skip-extrinsic-filtering
 # another 10min
 ```
 
@@ -75,7 +72,7 @@ touch spid.txt key.txt
 ./integritee-service shielding-key
 ./integritee-service signing-key
 ./integritee-service mrenclave > ~/mrenclave.b58
-./integritee-service run --skip-ra
+./integritee-service run --skip-ra --dev
 ```
 
 ## Play in terminal 3
