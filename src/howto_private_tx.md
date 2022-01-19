@@ -9,7 +9,7 @@ The detailed design of the shielding and unshielding process is described in the
 In the following demo we show how Alice can send tokens to Bob privately. The demo will run in our docker container so you don't need to setup a complete SGX development machine (although the Intel SGX driver and SDK needs to be installed making `/dev/isgx` and the aesm service available).
 
 ## Setup
-Build worker, client and node in our docker, so you don't need any intel sgx hardware:
+Build worker, client and node in our docker, so you don't need any Intel SGX hardware:
 
 ```bash
 # get the docker image
