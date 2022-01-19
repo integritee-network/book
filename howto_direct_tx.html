@@ -154,10 +154,9 @@
 <p>For direct invocation, our worker exposes a rpc interface for submitting and watching a <code>TrustedCall</code>. Our client uses direct invocation whenever the <code>--direct</code> flag is present.</p>
 <p>Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. Integritee offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in Integritee it is guaranteed by TEEs.</p>
 <p>The detailed design of the shielding and unshielding process is described in the chapter <a href="./token_shielding.html">Token Shielding</a>.</p>
-<p>In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need any special hardware. </p>
+<p>In the following demo we show how Alice can send tokens to Bob privately with a direct invocation call. The demo will run in our docker container so you don't need any special hardware.</p>
 <h2><a class="header" href="#setup" id="setup">Setup</a></h2>
-<p>You'll need SGX enabled hardware and to <a href="./howto_worker.html#intel-sgx-development-and-production-commercial-license">register with Intel</a> and obtain your own KEY.</p>
-<p>Build worker, client and node in our docker:</p>
+<p>Build worker, client and node in our docker, so you don't need any Intel SGX hardware:</p>
 <pre><code class="language-bash"># get the docker image
 # check for updates on https://hub.docker.com/r/integritee/integritee-dev/tags
 docker pull integritee/integritee-dev:0.1.7
@@ -170,7 +169,7 @@ cd work
 # clone and build the worker and the client
 git clone https://github.com/integritee-network/worker.git
 cd worker
-# Install the correct rust-toolchain 
+# Install the correct rust-toolchain
 rustup show
 SGX_MODE=SW make
 # this might take 10min+ on a fast machine
@@ -179,10 +178,10 @@ SGX_MODE=SW make
 cd ..
 git clone https://github.com/integritee-network/integritee-node.git
 cd integritee-node
-# Install the correct rust-toolchain 
+# Install the correct rust-toolchain
 rustup show
 # build the node
-cargo build --release
+cargo build --release --features skip-ias-check,skip-extrinsic-filtering
 # another 10min
 </code></pre>
 <p>For a nicer overview of the demo, let's use tmux and split our docker console into multiple terminals</p>
@@ -205,7 +204,7 @@ touch spid.txt key.txt
 ./integritee-service shielding-key
 ./integritee-service signing-key
 ./integritee-service mrenclave &gt; ~/mrenclave.b58
-./integritee-service run --skip-ra
+./integritee-service run --skip-ra --dev
 </code></pre>
 <p>wait until you see blocks being synched</p>
 <h2><a class="header" href="#run-client-in-terminal-3" id="run-client-in-terminal-3">Run client in terminal 3</a></h2>
