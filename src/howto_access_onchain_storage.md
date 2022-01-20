@@ -1,6 +1,6 @@
 # How To Access On-Chain Storage From Within The Enclave Trustlessly
 
-Integritee isolates *confidential state* (what the STF `TrustedCall` operates on inside the SGX enclave) from *on-chain state* (what is plaintext readable by the entire network of integritee-nodes). Some use cases, however, reqire read access to on-chain storage for their `TrustedCall`s. As the enclave can't trust its worker service, it has to request and verify read proofs from the integritee-node.
+Integritee isolates *confidential state* (what the STF `TrustedCall` operates on inside the SGX enclave) from *on-chain state* (what is plaintext readable by the entire network of integritee-nodes). Some use cases, however, require read access to on-chain storage for their `TrustedCall`s. As the enclave can't trust its worker service, it has to request and verify read proofs from the integritee-node.
 
 Our goal is that you can use the same pallets that you use on-chain also inside Integritee enclaves. Therefore, we are mapping storage keys directly between confidential state and on-chain state. Your `TrustedCall` has to specify what storage keys it requires and these will be mapped to the confidential state before executing the call.
 

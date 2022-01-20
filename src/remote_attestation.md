@@ -1,29 +1,30 @@
 # Remote Attestation
 
-TODO
-
 The goal of attestation is to convince a third party that a specific piece of code is running on a genuine Intel SGX HW.
 
-## convincing the Integritee user
+## Convincing the Integritee user
 
-A user that interacts with Integritee wants to be sure that the shielding pubkey she uses to encrypt her call to the STF originates form an enclave that
+A user that interacts with Integritee wants to execute a state update without sharing her data and therefore encrypt her call to the STF. She has to be sure that the shielding public key she uses for encryption originates from an enclave that
+<!-- TODO: define enclave before using -->
 
-   1. is running on genuine Intel SGX HW
-   1. runs the official code
-   1. accesses the correct STF state
+   1. is running on genuine Intel SGX HW,
+   1. runs the official code and
+   1. accesses the correct STF state.
 
 ### Classical Remote Attestation Solution
 
-The standard use case for remote attestation involves a service provider (SP) like a video streaming service which wants to be sure his viewer application runs on a genuine SGX HW and respects DRM.
-The SP therefore requests a quote from the application and sends that quote to Intel Attestation Services (IAS) who sign off the quote if it is genuine.
+The standard use case for remote attestation (RA) involves a service provider (SP) like a video streaming service that wants to be sure that his viewer application runs on a genuine SGX HW and respects DRM.
+The SP therefore requests a quote from the application and sends that quote to the Intel Attestation Services (IAS) who signs off the quote if it is genuine. This process certifies the enclave to be genuine and the SP can safely run his calls. 
 
-The issue here is that IAS only talks to registered clients. You need to register in order to get a SPID which needs to be supplied along with requests.
+However, that IAS only talks to registered clients. You need to register in order to get a SPID which needs to be supplied along with requests.
+
+![Attestation of the enclave](./fig/attestation.svg)
 
 ### Attestation Registry On-Chain
 
-It isn't practical to ask every client to register with Intel and perform RA before every request. Therefore we'd rather let the integritee-worker operators attest their enclaves with IAS and write the signed quote and their certificate to the blockchain for everyone to verify.
+It isn't practical to ask every client to register with Intel and perform RA before every request. An integritee-worker operator attests his own enclave with IAS. The signed quote and the certificate is then written onto the blockchain and everyone can verify the genuineness of the enclave.
 
-This does change the the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. integritee-worker will itself perform an attestation protocol with its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.
+This changes the attestation protocol. Now the SP and the enclave in the above scheme are both running on the same machine. The integritee-worker will itself perform an attestation protocol for its enclave and get the quote signed by IAS. Like this, only Integritee operators need to register with IAS.
 
 ![Sequence Diagram](./fig/attestation_registry_sequence.svg)
 
@@ -47,11 +48,11 @@ The attestation report which is written to an on-chain registry contains:
    * IAS certificate 
    * IAS signature over above body
 
-Any user can now verify IAS signature and MRENCLAVE (given the Integritee enclave can be built deterministically). See the [example](https://github.com/rodolfoams/sgx-retrieve-identity/blob/5be913b96b2a6e5a0e1158ad169b977507291faa/Makefile#L253) how you can extract MRENCLAVE after building the enclave
+Any user can now verify the IAS signature and MRENCLAVE (given the Integritee enclave can be built deterministically). See the [example](https://github.com/rodolfoams/sgx-retrieve-identity/blob/5be913b96b2a6e5a0e1158ad169b977507291faa/Makefile#L253) how you can extract MRENCLAVE after building the enclave
 
-The worker can now publish his sealing pubkey, signed with its enclave-individual signing key stated in the quote.
+The worker can now publish his sealing public key, signed with its enclave-individual signing key stated in the quote.
 
-workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)
+Workers will repeat remote attestation in reasonable regular intervals (i.e. once per month)
 
 ### Enclave Registry On-Chain
 
@@ -63,15 +64,13 @@ Integritee developers will propose code updates to be voted on. Validators check
 sgx_sign dump -enclave enclave.signed.so -dumpfile out.log
 ```
 
-TODO: we might need to provide a docker environment the achieve deterministic builds.
-
-## secret provisioning
+## Secret provisioning
 
 In order to establish shared secrets among workers, they need to convince themselves mutually that they are genuine before entering some *Distributed Key Generation* (DKG) protocol.
 
 ## Sealing
 
-provisioned secrets are sealed with Intel's [SGX Sealing](https://software.intel.com/content/www/us/en/develop/blogs/introduction-to-intel-sgx-sealing.html). Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of a SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.
+Provisioned secrets are sealed with Intel's [SGX Sealing](https://software.intel.com/content/www/us/en/develop/blogs/introduction-to-intel-sgx-sealing.html). Two different kinds of sealing exist. MRENCLAVE is unique for each build and each piece of HW. MRSIGNER is based on the authority of an SW vendor. The latter is practical for proprietary software because vendors can update their SW without re-provisioning secrets.
 
 However, for decentralized open source projects, MRSIGNER cannot apply as there is no authority that could sign builds.
 
@@ -104,7 +103,7 @@ Enhanced Privacy ID (EPID). A group signature key known only to the quoting encl
 
 ### SPID
 
-A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by [registering with Intel](https://api.portal.trustedservices.intel.com/EPID-attestation) (only allows to attest DEBUG encalves!)
+A Service Provider ID (SPID) is needed to talk to IAS. Developers can obtain their SPID by [registering with Intel](https://api.portal.trustedservices.intel.com/EPID-attestation) (only allows to attest DEBUG enclaves!)
 
 You can request either *linkable* or *unlinkable* quote. 
 
@@ -118,7 +117,7 @@ In any case, Intel can identify YOU by SSID as you use your SSID for remote atte
 
 Due to Intel policy, developers can only compile enclaves in *Debug*, *Pre-Release* or *Simulation* mode. This means that the enclave will always be launched in *Debug* mode which doesn't provide confidentiality as enclave memory isn't encrypted.
 
-In order to compile enclaves in *Release* mode (and run them in *Production* mode), the SW vendor has to apply for a SGX production license. 
+In order to compile enclaves in *Release* mode (and run them in *Production* mode), the SW vendor has to apply for an SGX production license. 
 Moreover, remote attestation in production mode can only be taken out with such production license.
 
 *SCS is looking into options how to apply such policy to a decentralized system with Intel.*

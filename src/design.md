@@ -22,7 +22,7 @@ The *integritee-node* is a substrate blockchain node with an additional runtime 
   * invoke worker
   * confirm processing of requests
 
-The *integritee-worker* checks on the first start-up if "his" enclave is already registered on the chain. If this is not the case, it requests a remote attestion from the Intel Attestation Service (IAS) and sends the report to the *teerex module* to register his enclave.
+The *integritee-worker* checks on the first start-up if "his" enclave is already registered on the chain. If this is not the case, it requests a remote attestation from the Intel Attestation Service (IAS) and sends the report to the *teerex module* to register his enclave.
 
 If there is already an enclave (belonging to a different integritee-worker) registered on the chain, the integritee-worker requests provisioning of secrets (the *shielding and state encryption private key*) from the already registered enclave. The exchange of critical information between the enclaves is performed over a secure connection (TLS). The two enclaves perform a mutual remote attestation before exchanging any secrets.
 
