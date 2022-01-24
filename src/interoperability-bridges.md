@@ -15,7 +15,7 @@ integritee-bridge will build light clients of both chains. Block headers are sto
 
 In contrast to an approach like [XClaim](https://www.xclaim.io/), integritee-bridge provides the following advantages:
 
-* No full collateral needed. XClaim needs vaults (or *banks*) to lock collateral to the amount of backed value transferred through the bridge in order to punish misbehaving vaults. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In integritee-bridge, SGX guarantees integrity of computation. Therefore there is no need for full collateralization.
+* No over-collateralization required for the bridge operator. XClaim needs vaults (or *banks*) with more value locked as collateral than is transferred through the bridge in order to punish misbehaving bridge operators. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In integritee-bridge, SGX guarantees integrity of computation and thus also the brigde operator. Therefore, there is no need for over-collateralization.
 * No relay-contract with on-chain registry of block headers needed. Block headers are stored in the enclave's sealed storage. Less onchain storage is needed on the issuing chain.
 * Less transactions needed as there is no need for a collateralized issue commitment.
 
@@ -57,7 +57,7 @@ integritee-bridge would replace this trust in PoA validators by trust in a singl
 
 #### XClaim
 
-[XClaim](https://www.xclaim.io/) solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than integritee-bridge.
+[XClaim](https://www.xclaim.io/) solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands over-collateralization and is therefore economically less attractive at scale than integritee-bridge.
 
 #### Tesseract
 
