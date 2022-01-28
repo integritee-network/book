@@ -161,7 +161,7 @@
 <p>integritee-bridge will build light clients of both chains. Block headers are stored in SGX sealed storage and transaction inclusion proofs are verified in Intel SGX enclaves. Backed value will be in custody of a set of TEEs. Correct execution is guaranteed by TEEs (Intel SGX).</p>
 <p>In contrast to an approach like <a href="https://www.xclaim.io/">XClaim</a>, integritee-bridge provides the following advantages:</p>
 <ul>
-<li>No full collateral needed. XClaim needs vaults (or <em>banks</em>) to lock collateral to the amount of backed value transferred through the bridge in order to punish misbehaving vaults. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In integritee-bridge, SGX guarantees integrity of computation. Therefore there is no need for full collateralization.</li>
+<li>No over-collateralization required for the bridge operator. XClaim needs vaults (or <em>banks</em>) with more value locked as collateral than is transferred through the bridge in order to punish misbehaving bridge operators. Because of the opportunity cost of locked capital, this would lead to higher fees for using such a bridge. In integritee-bridge, SGX guarantees integrity of computation and thus also the brigde operator. Therefore, there is no need for over-collateralization.</li>
 <li>No relay-contract with on-chain registry of block headers needed. Block headers are stored in the enclave's sealed storage. Less onchain storage is needed on the issuing chain.</li>
 <li>Less transactions needed as there is no need for a collateralized issue commitment.</li>
 </ul>
@@ -187,7 +187,7 @@ If users have many integritee-bridge operators to chose from, we rely on the fac
 <p><a href="https://github.com/paritytech/parity-bridge">Parity bridge</a> allows an Ethereum PoA chain to bridge to the Ethereum Mainnet using <a href="https://github.com/parity-contracts/bridge/blob/master/contracts/bridge.sol">contracts</a> on both chains. The bridge is generic (arbitrary information can be passed) and bidirectional. Trust in the PoA chain validators is required.</p>
 <p>integritee-bridge would replace this trust in PoA validators by trust in a single TEE or a set of TEE's (Intel SGX).</p>
 <h4><a class="header" href="#xclaim" id="xclaim">XClaim</a></h4>
-<p><a href="https://www.xclaim.io/">XClaim</a> solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands full collateralization and is therefore economically less attractive at scale than integritee-bridge.</p>
+<p><a href="https://www.xclaim.io/">XClaim</a> solves the bridge problem not by trusting PoA validators but by incentivized and punishable actors. However, this approach demands over-collateralization and is therefore economically less attractive at scale than integritee-bridge.</p>
 <h4><a class="header" href="#tesseract" id="tesseract">Tesseract</a></h4>
 <p>The <a href="https://eprint.iacr.org/2017/1153.pdf">Tesseract Paper</a> describes a trusted cryptocurrency exchange design using Intel SGX. In section 7 they describe a bridge protocol.</p>
 
