@@ -22,7 +22,7 @@ User of the system that holds tokens either on-chain or in an incognito account.
 * He uses the integritee-cli
 * He can send extrinsics/transactions to the node that will then be processed by the enclave
 * He can query his own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket
-* He holds his keypairs (for on-chain and incognito accounts)
+* He holds his key pairs (for on-chain and incognito accounts)
 
 ### Worker operator
 Operates the worker and the enclave.
@@ -57,10 +57,10 @@ Software updates are not yet supported: https://github.com/integritee-network/wo
 | Repudiation | Operator | Deny WorkerApi access to certain users selectively | Redundancy of workers | OK |
 | Information disclosure | Operator | Get information about contents of TrustedCalls | TrustedCalls are encrypted with public shielding key of the enclave (whose private key is stored in SGX sealed storage with MRENCLAVE policy) | [known issue](https://github.com/integritee-network/worker/issues/88) |
 | Information disclosure | Operator | Get information about contents of TrustedGetters responses | Encrypt responses<br/>wss:// to WorkerApi into enclave | [known issue](https://github.com/integritee-network/worker/issues/91) |
-| Information disclosure | Operator | Get metainformation about TrustedCalls | Indirect invocation: need to use public account to proxy the TrustedCall through blockchain. Use fresh unlinkable accounts for each TrustedCall.<br/>Direct invocation: limited access to metainformation (network layer only) | (delegated)<br/>[known issue](https://github.com/integritee-network/worker/issues/88) |
+| Information disclosure | Operator | Get meta information about TrustedCalls | Indirect invocation: need to use public account to proxy the TrustedCall through blockchain. Use fresh unlinkable accounts for each TrustedCall.<br/>Direct invocation: limited access to meta information (network layer only) | (delegated)<br/>[known issue](https://github.com/integritee-network/worker/issues/88) |
 | Information disclosure | Operator | Know which incognito account belongs to whom | SGX confidentiality guarantees, encrypted TrustedCall and TrustedGetter with enclave shielding key | [known issue](https://github.com/integritee-network/worker/issues/88) |
 | Information disclosure | Operator | Leak state information | SGX confidentiality guarantees, encrypted state with state-encryption-key<br/>MRENCLAVE policy for SGX sealed storage | [known issue](https://github.com/integritee-network/worker/issues/88) |
 | Information disclosure | User | Get information about other accounts and users in the enclave | Authentication of TrustedGetter.<br/>User can only query own state | OK |
 | Denial of service | Operator | Limit the resources of the worker or the enclave to slow down the system | Redundancy of workers | OK |
 | Denial of service | User | Send invalid transactions to crash either the worker or the enclave | Ensure enclave code doesn't panic | OK to the best of our knowledge |
-| Denial of service | User | Overload the system with spam (TrustedGetters or TrustedCalls) | TrustedCalls: cost of tx fees (indirect invocation), Blocksize limit<br/>TrustedGetter: load balancing as needed (scale number of workers horizontally), standard DDoS mitigations | delegated
+| Denial of service | User | Overload the system with spam (TrustedGetters or TrustedCalls) | TrustedCalls: cost of tx fees (indirect invocation), block size limit<br/>TrustedGetter: load balancing as needed (scale number of workers horizontally), standard DDoS mitigation | delegated
