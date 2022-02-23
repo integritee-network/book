@@ -49,6 +49,56 @@ For a nicer overview of the demo, let's use tmux and split our docker console in
 
 ```bash
 tmux
-tmux split-window -v
 tmux split-window -h
+```
+
+## Launch local setup in terminal 1
+
+Prepare the worker by generating all the necessary keys and files used for startup:
+
+```bash
+cd ~/work/worker/bin
+# create empty INTEL key files
+touch spid.txt key.txt
+./integritee-service init-shard
+./integritee-service shielding-key
+./integritee-service signing-key
+./integritee-service mrenclave > ~/mrenclave.b58
+```
+
+Use the `local-setup` scripts to launch an integritee node and 2 workers. The workers are started with a 1 minute delay in between them.
+
+```bash
+cd ~/work/worker
+./local-setup/launch.py ./local-setup/tutorial-config.json
+```
+
+Wait until you see the message "`Starting worker 2 in background`" and then wait another minute or so.  
+
+## Launch sidechain demo script in terminal 2
+
+Switch to terminal 2 (using `Ctrl-B + cursor right`) and run the demo script `sidechain.sh`.
+
+```bash
+cd ~/work/worker/scripts
+source ./init_env.sh && ./sidechain.sh
+```
+
+You will see output from the demo script, transferring funds using both workers and in the end verifying that the balances of both accounts (Alice and Bob) match the expected result.
+
+The `tmux` session can be ended using `Ctrl-B + : ` to enter command mode, and then `kill-session`.
+
+## Cleanup (optional)
+The files created in the docker container belong to `root`. This can make it hard to delete them from your host system. You can change ownership of those folders back to your regular user.
+
+```bash
+cd /root/work
+ls -la
+
+# write down the numbers on the line containing '.'
+# example output: drwxrwxr-x 17 1002 1002   4096 Nov  2 15:10 .
+#  where the numbers are 1002 (NUMBER1) and 1002 (NUMBER2)
+
+# give ownership back to the external user
+chown -R <NUMBER1>:<NUMBER2> integritee-service integritee-node
 ```
