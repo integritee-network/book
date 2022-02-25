@@ -14,11 +14,11 @@ Build worker, client and node in our docker, so you don't need any Intel SGX har
 ```bash
 # get the docker image
 # check for updates on https://hub.docker.com/r/integritee/integritee-dev/tags
-docker pull integritee/integritee-dev:0.1.7
+docker pull integritee/integritee-dev:0.1.8
 
 # create a dedicated demo directory and start the docker container
 mkdir demo && cd demo
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.8 /bin/bash
 
 # now you are inside the container
 # clone and build the worker and the client

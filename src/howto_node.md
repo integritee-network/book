@@ -35,8 +35,8 @@ cargo build --release
 If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):
 
 ```bash
-docker pull integritee/integritee-dev:0.1.7
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+docker pull integritee/integritee-dev:0.1.8
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.8 /bin/bash
 rustup show
 cargo build --release
 ```

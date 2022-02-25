@@ -73,7 +73,7 @@ The tag has the following format: `<Ubuntu version>-<Intel SGX SDK version>-<Rus
 If you execute
 
 ```bash
-docker pull integritee/integritee-dev:0.1.7
+docker pull integritee/integritee-dev:0.1.8
 ```
 
 you get a docker image with
@@ -87,7 +87,7 @@ you get a docker image with
 The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.
 
 ```bash
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.8 /bin/bash
 ```
 
 Now you can build and run your worker inside docker.
@@ -101,7 +101,7 @@ If you are on a platform that supports SGX, you can enable HW support by:
 * Start the docker with SGX device support:
 
   ```bash
-  docker run -it -v $(pwd):/root/work --device /dev/isgx integritee/integritee-dev:0.1.7 /bin/bash
+  docker run -it -v $(pwd):/root/work --device /dev/isgx integritee/integritee-dev:0.1.8 /bin/bash
   ```
 
 * Start the aesm service inside the docker:
