@@ -15,13 +15,13 @@ Run on a Linux console (or WSL 2 with docker integration enabled):
 ```bash
 # get the docker image
 # check for updates on https://hub.docker.com/r/integritee/integritee-dev/tags
-docker pull integritee/integritee-dev:0.1.7
+docker pull integritee/integritee-dev:0.1.9
 
 # create a dedicated demo directory
 mkdir demo && cd demo
 # start the docker container (with sgx support)
 # maps the current directory (demo) into the docker container and runs a bash shell
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.9 /bin/bash
 
 # now inside the docker container
 cd work
