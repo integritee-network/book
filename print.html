@@ -695,8 +695,8 @@ export AR=/usr/bin/llvm-ar-10
 </code></pre>
 <h3><a class="header" href="#with-docker" id="with-docker">with docker</a></h3>
 <p>If you prefer to skip the setup, you can just use our docker and build the node like this (run in the repo root):</p>
-<pre><code class="language-bash">docker pull integritee/integritee-dev:0.1.7
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+<pre><code class="language-bash">docker pull integritee/integritee-dev:0.1.9
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.9 /bin/bash
 rustup show
 cargo build --release
 </code></pre>
@@ -790,7 +790,7 @@ WantedBy=multi-user.target
 <p>We provide docker images with all the required tools installed. They can be found on <a href="https://hub.docker.com/r/integritee/integritee-dev/tags">dockerhub</a>.</p>
 <p>The tag has the following format: <code>&lt;Ubuntu version&gt;-&lt;Intel SGX SDK version&gt;-&lt;Rust SGX SDK version&gt;</code>. We don't provide any <em>latest</em> so you must specify the tag.</p>
 <p>If you execute</p>
-<pre><code class="language-bash">docker pull integritee/integritee-dev:0.1.7
+<pre><code class="language-bash">docker pull integritee/integritee-dev:0.1.9
 </code></pre>
 <p>you get a docker image with</p>
 <ul>
@@ -801,7 +801,7 @@ WantedBy=multi-user.target
 <li>IPFS 0.4.21</li>
 </ul>
 <p>The following builds the code inside the docker, but the compiled binaries are stored on your local working copy.</p>
-<pre><code class="language-bash">docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.9 /bin/bash
 </code></pre>
 <p>Now you can build and run your worker inside docker.</p>
 <h4><a class="header" href="#enabling-sgx-hw-support-in-docker" id="enabling-sgx-hw-support-in-docker">Enabling SGX HW Support in Docker</a></h4>
@@ -815,7 +815,7 @@ WantedBy=multi-user.target
 </li>
 <li>
 <p>Start the docker with SGX device support:</p>
-<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx integritee/integritee-dev:0.1.7 /bin/bash
+<pre><code class="language-bash">docker run -it -v $(pwd):/root/work --device /dev/isgx integritee/integritee-dev:0.1.9 /bin/bash
 </code></pre>
 </li>
 <li>
@@ -870,11 +870,11 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 <p>Build worker, client and node in our docker, so you don't need any Intel SGX hardware:</p>
 <pre><code class="language-bash"># get the docker image
 # check for updates on https://hub.docker.com/r/integritee/integritee-dev/tags
-docker pull integritee/integritee-dev:0.1.7
+docker pull integritee/integritee-dev:0.1.9
 
 # create a dedicated demo directory and start the docker container
 mkdir demo &amp;&amp; cd demo
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.9 /bin/bash
 
 # now you are inside the container
 # clone and build the worker and the client
@@ -953,11 +953,11 @@ chown -R &lt;NUMBER1&gt;:&lt;NUMBER2&gt; integritee-service integritee-node
 <p>Build worker, client and node in our docker, so you don't need any Intel SGX hardware:</p>
 <pre><code class="language-bash"># get the docker image
 # check for updates on https://hub.docker.com/r/integritee/integritee-dev/tags
-docker pull integritee/integritee-dev:0.1.7
+docker pull integritee/integritee-dev:0.1.9
 
 # create a dedicated demo directory and start the docker container (with sgx support)
 mkdir demo &amp;&amp; cd demo
-docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.7 /bin/bash
+docker run -it -v $(pwd):/root/work integritee/integritee-dev:0.1.9 /bin/bash
 cd work
 
 # clone and build the worker and the client
