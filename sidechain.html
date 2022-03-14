@@ -1,0 +1,290 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Sidechain - Multi-validateer setup - The Integritee Book</title>
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "light" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div id="sidebar-scrollbox" class="sidebar-scrollbox">
+                <ol class="chapter"><li class="expanded affix "><a href="introduction.html">Introduction</a></li><li class="expanded "><a href="trusted_execution.html"><strong aria-hidden="true">1.</strong> What is Trusted Execution?</a></li><li><ol class="section"><li class="expanded "><a href="remote_attestation.html"><strong aria-hidden="true">1.1.</strong> Remote Attestation</a></li></ol></li><li class="expanded "><a href="what_for.html"><strong aria-hidden="true">2.</strong> What is Integritee Good For?</a></li><li><ol class="section"><li class="expanded "><a href="privacy.html"><strong aria-hidden="true">2.1.</strong> Privacy</a></li><li class="expanded "><a href="scalability.html"><strong aria-hidden="true">2.2.</strong> Scalability</a></li><li class="expanded "><a href="interoperability.html"><strong aria-hidden="true">2.3.</strong> Interoperability</a></li><li><ol class="section"><li class="expanded "><a href="interoperability-bridges.html"><strong aria-hidden="true">2.3.1.</strong> Bridges</a></li></ol></li><li class="expanded "><a href="use_case_cdn.html"><strong aria-hidden="true">2.4.</strong> CDN</a></li></ol></li><li class="expanded "><a href="design.html"><strong aria-hidden="true">3.</strong> Design</a></li><li><ol class="section"><li class="expanded "><a href="sharding.html"><strong aria-hidden="true">3.1.</strong> Sharding</a></li><li class="expanded "><a href="token_shielding.html"><strong aria-hidden="true">3.2.</strong> Token Shielding</a></li><li class="expanded "><a href="security.html"><strong aria-hidden="true">3.3.</strong> Security</a></li><li><ol class="section"><li class="expanded "><a href="security_intel_sgx.html"><strong aria-hidden="true">3.3.1.</strong> Intel SGX</a></li><li class="expanded "><a href="security_tm_chainrelay.html"><strong aria-hidden="true">3.3.2.</strong> Threat model ChainRelay</a></li></ol></li><li class="expanded "><a href="benchmarks.html"><strong aria-hidden="true">3.4.</strong> Benchmarks</a></li><li class="expanded "><a href="hw_diversification.html"><strong aria-hidden="true">3.5.</strong> HW Diversification</a></li><li><ol class="section"><li class="expanded "><a href="hw_ra_by_distributor.html"><strong aria-hidden="true">3.5.1.</strong> Distributor-Level Remote Attestation</a></li></ol></li><li class="expanded "><a href="sidechain.html" class="active"><strong aria-hidden="true">3.6.</strong> Sidechain - Multi-validateer setup</a></li></ol></li><li class="expanded "><a href="howto.html"><strong aria-hidden="true">4.</strong> Howto</a></li><li><ol class="section"><li class="expanded "><a href="howto_node.html"><strong aria-hidden="true">4.1.</strong> How To Run a Node</a></li><li class="expanded "><a href="howto_worker.html"><strong aria-hidden="true">4.2.</strong> How To Run a Worker</a></li><li class="expanded "><a href="howto_private_tx.html"><strong aria-hidden="true">4.3.</strong> How To Perform a Private Transaction</a></li><li class="expanded "><a href="howto_direct_tx.html"><strong aria-hidden="true">4.4.</strong> How To Perform Direct Invocation</a></li><li class="expanded "><a href="howto_sidechain_multivalidateer.html"><strong aria-hidden="true">4.5.</strong> How To Run a sidechain multi-validateer setup</a></li><li class="expanded "><a href="howto_access_onchain_storage.html"><strong aria-hidden="true">4.6.</strong> How To Access On-Chain Storage Trustlessly</a></li><li class="expanded "><a href="howto_stf.html"><strong aria-hidden="true">4.7.</strong> How To Build Your Own Trusted STF</a></li></ol></li><li class="expanded "><a href="roadmap.html"><strong aria-hidden="true">5.</strong> Roadmap</a></li><li class="expanded "><a href="glossary.html"><strong aria-hidden="true">6.</strong> Glossary</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The Integritee Book</h1>
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1><a class="header" href="#sidechain" id="sidechain">Sidechain</a></h1>
+<h2><a class="header" href="#introduction-and-terminology" id="introduction-and-terminology">Introduction and terminology</a></h2>
+<p>This section explains what a sidechain is and how it can be used to enable a coordinated multi-validateer setup. First some clarification of terminology:</p>
+<ul>
+<li><strong>Validateer</strong>: Combination of the two terms <em>validator</em> and <em>TEE</em>. A <a href="https://wiki.polkadot.network/docs/learn-validator">validator</a> in <a href="https://polkadot.network/">Polkadot</a> is an agent that produces blocks for the blockchain, and <em>TEE</em> is 'Trusted Execution Environment'. So, a validateer is an agent that produces blocks in a trusted execution environment. This represents a specialization of the more general Integritee 'worker', which does not necessarily incorporate a sidechain.</li>
+<li><strong>Sidechain</strong>: The sidechain is a blockchain collectively maintained by validateers (i.e. workers that produce sidechain blocks). In the context of Polkadot, this would be a layer 2 blockchain (0 being the relay chain, 1 the 'parent chain' or Parachain).</li>
+<li><strong>Parentchain</strong>: The layer 1 blockchain that is used by any Integritee worker (including the validateer). When run in the Polkadot ecosystem, this is the Parachain - otherwise it's a solo chain.</li>
+</ul>
+<h2><a class="header" href="#motivation" id="motivation">Motivation</a></h2>
+<p>What are the applications of such a sidechain, what are its benefits? In short, the sidechain allows us to synchronize state transitions and updates across multiple validateers. </p>
+<p>Being a blockchain, the sidechain can guarantee the consistency, ordering of state transition executions, and traceability. We can decentralize a specific business logic and run it on many validateers independently while maintaining state consistency. A further benefit of running multiple validateers is scalability and load-balancing.</p>
+<h2><a class="header" href="#multi-validateer-setup-with-sidechain" id="multi-validateer-setup-with-sidechain">Multi-validateer setup with sidechain</a></h2>
+<p><img src="./fig/sidechain-multi-validateer-setup.png" alt="Multi-validateer setup diagram" /></p>
+<p>Validateers use their light-client and 'node API' to communicate with the parentchain, which is maintained by a substrate node.</p>
+<h2><a class="header" href="#block-production" id="block-production">Block production</a></h2>
+<p>The block time of the parentchain is currently set to <code>12s</code>. The validateers themselves produce sidechain blocks in intervals of <code>300ms</code>. The block production and consensus algorithm used to produce sidechain blocks, is <a href="https://docs.substrate.io/v3/advanced/consensus/#aura">AURA</a>. This means we have a defined set of authorities (i.e. validateers) that take turns in producing blocks. Each validateer (or more general, Integritee worker) is registered to the parentchain, thus defining the set of authorities. Time is then partitioned into slots of <code>300ms</code> and each slot is assigned to a validateer in a round-robin fashion. As an example, with 3 validateers, each validateer will produce a sidechain block every third slot.</p>
+<p>When a validateer produces a sidechain block, it broadcasts this new block to all of its peer validateers. How does it know its peers? As mentioned above, all validateers are registered on the parentchain. A validateer queries the parentchain to get the identities and URIs to communicate with all its peers.</p>
+<h4><a class="header" href="#block-production-cycle" id="block-production-cycle">Block production cycle</a></h4>
+<p>Depiction of the cycle each validateer runs for a slot. This is done in the <code>slot worker</code> component of a validateer. A cycle is triggered every <code>300ms</code>.</p>
+<p><img src="./fig/sidechain-block-production-cycle.png" alt="Sidechain block production cycle" /></p>
+<p>Explanation of the sequence:</p>
+<ol>
+<li>First it processes the sidechain import queue. Sidechain blocks from the queue are imported until the queue is empty.
+<ul>
+<li>Importing a sidechain block results in applying the state diff and removing executed operations from the trusted operation pool.</li>
+<li>It also includes potential fetching of sidechain blocks from a peer in case missing blocks were detected.</li>
+</ul>
+</li>
+<li>The next step is determining if the current slot should be claimed, meaning determining if it is this validateers turn to produce a block. If not, the slot cycle ends here.</li>
+<li>In case the slot is claimed, a validateer starts executing trusted operations from the trusted operation pool until the allocated time limit is reached. 
+<ul>
+<li>The time limit is a configurable fraction of the slot time, currently set to 80%. </li>
+<li>The result of the trusted operations is a state diff which will be included in the sidechain block. With this information the sidechain block will be composed.</li>
+<li>Once a sidechain block is composed, the validateer checks the slot time to ensure it's still within its claimed slot. If not, the block is discarded and the cycle ends. Otherwise, this new sidechain block is broadcasted to all peers, a parentchain extrinsic with confirmation of all executed operations composed and sent. </li>
+</ul>
+</li>
+</ol>
+<p><strong>Note</strong> on the slot time: At various points during the cycle the slot time is checked, to ensure the slot time of <code>300ms</code> is not exceeded. There are several cases where it still can happen. In order to prevent forks in the sidechain from happening, a sidechain block is only produced and broadcast when all the steps can be executed within the <code>300ms</code> time window. Otherwise it is discarded or not produced in the first place.</p>
+<h5><a class="header" href="#scenarios-where-the-slot-time-can-be-exceeded" id="scenarios-where-the-slot-time-can-be-exceeded">Scenarios where the slot time can be exceeded:</a></h5>
+<ul>
+<li><strong>Block import stage</strong>: The block import stage will import all the sidechain blocks it finds in the queue. This might also trigger a fetching of sidechain blocks from a peer when missing blocks are detected (further described in the on-boarding process). This whole process might take considerably longer than the slot time, but is necessary for further execution. If the time is exceeded here, the slot cycle will end after the import and be triggered again at the next point in time when a slot starts. This can potentially skip multiple slots including ones where this validateer should have produced a block. This is however not a problem, not producing a block during a slot does not endanger the integrity of the sidechain. And furthermore, the exceeding of the slot time because of block import should only happen in rare cases, e.g. during on-boarding or after being offline for period of time.</li>
+<li><strong>Trusted operation execution</strong>: Slot time is checked after each trusted operation execution. Only a defined fraction of the slot time is allocated for trusted operation execution. It can happen however, that the last operation that is executed takes too long and exceeds the allocated slot time fraction. In that case no block will be produced.</li>
+</ul>
+<h3><a class="header" href="#validateer-components" id="validateer-components">Validateer components</a></h3>
+<p>Let's have a brief, high-level look at the main components inside a validateer for the sidechain block production.</p>
+<p><img src="./fig/sidechain-validateer-component.png" alt="Validateer component overview" /></p>
+<p>The validateer component is split into two regions, untrusted and trusted. The trusted region is everything inside the enclave (TEE) and what is exclusively accessible by the enclave, such as the state. Both the trusted and untrusted regions have an RPC interface. The trusted RPC interface is used to send direct invocation calls, which are then added to the trusted operation pool. The trusted RPC interface is also used when we broadcast sidechain blocks. This then internally fills the sidechain block import queue. </p>
+<p>The <code>slot worker</code> component runs for every slot, imports sidechain blocks, executes trusted operations, and updates the state, as described in the chapter above. On the untrusted side we have a store for sidechain blocks, where we cache the last <code>100</code> blocks. This can be done on the untrusted side because sidechain blocks are signed, and any tampering could be noticed by verifying the signature. This store allows us to provide an RPC interface from which sidechain blocks can be fetched. This is relevant for the on-boarding process of new validateers which will be explained later.</p>
+<h2><a class="header" href="#on-boarding-of-new-validateers" id="on-boarding-of-new-validateers">On-boarding of new validateers</a></h2>
+<p>On-boarding is the process that happens when a new validateer is started and joins the set of validateers that have already been producing sidechain blocks for some time. On-boarding allows a new validateer to catch up on state and sidechain blocks to then start producing sidechain blocks itself.</p>
+<h3><a class="header" href="#sequence-diagram-of-on-boarding-a-new-validateer" id="sequence-diagram-of-on-boarding-a-new-validateer">Sequence diagram of on-boarding a new validateer</a></h3>
+<p>In this scenario, validateer 1 has been producing sidechain blocks for some time and is then joined by validateer 2. the following diagram illustrates the sequence from the point of view of validateer 2 undergoing the on-boarding process.</p>
+<p><img src="./fig/sidechain-onboarding-sequence.png" alt="On-boarding sequence diagram" /></p>
+<ol>
+<li>On-boarding starts off with determining if there are other running validateers that have produced sidechain blocks. This is done by querying the parentchain about the author of the last sidechain block. As a result validateer 2 learns about the identity and URI of validateer 1.
+<ul>
+<li>Note that in case there is no previous sidechain block and therefore no author, a validateer concludes that it's the first (or <code>primary</code>) validateer.</li>
+</ul>
+</li>
+<li>Validateer 2 then uses this information to fetch the state encryption key and state from this peer (validateer 1).</li>
+<li>Once this is done, validateer 2 registers itself to the parentchain and becomes part of the active (i.e. block producing) validateer set.</li>
+<li>Upon running the first slot cycle and importing sidechain blocks from the queue, validateer 2 notices it's missing sidechain blocks. Again it communicates with its peer, validateer 1, to directly fetch these missing blocks. As explained above, validateer 1 stores a certain amount of sidechain blocks in a database. Once these peer-fetched blocks are transferred and imported, the importing from the regular import queue resumes. </li>
+<li>And with that, validateer 2 is fully synced and can continue with the regular block production cycle, producing blocks itself now, every second slot.</li>
+</ol>
+<h4><a class="header" href="#relationship-between-state-and-sidechain-blocks" id="relationship-between-state-and-sidechain-blocks">Relationship between 'state' and sidechain blocks</a></h4>
+<p>In the on-boarding process, both 'state' and sidechain blocks are transferred from one validateer to another. What is the difference and why are both required? In theory, all state information is contained in the sidechain blocks. In order to know what the current state is, all transactions/operations in the sidechain blocks from genesis can be computed and accumulated. This however means that computing the current state becomes more time consuming as the blockchain grows. That is where the 'state' comes into play. The 'state' is a snapshot of the blockchain at a certain time (or block number). For example in a blockchain with <code>100</code> blocks, a state snapshot might be taken at block number <code>95</code>. So in order to know the latest state (at block number <code>100</code>), the state snapshot is taken and the last <code>5</code> blocks are applied to this state. This dramatically reduces the amount of computation required to arrive at the latest state.</p>
+<p>In the current configuration, a sidechain state snapshot is taken after each sidechain block. So why do we need to transfer the state and then still fetch missing sidechain blocks? Because in between the time of fetching the state snapshot and starting the sidechain block production cycle, more sidechain blocks were already produced. Furthermore, only a certain number (currently <code>100</code>) of sidechain blocks are cached in each validateer. This cache size has to be large enough to bridge the gap between receiving the state snapshot and starting the block production cycle. A cache size of <code>100</code> blocks and a block production time of <code>300ms</code> means that a gap of maximum <code>30s</code> can be bridged, which imposes an upper limit to the duration of the on-boarding process.</p>
+<h2><a class="header" href="#how-to-guide" id="how-to-guide">How-To Guide</a></h2>
+<p><a href="./howto_sidechain_multivalidateer.html">This</a> how-to guide explains how to set up multiple validateers with a substrate node and then execute the sidechain demo script.</p>
+<h2><a class="header" href="#youtube-demo" id="youtube-demo">Youtube Demo</a></h2>
+<p>A screen cast of the sidechain demo is available on Youtube, <a href="https://www.youtube.com/watch?v=HBH8R0RJ1mY">here</a>, where some of the aspects mentioned above are explained in more detail using the sidechain demo script and the resulting log output.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="hw_ra_by_distributor.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="howto.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="hw_ra_by_distributor.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="howto.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+        
+        
+        <script type="text/javascript">
+            window.playpen_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
