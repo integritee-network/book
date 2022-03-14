@@ -19,7 +19,7 @@ In contrast to an approach like [XClaim](https://www.xclaim.io/), integritee-bri
 * No relay-contract with on-chain registry of block headers needed. Block headers are stored in the enclave's sealed storage. Less onchain storage is needed on the issuing chain.
 * Less transactions needed as there is no need for a collateralized issue commitment.
 
-The term ***light client*** is used abiguously in the scene. We use the following definition of light client:
+The term ***light client*** is used ambiguously in the scene. We use the following definition of light client:
 
 > a light client can be viewed as a client that downloads block headers by default, and verifies only a small portion of what needs to be verified, using a distributed hash table as a database for trie nodes in place of its local hard drive
 ([source](https://github.com/ethereum/wiki/wiki/Light-client-protocol))
@@ -35,11 +35,11 @@ The set of active integritee-bridge instances changes over time. Some instances 
 We also need to guarantee *all-or-nothing fairness* (tx1 on the backing chain and tx2 on the issuing chain are either both included or both rejected). By using a TEE, we can make sure that bridges will correctly generate tx2 upon being shown a proof of inclusion for tx1. However, we can't guarantee that tx2 is included in the other chain by relying on a single TEE as the operator could prevent tx2 from being sent to the network among other attacks.
 If users have many integritee-bridge operators to chose from, we rely on the fact that these operators have an economic incentive to follow the protocol: They can't access locked funds but they can collect fees. We only need M-of-N (configurable threshold) of these operators to play fair in order to guarantee *all-or-nothing fairness*.
 
-Further hardening (including timelocked transactions) is described in the [Tesseract Paper](https://eprint.iacr.org/2017/1153.pdf) and is left for future work if security audits require it.
+Further hardening (including time locked transactions) is described in the [Tesseract Paper](https://eprint.iacr.org/2017/1153.pdf) and is left for future work if security audits require it.
 
 #### Reference Light Client Implementations
 
-Substrate as well as Ethereum clients geth and parity come with the option to run as light clients (i.e. `parity --light`). We suggest to port ethereum parity's and substrate's light clients' validation logic into SGX enclaves. While the networking can be conventional untrusted code, the tracking of block headers as well as the validation of merkle proofs need to be performed in SGX enclaves, so the bridge operator can convince others (the receiving chain) of the validity of a statement.
+Substrate as well as Ethereum clients geth and parity come with the option to run as light clients (i.e. `parity --light`). We suggest to port ethereum parity's and substrate's light clients' validation logic into SGX enclaves. While the networking can be conventional untrusted code, the tracking of block headers as well as the validation of Merkle proofs need to be performed in SGX enclaves, so the bridge operator can convince others (the receiving chain) of the validity of a statement.
 
 #### Risks
 

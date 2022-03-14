@@ -8,7 +8,7 @@ What Integritee aims to enable:
   * private transactions
   * private smart contracts
   * off-chain confidential personal data records (GDPR)
-  * decentalized identity with selective disclosure
+  * decentralized identity with selective disclosure
   * subscription-based content delivery networks
 * scalability by providing a 2nd layer to substrate-based blockchains
   * off-chain smart contracts
