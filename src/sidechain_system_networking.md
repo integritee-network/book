@@ -1,4 +1,4 @@
-# Sidechain System and Networking Overview
+# Sidechain system and networking overview
 
 ![Sidechain system and networking diagram](./fig/sidechain-system-networking.svg)
 
@@ -17,3 +17,9 @@ The **integritee-service** communicates among instances of itself. The following
 * Sidechain block fetching for on-boarding (provided by untrusted sidechain block storage)
 
 The **integritee-cli** uses RPC to communicate with both the **integritee-node**, for parentchain state queries and indirect invocation, and the **integritee-service**, for direct invocation and sidechain state queries.
+
+## Networking example for a multi-validateer setup with local nodes
+
+The following diagram depicts a multi-validateer setup with `integritee-nodes` running locally (i.e. on the same machine or container as the validateer itself). The `integritee-nodes` maintain the parentchain, the validateers the sidechain. Both blockchains use peer-to-peer communication to exchange blocks on their respective blockchain. A client like the `integritee-cli` can send extrinsics to any `integritee-node` (indirect invocation). The diagram shows the case of one that is running independently of any validateers. Or it can send an extrinsic directly to a validateer, using its RPC interface (direct invocation), again it does not matter which one, they are all synchronized.
+
+![Sidechain multi-validateer networking diagram](./fig/sidechain-multi-validateer-networking.svg)
