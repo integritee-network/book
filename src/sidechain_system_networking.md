@@ -1,6 +1,6 @@
 # Sidechain System and Networking Overview
 
-![Sidechain system and networking diagram](./fig/sidechain-system-networking.png)
+![Sidechain system and networking diagram](./fig/sidechain-system-networking.svg)
 
 Diagram showing the system and networking overview of the integritee systems:
 * **integritee-service** : The core Integritee service, hosting the TEE (enclave). Called `validateer` in case sidechain blocks are produced
