@@ -60,9 +60,6 @@ Prepare the worker by generating all the necessary keys and files used for start
 cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave > ~/mrenclave.b58
 ```
 

@@ -72,11 +72,8 @@ use `Ctrl-B + cursors` to move between terminals
 cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave > ~/mrenclave.b58
-./integritee-service run --skip-ra --dev
+./integritee-service --clean-reset run --skip-ra --dev
 ```
 wait until you see blocks being synched
 
