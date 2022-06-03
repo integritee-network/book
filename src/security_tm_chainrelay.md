@@ -19,22 +19,22 @@ The following points will be analysed:
 ### User
 User of the system that holds tokens either on-chain or in an incognito account.
 
-* He uses the integritee-cli
-* He can send extrinsics/transactions to the node that will then be processed by the enclave
-* He can query his own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket
-* He holds his key pairs (for on-chain and incognito accounts)
+* They use the integritee-cli
+* They can send extrinsics/transactions to the node that will then be processed by the enclave
+* They can query their own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket
+* They hold their key pairs (for on-chain and incognito accounts)
 
 ### Worker operator
 Operates the worker and the enclave.
 
-* He uses the integritee-service
-* He has full access to the system (HW, OS and services)
+* They use the integritee-service
+* They have full access to the system (HW, OS and services)
 
 ### Vendor
 Releases Integritee software
 
-* He distributes SW binaries
-* He can sign enclaves with MRSIGNER
+* They distribute SW binaries
+* They can sign enclaves with MRSIGNER
 
 There is no specific vendor in Integritee as it is open source code that can be deterministically built by anyone to reach an identical MRENCLAVE for the enclave. Therefore, each operator is also a vendor!
 

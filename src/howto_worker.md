@@ -144,9 +144,9 @@ cd worker
 make
 ```
 
-this might take 10min+ on a fast machine.
+This might take 10min+ on a fast machine.
 
-then you'll have to provide your SPID and KEY (see above)
+Then you'll have to provide your SPID and KEY (see above)
 
 ```bash
 echo "<YOUR SPID>" > bin/spid.txt
@@ -157,10 +157,7 @@ echo "<YOUR KEY>" > bin/key.txt
 
 ```bash
 cd bin
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
-./integritee-service run --ns <yournodeip>
+./integritee-service --clean-reset run --node-url <yournodeip> --node-port <port>
 ```
 
 ## Worker direct calls scalability
