@@ -195,9 +195,6 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave &gt; ~/mrenclave.b58
 </code></pre>
 <p>Use the <code>local-setup</code> scripts to launch an integritee node and 2 workers. The workers are started with a 1 minute delay in between them.</p>

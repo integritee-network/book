@@ -533,22 +533,22 @@ Similar to smart contracts reentrancy.</p>
 <h3><a class="header" href="#user" id="user">User</a></h3>
 <p>User of the system that holds tokens either on-chain or in an incognito account.</p>
 <ul>
-<li>He uses the integritee-cli</li>
-<li>He can send extrinsics/transactions to the node that will then be processed by the enclave</li>
-<li>He can query his own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket</li>
-<li>He holds his key pairs (for on-chain and incognito accounts)</li>
+<li>They use the integritee-cli</li>
+<li>They can send extrinsics/transactions to the node that will then be processed by the enclave</li>
+<li>They can query their own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket</li>
+<li>They hold their key pairs (for on-chain and incognito accounts)</li>
 </ul>
 <h3><a class="header" href="#worker-operator" id="worker-operator">Worker operator</a></h3>
 <p>Operates the worker and the enclave.</p>
 <ul>
-<li>He uses the integritee-service</li>
-<li>He has full access to the system (HW, OS and services)</li>
+<li>They use the integritee-service</li>
+<li>They have full access to the system (HW, OS and services)</li>
 </ul>
 <h3><a class="header" href="#vendor" id="vendor">Vendor</a></h3>
 <p>Releases Integritee software</p>
 <ul>
-<li>He distributes SW binaries</li>
-<li>He can sign enclaves with MRSIGNER</li>
+<li>They distribute SW binaries</li>
+<li>They can sign enclaves with MRSIGNER</li>
 </ul>
 <p>There is no specific vendor in Integritee as it is open source code that can be deterministically built by anyone to reach an identical MRENCLAVE for the enclave. Therefore, each operator is also a vendor!</p>
 <p>Because of this Integritee may not use MRSIGNER policy but MRENCLAVE for SGX sealed storage (known issue https://github.com/integritee-network/worker/issues/88)! This means that sealed storage can only be accessed by the very same untampered version of the enclave running on the same HW platform.</p>
@@ -940,17 +940,14 @@ export AR=/usr/bin/llvm-ar-10
 cd worker
 make
 </code></pre>
-<p>this might take 10min+ on a fast machine.</p>
-<p>then you'll have to provide your SPID and KEY (see above)</p>
+<p>This might take 10min+ on a fast machine.</p>
+<p>Then you'll have to provide your SPID and KEY (see above)</p>
 <pre><code class="language-bash">echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
 echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 </code></pre>
 <h2><a class="header" href="#run-worker" id="run-worker">Run Worker</a></h2>
 <pre><code class="language-bash">cd bin
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
-./integritee-service run --ns &lt;yournodeip&gt;
+./integritee-service --clean-reset run --node-url &lt;yournodeip&gt; --node-port &lt;port&gt;
 </code></pre>
 <h2><a class="header" href="#worker-direct-calls-scalability" id="worker-direct-calls-scalability">Worker direct calls scalability</a></h2>
 <p>For direct calls, a worker runs a web-socket server inside the enclave. An important factor for scalability is the transaction throughput of a single worker instance, which is in part defined by the maximum number of concurrent socket connections possible. On Linux by default, a process can have a maximum of <code>1024</code> concurrent file descriptors (show by <code>ulimit -n</code>).
@@ -1006,11 +1003,8 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave &gt; ~/mrenclave.b58
-./integritee-service run --skip-ra --dev
+./integritee-service --clean-reset run --skip-ra --dev
 </code></pre>
 <h2><a class="header" href="#play-in-terminal-3" id="play-in-terminal-3">Play in terminal 3</a></h2>
 <pre><code class="language-bash">cd ~/work/worker/cli
@@ -1088,11 +1082,8 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave &gt; ~/mrenclave.b58
-./integritee-service run --skip-ra --dev
+./integritee-service --clean-reset run --skip-ra --dev
 </code></pre>
 <p>wait until you see blocks being synched</p>
 <h2><a class="header" href="#run-client-in-terminal-3" id="run-client-in-terminal-3">Run client in terminal 3</a></h2>
@@ -1165,9 +1156,6 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave &gt; ~/mrenclave.b58
 </code></pre>
 <p>Use the <code>local-setup</code> scripts to launch an integritee node and 2 workers. The workers are started with a 1 minute delay in between them.</p>

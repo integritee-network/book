@@ -200,11 +200,8 @@ tmux split-window -h
 <pre><code class="language-bash">cd ~/work/worker/bin
 # create empty INTEL key files
 touch spid.txt key.txt
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
 ./integritee-service mrenclave &gt; ~/mrenclave.b58
-./integritee-service run --skip-ra --dev
+./integritee-service --clean-reset run --skip-ra --dev
 </code></pre>
 <p>wait until you see blocks being synched</p>
 <h2><a class="header" href="#run-client-in-terminal-3" id="run-client-in-terminal-3">Run client in terminal 3</a></h2>

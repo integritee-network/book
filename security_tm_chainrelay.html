@@ -166,22 +166,22 @@
 <h3><a class="header" href="#user" id="user">User</a></h3>
 <p>User of the system that holds tokens either on-chain or in an incognito account.</p>
 <ul>
-<li>He uses the integritee-cli</li>
-<li>He can send extrinsics/transactions to the node that will then be processed by the enclave</li>
-<li>He can query his own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket</li>
-<li>He holds his key pairs (for on-chain and incognito accounts)</li>
+<li>They use the integritee-cli</li>
+<li>They can send extrinsics/transactions to the node that will then be processed by the enclave</li>
+<li>They can query their own enclave state, the enclave public key and the mutual-remote-attestation port directly from a worker over WebSocket</li>
+<li>They hold their key pairs (for on-chain and incognito accounts)</li>
 </ul>
 <h3><a class="header" href="#worker-operator" id="worker-operator">Worker operator</a></h3>
 <p>Operates the worker and the enclave.</p>
 <ul>
-<li>He uses the integritee-service</li>
-<li>He has full access to the system (HW, OS and services)</li>
+<li>They use the integritee-service</li>
+<li>They have full access to the system (HW, OS and services)</li>
 </ul>
 <h3><a class="header" href="#vendor" id="vendor">Vendor</a></h3>
 <p>Releases Integritee software</p>
 <ul>
-<li>He distributes SW binaries</li>
-<li>He can sign enclaves with MRSIGNER</li>
+<li>They distribute SW binaries</li>
+<li>They can sign enclaves with MRSIGNER</li>
 </ul>
 <p>There is no specific vendor in Integritee as it is open source code that can be deterministically built by anyone to reach an identical MRENCLAVE for the enclave. Therefore, each operator is also a vendor!</p>
 <p>Because of this Integritee may not use MRSIGNER policy but MRENCLAVE for SGX sealed storage (known issue https://github.com/integritee-network/worker/issues/88)! This means that sealed storage can only be accessed by the very same untampered version of the enclave running on the same HW platform.</p>

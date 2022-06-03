@@ -256,17 +256,14 @@ export AR=/usr/bin/llvm-ar-10
 cd worker
 make
 </code></pre>
-<p>this might take 10min+ on a fast machine.</p>
-<p>then you'll have to provide your SPID and KEY (see above)</p>
+<p>This might take 10min+ on a fast machine.</p>
+<p>Then you'll have to provide your SPID and KEY (see above)</p>
 <pre><code class="language-bash">echo &quot;&lt;YOUR SPID&gt;&quot; &gt; bin/spid.txt
 echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 </code></pre>
 <h2><a class="header" href="#run-worker" id="run-worker">Run Worker</a></h2>
 <pre><code class="language-bash">cd bin
-./integritee-service init-shard
-./integritee-service shielding-key
-./integritee-service signing-key
-./integritee-service run --ns &lt;yournodeip&gt;
+./integritee-service --clean-reset run --node-url &lt;yournodeip&gt; --node-port &lt;port&gt;
 </code></pre>
 <h2><a class="header" href="#worker-direct-calls-scalability" id="worker-direct-calls-scalability">Worker direct calls scalability</a></h2>
 <p>For direct calls, a worker runs a web-socket server inside the enclave. An important factor for scalability is the transaction throughput of a single worker instance, which is in part defined by the maximum number of concurrent socket connections possible. On Linux by default, a process can have a maximum of <code>1024</code> concurrent file descriptors (show by <code>ulimit -n</code>).
