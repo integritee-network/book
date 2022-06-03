@@ -952,6 +952,9 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 ./integritee-service signing-key
 ./integritee-service run --ns &lt;yournodeip&gt;
 </code></pre>
+<h2><a class="header" href="#worker-direct-calls-scalability" id="worker-direct-calls-scalability">Worker direct calls scalability</a></h2>
+<p>For direct calls, a worker runs a web-socket server inside the enclave. An important factor for scalability is the transaction throughput of a single worker instance, which is in part defined by the maximum number of concurrent socket connections possible. On Linux by default, a process can have a maximum of <code>1024</code> concurrent file descriptors (show by <code>ulimit -n</code>).
+If the web-socket server hits that limit, incoming connections will be declined until one of the established connections is closed. Permanently changing the <code>ulimit -n</code> value can be done in the <code>/etc/security/limits.conf</code> configuration file. See <a href="https://linuxhint.com/permanently_set_ulimit_value/">this</a> guide for more information.</p>
 <h1><a class="header" href="#how-to-perform-private-transactions" id="how-to-perform-private-transactions">How to Perform Private Transactions</a></h1>
 <p>Private transactions are a change of ownership of tokens where no one but the involved parties can learn who sent how many tokens to whom.</p>
 <p>Substrate blockchains are usually account-based and pseudonymous by nature: The whole world can see all transactions and their source, destination and amount. Integritee offers confidentiality in a similar way that Zcash does: it offers users a way to move their tokens into a dark pool (shielding process) where they can transact privately and later retrieve tokens on their public accounts (unshielding). In the case of Zcash, privacy is guaranteed by zk-SNARKS, in Integritee it is guaranteed by TEEs.</p>

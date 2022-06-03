@@ -268,6 +268,9 @@ echo &quot;&lt;YOUR KEY&gt;&quot; &gt; bin/key.txt
 ./integritee-service signing-key
 ./integritee-service run --ns &lt;yournodeip&gt;
 </code></pre>
+<h2><a class="header" href="#worker-direct-calls-scalability" id="worker-direct-calls-scalability">Worker direct calls scalability</a></h2>
+<p>For direct calls, a worker runs a web-socket server inside the enclave. An important factor for scalability is the transaction throughput of a single worker instance, which is in part defined by the maximum number of concurrent socket connections possible. On Linux by default, a process can have a maximum of <code>1024</code> concurrent file descriptors (show by <code>ulimit -n</code>).
+If the web-socket server hits that limit, incoming connections will be declined until one of the established connections is closed. Permanently changing the <code>ulimit -n</code> value can be done in the <code>/etc/security/limits.conf</code> configuration file. See <a href="https://linuxhint.com/permanently_set_ulimit_value/">this</a> guide for more information.</p>
 
                     </main>
 
